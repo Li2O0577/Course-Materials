@@ -1,0 +1,39 @@
+\section*{Problem 1}
+
+设 $\bm{a}, \bm{b} \in \mathbb{R}^n$ 为常向量，$A \in \mathbb{R}^{n \times n}$ 为常矩阵（不必对称），$\bm{x} \in \mathbb{R}^n$。计算下列各式对 $\bm{x}$ 的导数：
+
+\begin{enumerate}
+    \item $f_1(\bm{x}) = \bm{a}^\top \bm{x}$；
+    \item $f_2(\bm{x}) = \bm{x}^\top A \bm{x}$（$A$ 不必对称）；
+    \item $f_3(\bm{x}) = \left(\bm{a}^\top \bm{x}\right)\left(\bm{b}^\top \bm{x}\right)$。
+\end{enumerate}
+
+\section*{Problem 2}
+
+设 $X \in \mathbb{R}^{n \times n}$ 为可逆矩阵，$A, B$ 为常矩阵，使下列各式有意义。利用矩阵求导的链式法则及行列式求导公式，计算：
+
+\begin{enumerate}
+    \item $\displaystyle \frac{\partial}{\partial X} \ln \det(X)$（不假设 $X$ 对称）；
+    \item $\displaystyle \frac{\partial}{\partial X} \ln \det(AXB)$（设 $AXB$ 可逆）；
+    \item 验证当 $X$ 为对称可逆矩阵时，
+    \[
+        \frac{\partial}{\partial X} \ln \det(X)
+        =
+        2X^{-1} - \diag(X^{-1}).
+    \]
+\end{enumerate}
+
+\section*{Problem 3}
+
+设 $X \in \mathbb{R}^{n \times m}$，$A \in \mathbb{R}^{m \times m}$，$B \in \mathbb{R}^{n \times n}$ 均为常矩阵。利用 $\displaystyle \frac{\partial \operatorname{tr}(\cdot)}{\partial X}$ 的求导技巧，证明：
+
+\begin{enumerate}
+    \item $\displaystyle \frac{\partial}{\partial X} \operatorname{tr}\left(XAX^\top\right) = X(A + A^\top)$；
+    \item $\displaystyle \frac{\partial}{\partial X} \operatorname{tr}\left(X^\top BXA\right) = BXA + B^\top XA^\top$；
+    \item 作为 (2) 的应用，设 $B$ 对称且 $X^\top BX$ 可逆，证明
+    \[
+        \frac{\partial}{\partial X} \ln \det\left(X^\top BX\right)
+        =
+        2BX\left(X^\top BX\right)^{-1}.
+    \]
+\end{enumerate}

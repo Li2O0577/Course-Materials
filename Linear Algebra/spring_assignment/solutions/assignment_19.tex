@@ -1,0 +1,140 @@
+\section*{Problem 1}
+
+一个人工神经元的输入为
+\[
+\bm{x} = (1, -2, 3)^\top,\quad
+\bm{w} = (2, -1, 0.5)^\top,\quad
+b = -1.
+\]
+记净输入为 $z = \bm{w}^\top \bm{x} + b$。
+\begin{enumerate}
+    \item 计算该神经元的净输入 $z$。
+    \item 若激活函数为阶梯函数
+    \[
+    h(z) = \begin{cases}
+        1, & z \ge 0,\\
+        0, & z < 0,
+    \end{cases}
+    \]
+    求神经元输出。
+    \item 若激活函数分别为 $\operatorname{ReLU}(z) = \max\{0, z\}$ 和 LeakyReLU，其中
+    \[
+    \operatorname{LeakyReLU}(z) = \begin{cases}
+        z,      & z \ge 0,\\
+        0.01z,  & z < 0,
+    \end{cases}
+    \]
+    分别求神经元输出，并说明二者在 $z < 0$ 时的主要区别。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 净输入为
+        \[
+            z = 2\cdot 1 + (-1)(-2) + 0.5\cdot 3 - 1
+              = \boxed{4.5}.
+        \]
+        \item 因为 $z=4.5>0$，阶梯函数的输出为
+        \[
+            \boxed{h(z)=1}.
+        \]
+        \item 此处净输入为正，故两种激活函数均输出
+        \[
+            \operatorname{ReLU}(4.5)
+            = \operatorname{LeakyReLU}(4.5)
+            = \boxed{4.5}.
+        \]
+        当 $z<0$ 时，ReLU 的输出恒为 $0$，而 LeakyReLU 保留 $0.01z$，因而仍保留一条斜率为 $0.01$ 的负半轴分支。
+    \end{enumerate}
+\end{proof}
+
+\section*{Problem 2}
+
+Logistic 激活函数定义为
+\[
+\sigma(z) = \frac{1}{1 + \exp(-z)}.
+\]
+已知其导数为 $\sigma'(z) = \sigma(z)(1 - \sigma(z))$。
+\begin{enumerate}
+    \item 计算 $\sigma(0)$ 与 $\sigma'(0)$。
+    \item 近似计算 $\sigma(4), \sigma'(4), \sigma(-4), \sigma'(-4)$。可使用 $\exp(-4) \approx 0.0183$, $\exp(4) \approx 54.6$。
+    \item 根据以上结果，解释为什么 Logistic 激活函数在 $|z|$ 较大时容易导致梯度消失。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 代入 $z=0$，得到
+        \[
+            \sigma(0)=\frac12,\qquad
+            \sigma'(0)=\frac12\left(1-\frac12\right)=\boxed{\frac14}.
+        \]
+        \item 利用题给近似值，
+        \[
+        \begin{aligned}
+            \sigma(4)
+            &\approx \frac{1}{1+0.0183}
+             \approx 0.9820, \\
+            \sigma'(4)
+            &\approx 0.9820(1-0.9820)
+             \approx 0.0177, \\
+            \sigma(-4)
+            &\approx \frac{1}{1+54.6}
+             \approx 0.0180, \\
+            \sigma'(-4)
+            &\approx 0.0180(1-0.0180)
+             \approx 0.0177.
+        \end{aligned}
+        \]
+        \item 当 $z\to+\infty$ 时，$\sigma(z)\to1$；当 $z\to-\infty$ 时，$\sigma(z)\to0$。两种情形下
+        \[
+            \sigma'(z)=\sigma(z)(1-\sigma(z))\to0.
+        \]
+        反向传播中的梯度需要逐层乘以该导数，多层连乘后会迅速趋近于零，因此前层参数难以获得有效更新。
+    \end{enumerate}
+\end{proof}
+
+\section*{Problem 3}
+
+考虑一个使用 ReLU 激活函数的神经元
+\[
+z = \bm{w}^\top \bm{x} + b,\quad a = \operatorname{ReLU}(z),
+\]
+设训练集中所有样本都满足 $\bm{x} \ge 0$（逐分量非负）。
+\begin{enumerate}
+    \item 写出 ReLU 的函数表达式及其在 $z \neq 0$ 处的导数。
+    \item 设 $\bm{w} = (-1, -2)^\top$, $b = 0$，对任意满足 $\bm{x} \ge 0$ 的样本，说明为什么有 $z \le 0$。
+    \item 若某个神经元对所有训练样本都有 $z < 0$，说明其权重为什么难以通过梯度下降更新，并说明 LeakyReLU 为什么可以缓解这一问题。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item ReLU 及其在 $z\neq0$ 处的导数分别为
+        \[
+            \operatorname{ReLU}(z)=
+            \begin{cases}
+                z, & z>0,\\
+                0, & z\le0,
+            \end{cases}
+            \qquad
+            \operatorname{ReLU}'(z)=
+            \begin{cases}
+                1, & z>0,\\
+                0, & z<0.
+            \end{cases}
+        \]
+        \item 写成 $\bm{x}=(x_1,x_2)^\top$。由 $x_1,x_2\ge0$，有
+        \[
+            z=-x_1-2x_2\le0.
+        \]
+        \item 若所有训练样本均满足 $z<0$，则 $\operatorname{ReLU}'(z)=0$。以损失函数 $L$ 为例，链式法则给出
+        \[
+            \frac{\partial L}{\partial \bm{w}}
+            = \frac{\partial L}{\partial a}
+              \operatorname{ReLU}'(z)\bm{x}
+            = \bm{0},
+            \qquad
+            \frac{\partial L}{\partial b}=0.
+        \]
+        因而梯度下降无法把该神经元带回激活区。LeakyReLU 在 $z<0$ 时的导数为 $0.01$，梯度虽小但不为零，所以参数仍可能得到更新。
+    \end{enumerate}
+\end{proof}

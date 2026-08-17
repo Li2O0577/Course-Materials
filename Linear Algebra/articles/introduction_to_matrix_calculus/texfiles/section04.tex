@@ -1,0 +1,92 @@
+\section{标量矩阵函数与 Frobenius 梯度}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Death.png}
+\end{center}
+
+第三章中的矩阵变量函数可以有不同类型的输出；当输出是标量时，微分 \(\mathrm{D}f(X)[H]\) 是一个关于矩阵增量 \(H\) 的标量线性映射。由于 \(H\) 的每一个元素都可以独立变化，这个标量线性主项必然由各元素增量的系数共同决定；把这些系数重新排成与 \(X\) 同型的矩阵，就得到与向量梯度相对应的矩阵梯度。
+
+在向量情形中，若 \(f:\mathbb{R}^n\to\mathbb{R}\) 可微，则 \(\mathrm{D}f(\bm{x})[\bm{u}]=\bm{\nabla} f(\bm{x})^\top \bm{u}\)。这里的 \(\bm{\nabla} f(\bm{x})\) 可以理解为线性主项中各个坐标增量的系数组成的向量，而内积 \(\bm{\nabla} f(\bm{x})^\top \bm{u}\) 则把“系数与增量逐项相乘再求和”写成紧凑形式。矩阵空间中的情形完全类似，只是坐标增量由 \(u_i\) 变成矩阵元素增量 \(h_{ij}\)；为了把对应的逐项求和写成矩阵形式，矩阵空间中采用 Frobenius 内积
+\[
+\langle A,B\rangle_F=\operatorname{tr}(A^\top B)=\sum_{i,j}a_{ij}b_{ij},
+\]
+其中 \(A,B\in\mathbb{R}^{m\times n}\)。该内积把同型矩阵的对应元素相乘后求和，因此正好适合记录标量线性主项中“系数矩阵与增量矩阵逐项配对”的结构。
+
+设 \(L:\mathbb{R}^{m\times n}\to\mathbb{R}\) 是任意标量线性规则，令 \(E_{ij}\) 表示第 \((i,j)\) 个位置为 \(1\)、其余位置为 \(0\) 的标准矩阵。由于任意矩阵 \(H=(h_{ij})\) 都可写成 \[H=\sum_{i,j}h_{ij}E_{ij},\]
+由线性性给出
+\[
+L(H)=\sum_{i,j}h_{ij}L(E_{ij}).
+\]
+\(L\) 完全由它在标准方向 \(E_{ij}\) 上的取值决定。把这些系数排成矩阵 \(G=(g_{ij})\)，其中 \(g_{ij}=L(E_{ij})\)，则
+\[
+L(H)=\sum_{i,j}g_{ij}h_{ij}=\langle G,H\rangle_F.
+\]
+若另有 \(G'\) 表示同一个线性规则，则对所有 \(H\) 有 \(\langle G-G',H\rangle_F=0\)，取 \(H=G-G'\) 得 \(G=G'\)。因此，矩阵到标量的线性主项总能唯一地写成某个同型矩阵与增量矩阵的 Frobenius 内积。
+
+设 \(f:\mathbb{R}^{m\times n}\to\mathbb{R}\) 在 \(X\) 处可微。由上述坐标说明，存在唯一矩阵 \(G\in\mathbb{R}^{m\times n}\)，使得对任意同型增量 \(H\) 都有
+\[
+\mathrm{D}f(X)[H]=\langle G,H\rangle_F=\operatorname{tr}(G^\top H),
+\]
+这个唯一矩阵称为 \(f\) 在 \(X\) 处关于 Frobenius 内积的矩阵梯度，记为 \(\nabla_X f\)。换言之，矩阵梯度是把标量线性规则 \(H\mapsto \mathrm{D}f(X)[H]\) 写成 Frobenius 内积形式时出现的代表矩阵。
+
+这个定义对应的基本书写格式为
+\[
+f(X+H)=f(X)+\langle \nabla_X f,H\rangle_F+o(\|H\|).
+\]
+若使用微分记号，并把矩阵增量写成 \(\mathrm{d}X\)，则同一关系写作
+\[
+\mathrm{d}f=\mathrm{D}f(X)[\mathrm{d}X]=\operatorname{tr}((\nabla_X f)^\top \mathrm{d}X).
+\]
+这里 \(\mathrm{d}f\) 是微分作用在实际增量 \(\mathrm{d}X\) 后得到的标量主项，\(\nabla_X f\) 是在 Frobenius 内积下表示该主项的矩阵。
+
+先看最直接的线性标量函数。设 \(C\in\mathbb{R}^{m\times n}\)，定义
+\[
+f(X)=\langle C,X\rangle_F=\operatorname{tr}(C^\top X).
+\]
+则
+\[
+f(X+H)-f(X)=\langle C,X+H\rangle_F-\langle C,X\rangle_F=\langle C,H\rangle_F.
+\]
+因此 \(\mathrm{D}f(X)[H]=\langle C,H\rangle_F\)，并且 \(\nabla_X f=C\)。
+
+Frobenius 范数平方保留了非线性标量函数中的同一结构。设
+\[
+f(X)=\frac12\|X\|_F^2=\frac12\langle X,X\rangle_F.
+\]
+当 \(X\) 变为 \(X+H\) 时，
+\[
+f(X+H)-f(X)=\frac12\langle X+H,X+H\rangle_F-\frac12\langle X,X\rangle_F
+=\langle X,H\rangle_F+\frac12\langle H,H\rangle_F.
+\]
+最后一项为 \(O(\|H\|_F^2)\)，相对于 \(\|H\|_F\) 是高阶小量，所以
+\[
+\mathrm{D}f(X)[H]=\langle X,H\rangle_F,\qquad \nabla_X f=X.
+\]
+这里无需逐个展开所有元素也能确认梯度，因为一阶主项 \(H\mapsto \langle X,H\rangle_F\) 在 Frobenius 内积下的代表矩阵正是 \(X\)。
+
+带中心的平方范数只改变基点处的一阶系数。设 \(B\in\mathbb{R}^{m\times n}\)，定义 \(f(X)=\frac12\|X-B\|_F^2\)。令 \(R=X-B\)，则
+\[
+f(X+H)-f(X)=\frac12\|R+H\|_F^2-\frac12\|R\|_F^2
+=\langle R,H\rangle_F+\frac12\|H\|_F^2.
+\]
+因此
+\[
+\mathrm{D}f(X)[H]=\langle X-B,H\rangle_F,\qquad \nabla_X f=X-B.
+\]
+这个例子在最小二乘问题中会反复出现，其本质仍然是从增量展开中读出关于 \(H\) 的线性主项。
+
+在第三章的坐标解释下，矩阵梯度与元素偏导的关系也很明确。若把 \(X\) 的所有元素 \(x_{ij}\) 都视为独立坐标，则标量函数 \(f(X)\) 的一阶展开具有形式
+\[
+f(X+H)-f(X)=\sum_{i,j}\frac{\partial f}{\partial x_{ij}}(X)\,h_{ij}+o(\|H\|).
+\]
+每一个偏导数都是线性主项在标准方向 \(E_{ij}\) 上的系数。另一方面，若已经把整体微分写成 \(\mathrm{D}f(X)[H]=\langle \nabla_X f,H\rangle_F\)，则沿前述标准矩阵 \(E_{ij}\) 方向的增量满足
+\[
+\mathrm{D}f(X)[E_{ij}]=\langle \nabla_X f,E_{ij}\rangle_F=(\nabla_X f)_{ij}.
+\]
+因此，在标准 Frobenius 内积下，
+\[
+(\nabla_X f)_{ij}=\frac{\partial f}{\partial x_{ij}}(X).
+\]
+这与前面由线性主项定义矩阵梯度的方式一致：逐坐标计算会逐个得到 \((\nabla_X f)_{ij}\)，而微分法先得到关于任意 \(H\) 的整体线性规则，再通过 Frobenius 内积读出同一个系数矩阵。微分法的优势不在于改变梯度的含义，而在于避免在复杂矩阵表达式中反复展开所有元素。
+
+标量矩阵函数求导的步骤是：先通过增量展开得到 \(\mathrm{D}f(X)[H]\)，再用 Frobenius 内积把这个标量线性规则表示为 \(\langle \nabla_X f,H\rangle_F\)。较复杂的一阶主项通常还要整理成 \(\operatorname{tr}(G^\top H)\) 的形式，才能读出矩阵梯度，这一点将在下一章讨论。

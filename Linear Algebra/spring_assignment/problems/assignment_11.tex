@@ -1,0 +1,46 @@
+\section*{Problem 1}
+
+设矩阵 \[
+A = \begin{bmatrix}
+    3 & 0 \\
+    0 & 2 \\
+    0 & 0 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 计算 $A^\top A$，求其特征值与单位特征向量，写出 $A$ 的奇异值 $\sigma_1 > \sigma_2$ 及右奇异向量 $\boldsymbol{v}_1, \boldsymbol{v}_2$。
+    \item 利用公式 \[\boldsymbol{u}_i = \frac{A\boldsymbol{v}_i}{\sigma_i},\] 求左奇异向量 $\boldsymbol{u}_1, \boldsymbol{u}_2$，并将其补全为 $\mathbb{R}^3$ 的标准正交基。
+    \item 写出 $A$ 的奇异值分解 $A = U \Sigma V^\top$。
+\end{enumerate}
+
+\section*{Problem 2}
+
+设矩阵
+\[A =
+\begin{bmatrix}
+    3 & 0 \\
+    0 & 1 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 直接写出 $A$ 的 SVD（该矩阵已是对角形式，奇异值即对角元）。
+    \item 利用谱范数定义 \[\|A\|_2 = \sup_{x \neq 0} \frac{\|Ax\|_2}{\|x\|_2},\]证明 $\|A\|_2 = \sigma_1 = 3$。
+    \item 写出 $A$ 的秩 - 1 近似 $A_1$，计算 $\|A - A_1\|_2$。
+\end{enumerate}
+
+\section*{Problem 3}
+
+设矩阵
+\[
+A =
+\begin{bmatrix}
+    3 & 0 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix},
+\]
+其奇异值为 \[\sigma_1 = 3, \quad \sigma_2 = 2, \quad \sigma_3 = 1.\]
+\begin{enumerate}
+    \item 写出 $A$ 的秩 - 1 近似 $A_1$ 与秩 - 2 近似 $A_2$，分别计算近似误差 $\|A - A_1\|_2$ 与 $\|A - A_2\|_2$。
+    \item 由 Eckart – Young 定理，$A_1$ 是 $A$ 的最优秩 - 1 近似。若另取秩 - 1 矩阵 \[B = 3 \boldsymbol{e}_1 \boldsymbol{e}_2^\top,\]其中 $\boldsymbol{e}_1, \boldsymbol{e}_2$ 为标准基向量，计算 $\|A - B\|_2$ 并验证其不小于 $\|A - A_1\|_2$。
+\end{enumerate}

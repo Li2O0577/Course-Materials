@@ -1,0 +1,105 @@
+\section{典型优化问题中的统一方法}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Time.png}
+\end{center}
+
+矩阵微积分在优化中的作用，是把目标函数在当前点附近的主要变化写成关于增量的线性主项，并由此得到一阶条件。无约束问题要求这个线性主项对所有增量消失；约束问题要求它对所有可行增量消失。微分、梯度、Hessian 和投影公式都服务于这个判断。
+
+最小二乘问题是最基本的例子。设 \(A\in\mathbb{R}^{p\times m}\)、\(B\in\mathbb{R}^{p\times n}\)，考虑
+\[
+f(X)=\frac12\|AX-B\|_F^2,\qquad X\in\mathbb{R}^{m\times n}.
+\]
+第六章已经得到
+\[
+\nabla_X f=A^\top(AX-B).
+\]
+无约束一阶条件为
+\[
+A^\top(AX-B)=0,
+\]
+即
+\[
+A^\top A X=A^\top B.
+\]
+这就是矩阵形式的正规方程。若 \(A^\top A\) 可逆，则唯一驻点为 \(X=(A^\top A)^{-1}A^\top B\)；若 \(A^\top A\) 不可逆，一阶条件仍然描述所有最小二乘解所在的仿射集合。
+
+正则化最小二乘只是在一阶条件中增加一个稳定项。设 \(\lambda>0\)，
+\[
+f(X)=\frac12\|AX-B\|_F^2+\frac{\lambda}{2}\|X\|_F^2.
+\]
+由梯度的线性性，
+\[
+\nabla_X f=A^\top(AX-B)+\lambda X.
+\]
+一阶条件为
+\[
+(A^\top A+\lambda I_m)X=A^\top B.
+\]
+由于 \(A^\top A+\lambda I_m\) 正定，该方程有唯一解。这里的正则化项改变了 Hessian 映射，从 \(H\mapsto A^\top A H\) 变为 \(H\mapsto (A^\top A+\lambda I_m)H\)，从而消除了 \(A^\top A\) 可能存在的零曲率方向。
+
+带右乘的二次优化对乘法顺序更敏感。若
+\[
+f(X)=\frac12\|XA-B\|_F^2+\frac{\lambda}{2}\|X\|_F^2,
+\]
+其中 \(A\in\mathbb{R}^{n\times q}\)、\(B\in\mathbb{R}^{m\times q}\)，则
+\[
+\nabla_X f=(XA-B)A^\top+\lambda X.
+\]
+一阶条件为
+\[
+X(AA^\top+\lambda I_n)=BA^\top.
+\]
+这个方程与左乘情形不同，未知矩阵 \(X\) 位于系数矩阵的左侧；直接套用左乘公式会破坏矩阵乘法顺序。
+
+对数行列式目标展示了正定约束中的一阶条件。设 \(C=C^\top\)，考虑
+\[
+f(X)=-\log\det X+\operatorname{tr}(CX),\qquad X\in\mathbb{S}_{++}^n.
+\]
+由于 \(\nabla_X(-\log\det X)=-X^{-1}\)，且 \(\nabla_X\operatorname{tr}(CX)=C\)，可得
+\[
+\nabla_X f=-X^{-1}+C.
+\]
+正定集合是对称矩阵空间中的开集，因此内部驻点满足
+\[
+-X^{-1}+C=0.
+\]
+若 \(C\) 正定，则解为 \(X=C^{-1}\)。若 \(C\) 不是正定矩阵，则该方程无法在 \(\mathbb{S}_{++}^n\) 中产生可行解，目标函数的极小性需要重新结合定义域和边界行为分析。
+
+另一类常见问题是带有迹逆矩阵项的目标。设 \(A=A^\top\succeq0\)，考虑
+\[
+f(X)=\operatorname{tr}(A X^{-1})+\operatorname{tr}(CX),\qquad X\in\mathbb{S}_{++}^n,
+\]
+其中 \(C=C^\top\)。一般公式为 \(\nabla_X\operatorname{tr}(A X^{-1})=-X^{-\top}A^\top X^{-\top}\)。在正定对称约束下，这化为
+\[
+\nabla_X f=-X^{-1}AX^{-1}+C.
+\]
+因此内部一阶条件为
+\[
+X^{-1}AX^{-1}=C.
+\]
+这个方程虽非普通线性方程，但仍然来自同一个微分主项；后续求解可以使用矩阵方程、特征分解或数值迭代，而一阶条件本身由梯度直接确定。
+
+正交约束问题展示了投影条件的作用。设 \(X\in\mathbb{R}^{n\times p}\) 满足 \(X^\top X=I_p\)，考虑线性目标
+\[
+f(X)=-\operatorname{tr}(C^\top X).
+\]
+普通欧氏梯度为 \(G=-C\)。约束驻点条件应写成切向投影为零：
+\[
+G-X\operatorname{sym}(X^\top G)=0.
+\]
+代入 \(G=-C\)，可得
+\[
+C=X\operatorname{sym}(X^\top C).
+\]
+该条件蕴含 \(X^\top C\) 是对称矩阵，同时还要求 \(C\) 落在由 \(X\) 的列空间决定的法向结构中；对于矩形 Stiefel 约束，不能只用 \(X^\top C\) 对称替代完整的投影方程。在线性目标下，普通梯度一般不会消失；约束极值只要求目标的一阶变化在所有正交可行方向上消失。
+
+若 \(X\in O(n)\) 是方阵正交矩阵，切空间可写为 \(H=X\Omega\)，其中 \(\Omega^\top=-\Omega\)。对于同一个目标 \(f(X)=-\operatorname{tr}(C^\top X)\)，一阶变化为
+\[
+\mathrm{D}f(X)[X\Omega]=-\operatorname{tr}(C^\top X\Omega).
+\]
+该式对所有反对称 \(\Omega\) 消失，当且仅当 \(X^\top C\) 是对称矩阵。这与投影条件一致，但切空间表达更直接地显示了可行方向的结构。
+
+矩阵优化的一阶分析可以固定为一个流程。第一，明确变量所在空间以及允许的增量；第二，写出目标函数的一阶主项或调用已经推导出的梯度公式；第三，无约束问题令普通梯度为零，约束问题令梯度在切空间上的投影为零；第四，再根据 Hessian 或二阶主项判断驻点的局部性质。
+
+这里的重点不是增加新的求导公式，而是把已有工具合并为一种方法。最小二乘使用 Frobenius 范数梯度，对数行列式使用逆矩阵和行列式微分，正交约束使用切空间与投影；这些类型不同的问题，都通过“输入增量如何决定目标函数变化”联系起来。

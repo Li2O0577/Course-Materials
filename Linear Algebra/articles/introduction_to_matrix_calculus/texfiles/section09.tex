@@ -1,0 +1,95 @@
+\section{二阶微分与 Hessian}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Ocean.png}
+\end{center}
+
+一阶微分描述函数增量中的线性主项，二阶展开则刻画这一主项随基点变化的方式。对于标量函数，二阶项对应局部曲率；在优化问题中，它决定驻点附近的上凸、下凸或鞍点行为。Hessian 可以理解为梯度或一阶微分的再次变化。
+
+在向量变量情形中，设 \(f:\mathbb{R}^n\to\mathbb{R}\) 二阶可微。若 \(\bm{x}\) 的增量为 \(\bm{u}\)，则一阶展开为
+\[
+f(\bm{x}+\bm{u})=f(\bm{x})+\bm{\nabla} f(\bm{x})^\top \bm{u}+o(\|\bm{u}\|).
+\]
+若继续保留二阶主项，则有
+\[
+f(\bm{x}+\bm{u})=f(\bm{x})+\bm{\nabla} f(\bm{x})^\top \bm{u}+\frac12 \bm{u}^\top \nabla^2 f(\bm{x})\bm{u}+o(\|\bm{u}\|^2).
+\]
+其中 \(\nabla^2 f(\bm{x})\in\mathbb{R}^{n\times n}\) 称为 Hessian 矩阵，它描述梯度 \(\bm{\nabla} f(\bm{x})\) 对输入变化的一阶响应。
+
+从梯度增量看，若 \(\bm{\nabla} f:\mathbb{R}^n\to\mathbb{R}^n\) 可微，则
+\[
+\bm{\nabla} f(\bm{x}+\bm{u})=\bm{\nabla} f(\bm{x})+\nabla^2 f(\bm{x})\bm{u}+o(\|\bm{u}\|).
+\]
+因此 Hessian 是梯度映射的 Jacobian。它先描述梯度如何变化，再由这种变化产生二阶曲率项，从而间接刻画函数增量中的二阶部分。
+
+一元函数 \(f(x)=x^2\) 是一个最简单的例子。由于 \(f'(x)=2x\)、\(f''(x)=2\)，有
+\[
+f(x+h)=f(x)+2xh+\frac12\cdot 2h^2.
+\]
+多元二次型 \(f(\bm{x})=\bm{x}^\top A\bm{x}\) 展示了同样结构。前面已经得到 \(\bm{\nabla} f(\bm{x})=(A+A^\top)\bm{x}\)，因此
+\[
+\nabla^2 f(\bm{x})=A+A^\top.
+\]
+若 \(A=A^\top\)，则 Hessian 为 \(2A\)。这里对称性仍然是简化的必要条件；没有对称性时，二阶项由 \(A+A^\top\) 决定，不能直接写成 \(2A\)。
+
+矩阵变量中的二阶展开保持同一形式，只是输入增量变为矩阵。设 \(f:\mathbb{R}^{m\times n}\to\mathbb{R}\)，若在 \(X\) 处二阶可微，则
+\[
+f(X+H)=f(X)+\mathrm{D}f(X)[H]+\frac12 \mathrm{D}^2 f(X)[H,H]+o(\|H\|^2).
+\]
+这里 \(\mathrm{D}^2 f(X)\) 是作用在两个矩阵增量上的双线性映射，而 \(\mathrm{D}^2 f(X)[H,H]\) 是把两个位置都取为同一个增量 \(H\) 后得到的二阶主项。二阶微分的输出仍是标量，但与一阶微分不同，它依赖于两个增量方向。
+
+若采用 Frobenius 内积表示一阶微分，且 \(\nabla_X f\) 可微，则 Hessian 也可以理解为梯度映射的导数。具体地，
+\[
+\nabla_X f(X+H)=\nabla_X f(X)+\mathcal{H}_X[H]+o(\|H\|),
+\]
+其中 \(\mathcal{H}_X\) 是把矩阵增量 \(H\) 送到梯度增量主项的线性映射。于是二阶项可以写成
+\[
+\frac12 \mathrm{D}^2 f(X)[H,H]= \frac12 \langle H,\mathcal{H}_X[H]\rangle_F.
+\]
+矩阵变量中的 Hessian 最自然的形式是从矩阵增量到矩阵增量的线性映射；四维数组只是进一步坐标化后的表示。
+
+Frobenius 范数平方是最简单的矩阵例子。设
+\[
+f(X)=\frac12\|X-B\|_F^2.
+\]
+第四章已经得到 \(\nabla_X f=X-B\)。因此当 \(X\) 变为 \(X+H\) 时，梯度增量为
+\[
+\nabla_X f(X+H)-\nabla_X f(X)=H.
+\]
+所以 Hessian 映射为 \(\mathcal{H}_X[H]=H\)，并且
+\[
+f(X+H)=f(X)+\langle X-B,H\rangle_F+\frac12\langle H,H\rangle_F.
+\]
+这里的二阶项正是 \(\frac12\|H\|_F^2\)，说明该函数在所有方向上的曲率相同。
+
+带左乘的最小二乘目标展示了非平凡的 Hessian。设
+\[
+f(X)=\frac12\|AX-B\|_F^2,
+\]
+其中 \(A\in\mathbb{R}^{p\times m}\)。由 \(\nabla_X f=A^\top(AX-B)\) 可知，当 \(X\) 增加 \(H\) 时，
+\[
+\nabla_X f(X+H)-\nabla_X f(X)=A^\top A H.
+\]
+因此 Hessian 映射为
+\[
+\mathcal{H}_X[H]=A^\top A H.
+\]
+对应的二阶项为
+\[
+\frac12\langle H,A^\top A H\rangle_F=\frac12\|AH\|_F^2.
+\]
+曲率由 \(A^\top A\) 决定；若 \(A\) 的某些方向被压缩，目标函数在相应方向上的二阶变化也会减弱。
+
+若需要显式 Hessian 矩阵，可以使用第八章的向量化坐标。令 \(\bm{h}=\operatorname{vec}(H)\)。对于 \(f(X)=\frac12\|AX-B\|_F^2\)，由于 \(\mathcal{H}_X[H]=A^\top A H\)，有
+\[
+\operatorname{vec}(\mathcal{H}_X[H])=(I_n\otimes A^\top A)\bm{h}.
+\]
+因此在列堆叠坐标下，Hessian 矩阵为 \(I_n\otimes A^\top A\)。这个矩阵是 Hessian 映射 \(\mathcal{H}_X\) 的坐标表示。
+
+Hessian 与优化条件直接相关。若 \(\bm{x}_\ast\) 是无约束局部极小点，通常需要 \(\bm{\nabla} f(\bm{x}_\ast)=\bm{0}\)，并且 Hessian 在该点半正定，即 \(\bm{u}^\top\nabla^2 f(\bm{x}_\ast)\bm{u}\ge0\) 对所有方向 \(\bm{u}\) 成立。矩阵变量中，对应条件是
+\[
+\langle H,\mathcal{H}_{X_\ast}[H]\rangle_F\ge0
+\]
+对所有矩阵增量 \(H\) 成立。若该二次型在所有非零方向上为正，则驻点附近具有严格的二阶增长；若存在方向使其为负，则沿该方向会出现二阶下降。
+
+Hessian 描述一阶微分或梯度的再次变化，二阶项是 Hessian 作用在增量后形成的二次型。向量化可以把 Hessian 映射写成普通矩阵，但二阶结构本身仍然来自 \(f(X+H)\) 中关于 \(H\) 的二阶主项。若变量受到约束，允许的增量不再是全部矩阵方向，梯度和 Hessian 条件也必须沿可行方向理解。

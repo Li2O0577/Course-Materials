@@ -1,0 +1,55 @@
+\section*{Problem 1}
+
+设 $\omega_n = e^{-2\pi \mathrm{i}/n}$ 为 $n$ 次单位根。请证明：对任意整数
+$a, b \in \{0, 1, \ldots, n - 1\}$，
+\[
+    \sum_{k = 0}^{n - 1} \omega_n^{(a - b)k}
+    =
+    \begin{cases}
+        n, & a = b, \\
+        0, & a \neq b.
+    \end{cases}
+\]
+并由此推出 $n$ 阶 Fourier 矩阵
+\[
+    F_n = \left(\omega_n^{jk}\right)_{j,k = 0}^{n - 1}
+\]
+满足
+\[
+    F_n^\ct F_n = n I_n, \qquad F_n^{-1} = \frac{1}{n} F_n^\ct.
+\]
+
+\section*{Problem 2}
+
+取 $n = 4$，$\omega_4 = e^{-2\pi \mathrm{i}/4} = -\mathrm{i}$。设输入向量
+\[
+    \bm{x} = \left(1, 2, 3, 4\right)^\top.
+\]
+
+\begin{enumerate}
+    \item 直接利用 Fourier 矩阵 $F_4$ 计算 $\bm{y} = F_4 \bm{x}$。
+    \item 用 FFT 的蝶形分解（即先分别计算偶数项 $\left(x_0, x_2\right)$ 与奇数项 $\left(x_1, x_3\right)$ 的 2 点 DFT，再用旋转因子合并）重新计算 $\bm{y}$，并核对两种方法结果一致。
+\end{enumerate}
+
+\section*{Problem 3}
+
+设次数小于 $n$ 的多项式
+\[
+    p(z) = x_0 + x_1 z + x_2 z^2 + \cdots + x_{n - 1} z^{n - 1},
+\]
+记 $\omega_n = e^{-2\pi \mathrm{i}/n}$。
+
+\begin{enumerate}
+    \item 证明 $\bm{y} = F_n \bm{x}$ 的第 $j$ 个分量恰为 $y_j = p(\omega_n^j)$，即 DFT 是把多项式从“系数表示”转为“在 $n$ 次单位根处的点值表示”。
+    \item 设 $n = 2m$。把 $p(z)$ 按偶、奇次项拆分为
+    \[
+        p(z) = p_e(z^2) + z p_o(z^2),
+    \]
+    利用 $\omega_{2m}^2 = \omega_m$ 与 $\omega_{2m}^m = -1$ 推导 FFT 的蝶形合并公式
+    \[
+        y_j = p_e(\omega_m^j) + \omega_{2m}^j p_o(\omega_m^j), \qquad
+        y_{j + m} = p_e(\omega_m^j) - \omega_{2m}^j p_o(\omega_m^j),
+    \]
+    其中 $j = 0, 1, \ldots, m - 1$。
+    \item 写出递推式 $T(n) = 2T(n/2) + O(n)$ 的解，并说明 FFT 相比直接计算 DFT 在复杂度上的优势。
+\end{enumerate}

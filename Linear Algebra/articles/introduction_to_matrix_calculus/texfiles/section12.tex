@@ -1,0 +1,78 @@
+\section{总结}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Earth.png}
+\end{center}
+
+矩阵微积分反复处理同一个问题：输入发生小变化时，函数值的主要变化由什么决定。若干求导公式只有放回这一问题中，才不再是互不相关的记忆对象。无论输入是实数、向量还是矩阵，基本形式都可以写成
+\[
+F(X+H)=F(X)+\mathrm{D}F(X)[H]+o(\|H\|).
+\]
+其中 \(H\) 是输入增量，\(\mathrm{D}F(X)[H]\) 是函数增量的一阶主项，\(\mathrm{D}F(X)\) 是把输入增量送到一阶主项的线性规则。所有后续概念都围绕这个线性规则展开。
+
+微分是这里最基本的对象。对于标量值函数，微分输出一个数；对于矩阵值函数，微分输出一个矩阵。它的共同含义始终是：在基点 \(X\) 附近，函数增量最先由哪个关于 \(H\) 的线性规则控制。逐元素偏导、方向导数和 Jacobian 矩阵都可以理解为这个线性规则的不同坐标表达，不能视为与微分平行的另一套概念。
+
+梯度只出现在标量值函数中。若 \(f:\mathbb{R}^{m\times n}\to\mathbb{R}\)，则 \(\mathrm{D}f(X)[H]\) 是矩阵增量 \(H\) 上的标量线性规则。采用 Frobenius 内积后，存在唯一矩阵 \(\nabla_X f\)，使得
+\[
+\mathrm{D}f(X)[H]=\langle \nabla_X f,H\rangle_F=\operatorname{tr}((\nabla_X f)^\top H).
+\]
+因此，梯度是微分在选定内积下的代表矩阵，而微分这条线性规则本身不依赖于这种代表形式。改变内积约定会改变代表对象，但不会改变微分这条线性规则。
+
+迹的循环性服务于梯度读取。许多标量矩阵函数的一阶主项先以 \(\operatorname{tr}(AHB)\)、\(\operatorname{tr}(X^\top A H)\) 或类似形式出现；利用迹的循环性和转置关系，可以把它化成 \(\operatorname{tr}(G^\top H)\)，从而读出 \(\nabla_X f=G\)。迹的作用在于把一阶主项转换为 Frobenius 内积形式，而不应脱离微分过程成为独立技巧。
+
+矩阵值函数的导数应保持为线性映射。若 \(F:\mathbb{R}^{m\times n}\to\mathbb{R}^{p\times q}\)，则
+\[
+\mathrm{D}F(X)[H]\in\mathbb{R}^{p\times q}.
+\]
+例如 \(F(X)=AXB\) 的导数是 \(H\mapsto AHB\)，\(F(X)=X^\top X\) 的导数是 \(H\mapsto H^\top X+X^\top H\)。这些表达保留了输入空间、输出空间和矩阵乘法顺序，是导数最自然的形式。
+
+Jacobian 矩阵、向量化和 Kronecker 积属于坐标化工具。若把矩阵按列堆叠成向量，则线性映射 \(H\mapsto \mathrm{D}F(X)[H]\) 可以写成
+\[
+\operatorname{vec}(\mathrm{D}F(X)[H])=J\,\operatorname{vec}(H).
+\]
+这个 \(J\) 是导数在列堆叠坐标下的 Jacobian 矩阵。特别地，恒等式
+\[
+\operatorname{vec}(AHB)=(B^\top\otimes A)\operatorname{vec}(H)
+\]
+表明 \(H\mapsto AHB\) 的坐标矩阵是 \(B^\top\otimes A\)。因此，Kronecker 积的作用是把矩阵间线性规则写成普通矩阵乘法，并不引入新的微分规则。
+
+Hessian 描述二阶主项。对于标量函数，一阶微分刻画局部线性变化，Hessian 刻画这个线性映射如何随基点继续变化。向量变量中，二阶展开为
+\[
+f(\bm{x}+\bm{u})=f(\bm{x})+\bm{\nabla} f(\bm{x})^\top \bm{u}+\frac12\bm{u}^\top\nabla^2 f(\bm{x})\bm{u}+o(\|\bm{u}\|^2).
+\]
+矩阵变量中，对应形式为
+\[
+f(X+H)=f(X)+\mathrm{D}f(X)[H]+\frac12 \mathrm{D}^2 f(X)[H,H]+o(\|H\|^2).
+\]
+若用梯度映射描述 Hessian，则 \(\nabla_X f(X+H)=\nabla_X f(X)+\mathcal{H}_X[H]+o(\|H\|)\)，二阶项为 \(\langle H,\mathcal{H}_X[H]\rangle_F\)。Hessian 既可以理解为二阶双线性映射，也可以理解为梯度变化的线性映射。
+
+约束投影来自可行增量的限制。无约束问题中，局部极小点的一阶条件要求 \(\mathrm{D}f(X)[H]=0\) 对所有 \(H\) 成立，因此普通梯度为零。受约束问题中，允许的增量只属于切空间 \(T_X\mathcal{M}\)，一阶条件变为
+\[
+\mathrm{D}f(X)[H]=0,\qquad H\in T_X\mathcal{M}.
+\]
+于是普通梯度不必为零，只需其切向分量为零。对称矩阵约束产生对称化投影，正交约束产生 \(G-X\operatorname{sym}(X^\top G)\) 这样的切空间投影；这些公式都来自同一个事实：只有可行方向上的一阶变化才与约束极值有关。
+
+对称矩阵变量还容易引起另一类记号差异。设 \(X=X^\top\)，且某个标量函数在对称空间中的 Frobenius 梯度为 \(G=G^\top\)，即对所有对称增量 \(H=H^\top\) 有
+\[
+\mathrm{D}f(X)[H]=\langle G,H\rangle_F.
+\]
+若改用上三角元素 \(x_{ij}\ (i\le j)\) 作为独立坐标，则
+\[
+\langle G,H\rangle_F
+=\sum_i G_{ii}H_{ii}+2\sum_{i<j}G_{ij}H_{ij}.
+\]
+因此，上三角独立坐标下的偏导数组在非对角元处会多出一个因子 \(2\)。若把这组坐标偏导重新排成对称矩阵，得到的矩阵为
+\[
+G_{\mathrm{coord}}=2G-\operatorname{diag}(G).
+\]
+反过来，从 \(G_{\mathrm{coord}}\) 回到 Frobenius 梯度时，对角元保持不变，非对角元除以 \(2\)。例如 \(f(X)=\log\det X\) 在 \(X\succ0\) 上的 Frobenius 梯度是 \(X^{-1}\)，而上三角独立坐标偏导矩阵是
+\[
+2X^{-1}-\operatorname{diag}(X^{-1}).
+\]
+两种写法表示的是同一个微分线性规则，只是坐标和内积约定不同。
+
+常用公式表也应按这一结构理解。线性函数、Frobenius 范数、最小二乘、迹二次型、逆矩阵和对数行列式都不宜孤立记忆。每个公式都来自三步：写出函数增量，保留关于输入增量的线性主项，再根据输出类型选择表示方式。标量值函数读出梯度，矩阵值函数保留线性映射，需要坐标时再向量化。
+
+这些联系也解释了常见错误的来源。把矩阵乘法当作可交换乘法，会破坏一阶主项中的因子顺序；在没有说明内积时直接读出梯度，会混淆微分和代表矩阵；对对称或正交变量直接使用普通梯度条件，会忽略可行增量并不任意；把 Jacobian 当作导数本身，则会忘记它依赖具体坐标约定。
+
+最终，矩阵微积分可以被理解为有限维线性空间上的微分语言。微分负责找到输入增量到函数增量主项的线性规则；梯度是在内积下表示标量线性规则的对象；迹的循环性帮助把标量主项写成 Frobenius 内积；向量化和 Kronecker 积把矩阵线性映射坐标化；Hessian 描述二阶曲率；约束投影把一阶和二阶条件限制到可行方向。掌握这些位置之后，矩阵求导的关键就从公式表记忆转向增量中的线性主项识别，以及相应表示方式的选择。

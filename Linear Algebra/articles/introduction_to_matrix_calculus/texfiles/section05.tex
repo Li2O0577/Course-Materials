@@ -1,0 +1,70 @@
+\section{迹的循环性与梯度读取}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Reason.png}
+\end{center}
+
+第四章已经说明，标量矩阵函数的梯度由关系 \[\mathrm{D}f(X)[H]=\langle \nabla_X f,H\rangle_F = \operatorname{tr}((\nabla_X f)^\top H)\] 确定。实际计算时，先通过微分找到关于 \(H\) 的一阶主项，再利用迹的循环性把这个主项写成 \(\operatorname{tr}(G^\top H)\) 的形式；逐元素展开只是在特定坐标下的辅助方式。一旦这种形式成立，就有 \(\nabla_X f=G\)。
+
+本章只使用几个直接服务于梯度读取的性质。首先，迹具有线性性，即 \[\operatorname{tr}(\alpha A+\beta B)=\alpha\operatorname{tr}(A)+\beta\operatorname{tr}(B),\]
+其次，\(\operatorname{tr}(M)=\operatorname{tr}(M^\top)\)；再次，在乘积维度匹配时，迹具有循环性质，例如 \(\operatorname{tr}(ABC)=\operatorname{tr}(BCA)=\operatorname{tr}(CAB)\)。循环性质只允许整体循环移动因子，不能当作可交换乘法处理。
+
+最简单的例子是迹线性函数。设 \(X\in\mathbb{R}^{m\times n}\)，\(A\in\mathbb{R}^{n\times m}\)，定义 \(f(X)=\operatorname{tr}(AX)\)。当 \(X\) 变为 \(X+H\) 时，
+\[
+f(X+H)-f(X)=\operatorname{tr}(A H).
+\]
+为了读出 Frobenius 梯度，需要把它写成 \(\operatorname{tr}(G^\top H)\)。由于 \(\operatorname{tr}(A H)=\operatorname{tr}((A^\top)^\top H)\)，可得
+\[
+\mathrm{D}f(X)[H]=\operatorname{tr}((A^\top)^\top H),\qquad \nabla_X f=A^\top.
+\]
+维度上，\(A^\top\in\mathbb{R}^{m\times n}\)，与变量 \(X\) 同型，因此能够与任意增量 \(H\) 作 Frobenius 内积。
+
+含有左右乘因子的迹线性函数需要用到迹的循环性。设 \(X\in\mathbb{R}^{m\times n}\)、\(A\in\mathbb{R}^{p\times m}\)、\(B\in\mathbb{R}^{n\times p}\)，定义
+\[
+f(X)=\operatorname{tr}(A X B).
+\]
+则
+\[
+\mathrm{D}f(X)[H]=\operatorname{tr}(A H B).
+\]
+为了让 \(H\) 出现在 \(\operatorname{tr}(G^\top H)\) 中的最后一个位置，可以使用循环性质：
+\[
+\operatorname{tr}(A H B)=\operatorname{tr}(B A H)=\operatorname{tr}((A^\top B^\top)^\top H).
+\]
+因此 \(\nabla_X f=A^\top B^\top\)。这里的移动仅指迹内因子的循环移动，不能把 \(A\)、\(H\)、\(B\) 任意交换；若不借助迹的循环性质，直接把 \(H\) 当作可交换量移到末尾会导致错误。
+
+迹二次型中会同时出现多个一阶项。设 \(X\in\mathbb{R}^{m\times n}\)，\(A\in\mathbb{R}^{m\times m}\)，定义 \(f(X)=\operatorname{tr}(X^\top A X)\)。由乘积微分规则得到
+\[
+\mathrm{d}f=\operatorname{tr}(\mathrm{d}X^\top A X)+\operatorname{tr}(X^\top A\,\mathrm{d}X).
+\]
+第一项满足 \(\operatorname{tr}(\mathrm{d}X^\top A X)=\operatorname{tr}((A X)^\top \mathrm{d}X)\)，第二项已经可写为 \(\operatorname{tr}((A^\top X)^\top \mathrm{d}X)\)。因此
+\[
+\mathrm{d}f=\operatorname{tr}(((A+A^\top)X)^\top \mathrm{d}X),
+\]
+从而
+\[
+\nabla_X f=(A+A^\top)X.
+\]
+若 \(A=A^\top\)，梯度才化为 \(2AX\)。没有对称性条件时，两个一阶项分别贡献 \(AX\) 与 \(A^\top X\)，不能直接合并为 \(2AX\)。
+
+Frobenius 范数型目标是优化中最常见的例子。设 \(A\in\mathbb{R}^{p\times m}\)、\(X\in\mathbb{R}^{m\times n}\)、\(B\in\mathbb{R}^{p\times n}\)，定义
+\[
+f(X)=\frac12\|AX-B\|_F^2.
+\]
+记 \(R=AX-B\)，则当 \(X\) 的增量为 \(\mathrm{d}X\) 时，\(R\) 的增量为 \(A\,\mathrm{d}X\)，于是
+\[
+\mathrm{d}f=\langle R,A\,\mathrm{d}X\rangle_F=\operatorname{tr}(R^\top A\,\mathrm{d}X).
+\]
+利用迹的循环性与转置关系可得
+\[
+\operatorname{tr}(R^\top A\,\mathrm{d}X)=\operatorname{tr}((A^\top R)^\top \mathrm{d}X).
+\]
+因此
+\[
+\nabla_X f=A^\top(AX-B).
+\]
+这个推导中，微分法识别残差 \(R\) 与残差增量 \(A\,\mathrm{d}X\) 的一阶配对，迹的循环性把 \(\mathrm{d}X\) 的系数整理成与 \(X\) 同型的梯度矩阵。
+
+这类计算通常按四步进行。第一，给变量 \(X\) 加上增量 \(\mathrm{d}X\)，只保留函数增量中的一阶项。第二，把标量一阶项写成迹表达式。第三，使用转置关系和迹的循环性，把表达式化为 \(\operatorname{tr}(G^\top \mathrm{d}X)\)。第四，根据 Frobenius 内积定义读出 \(\nabla_X f=G\)。最终读出的 \(G\) 必须与 \(X\) 同型，并且等式必须对任意同型增量 \(\mathrm{d}X\) 成立。
+
+迹的循环性在这里的作用很具体：把标量一阶主项转换成 Frobenius 内积形式。线性函数、二次型、范数、逆矩阵和对数行列式的常用公式都可以按这个流程推导。

@@ -1,0 +1,27 @@
+\section*{Problem 1}
+
+在多元线性回归中，假设设计矩阵 $X$ 列满秩。为了极小化最小二乘目标函数
+\[
+    \left\|X\bm{\beta} - \bm{y}\right\|^2,
+\]
+请推导参数 $\bm{\beta}$ 的最优解所满足的正规方程（Normal Equation）。
+
+\section*{Problem 2}
+
+在单层神经网络
+\[
+    \bm{z} = \sigma\left(W\bm{x} + \bm{b}\right)
+\]
+中，设激活函数为 Sigmoid 函数
+\[
+    \sigma(t) = \frac{1}{1 + e^{-t}}.
+\]
+请推导导数 $\sigma'(t)$，并将其恒等变形为仅包含 $\sigma(t)$ 的表达式。
+
+\section*{Problem 3}
+
+在主成分分析（PCA）中，求解半正定矩阵 $A^\top A$ 的最大特征值问题等价于求解约束优化问题
+\[
+    \max_{\|\bm{x}\| = 1}\bm{x}^\top A^\top A\bm{x}.
+\]
+请利用拉格朗日（Lagrange）乘子法证明：该优化问题的最大值即为矩阵 $A^\top A$ 的最大特征值 $\lambda_1$。

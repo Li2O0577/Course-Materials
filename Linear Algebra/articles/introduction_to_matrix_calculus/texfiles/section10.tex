@@ -1,0 +1,80 @@
+\section{约束变量与可行增量}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Law.png}
+\end{center}
+
+无约束情形中，矩阵变量可以沿任意方向变化，一阶条件可以对所有增量 \(H\) 检验。受约束问题的差别在于，变量只能留在某个集合中，允许的增量不再是整个矩阵空间。此时微分主项仍然是核心对象，但它只需要在可行方向上满足相应条件。
+
+设变量 \(X\) 被限制在集合 \(\mathcal{M}\) 中。若从 \(X\) 出发的一条可行曲线 \(X(t)\in\mathcal{M}\) 满足 \(X(0)=X\)，则 \(H=X'(0)\) 表示 \(X\) 处的一个可行增量。所有这种一阶可行增量构成的空间称为切空间，记为 \(T_X\mathcal{M}\)。对于标量函数 \(f\)，若 \(X\) 是约束下的局部极小点，则对所有 \(H\in T_X\mathcal{M}\) 都应有
+\[
+\mathrm{D}f(X)[H]=0.
+\]
+若采用 Frobenius 内积表示 \(\mathrm{D}f(X)[H]=\langle \nabla_X f,H\rangle_F\)，则一阶条件变为
+\[
+\langle \nabla_X f,H\rangle_F=0,\qquad H\in T_X\mathcal{M}.
+\]
+普通梯度不必为零；它只需要与所有可行方向正交。
+
+最简单的约束是对称矩阵空间。若变量满足 \(X=X^\top\)，则可行增量也必须满足
+\[
+H=H^\top.
+\]
+因此切空间就是所有对称矩阵组成的线性空间。对于一般矩阵空间中的梯度 \(G=\nabla_X f\)，真正影响对称可行方向的一阶项是
+\[
+\langle G,H\rangle_F=\left\langle \frac{G+G^\top}{2},H\right\rangle_F,\qquad H=H^\top.
+\]
+因此，在对称矩阵变量上，欧氏梯度应投影为
+\[
+\operatorname{sym}(G)=\frac{G+G^\top}{2}.
+\]
+约束极小点的一阶条件是 \(\operatorname{sym}(\nabla_X f)=0\)，不能直接使用一般矩阵意义下的 \(\nabla_X f=0\)。
+
+正定矩阵集合 \(\mathbb{S}_{++}^n\) 是对称矩阵空间中的开集。若 \(X\in\mathbb{S}_{++}^n\)，则足够小的对称增量 \(H=H^\top\) 会使 \(X+H\) 仍位于正定集合内，因此其切空间仍是所有对称矩阵。正定性本身影响函数定义域和可行区域，例如 \(\log\det X\) 只在正定矩阵上自然成为实值函数；但在内部点处，一阶可行方向仍由对称性决定。
+
+以 \(f(X)=-\log\det X+\operatorname{tr}(CX)\) 为例，其中 \(X\in\mathbb{S}_{++}^n\)，\(C=C^\top\)。在一般矩阵空间中，\(\nabla_X(-\log\det X)=-X^{-\top}\)，而正定约束下 \(X^{-\top}=X^{-1}\)。又由于 \(C\) 对称，梯度为
+\[
+\nabla_X f=-X^{-1}+C.
+\]
+该梯度已经位于对称矩阵空间中，因此一阶条件为 \(-X^{-1}+C=0\)。若目标中的普通梯度不是对称矩阵，则必须先取对称部分，再在对称方向上判断驻点条件。
+
+正交约束中，“允许的增量不再任意”这一点更明显。设 \(X\in\mathbb{R}^{n\times p}\) 满足
+\[
+X^\top X=I_p.
+\]
+若 \(X(t)^\top X(t)=I_p\) 且 \(X(0)=X\)、\(X'(0)=H\)，对约束取一阶变化得
+\[
+H^\top X+X^\top H=0.
+\]
+因此切空间为
+\[
+T_X\mathcal{M}=\{H\in\mathbb{R}^{n\times p}:X^\top H+H^\top X=0\}.
+\]
+对于约束优化，驻点条件应写成切空间上的正交条件：
+\[
+\langle \nabla_X f,H\rangle_F=0,\qquad H\in T_X\mathcal{M}.
+\]
+
+这个条件可以写成投影形式。给定普通梯度 \(G=\nabla_X f\)，它在正交约束切空间上的投影为
+\[
+\operatorname{Proj}_{T_X}(G)=G-X\,\operatorname{sym}(X^\top G),
+\]
+其中 \(\operatorname{sym}(M)=\frac12(M+M^\top)\)。因此正交约束下的一阶驻点条件可以写为
+\[
+G-X\,\operatorname{sym}(X^\top G)=0.
+\]
+等价地，\(G\) 的切向分量必须为零，普通梯度只能指向约束集合的法向方向。
+
+当 \(p=n\) 且 \(X\) 是正交矩阵时，切空间还可以写成
+\[
+T_X O(n)=\{X\Omega:\Omega^\top=-\Omega\}.
+\]
+这是因为 \(X^\top H\) 必须是反对称矩阵。此时一阶条件 \(\langle G,X\Omega\rangle_F=0\) 对所有反对称 \(\Omega\) 成立，等价于 \(X^\top G\) 是对称矩阵。这个形式常用于正交矩阵优化，因为它直接把可行方向写成“当前点乘反对称增量”。
+
+约束情形下的二阶条件也必须沿可行方向理解。若 \(X_\ast\) 是约束局部极小点，首先需要一阶主项在所有切向方向上消失；其次，二阶主项应在可行方向上非负。对于线性约束空间，例如对称矩阵空间，这可以直接写为
+\[
+\mathrm{D}^2 f(X_\ast)[H,H]\ge0,\qquad H\in T_{X_\ast}\mathcal{M}.
+\]
+对于曲面型约束，例如正交约束，二阶可行曲线还会带来约束曲率项；完整二阶条件需要结合拉格朗日函数处理。这里要保留的判断是：二阶分析不能沿所有矩阵方向进行，而必须沿可行方向进行。
+
+约束不改变微分的基本定义，但会改变允许代入微分的增量集合。无约束问题要求一阶主项对所有 \(H\) 消失；约束问题只要求它对所有 \(H\in T_X\mathcal{M}\) 消失。梯度投影、对称化和正交切空间条件，都是这一原则在不同约束集合中的具体形式。

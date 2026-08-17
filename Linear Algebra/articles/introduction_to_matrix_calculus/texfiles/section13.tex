@@ -1,0 +1,175 @@
+\section{常见矩阵微积分公式表}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Genesis.png}
+\end{center}
+
+下面把常见例子汇总成公式表。表中的梯度默认采用 Frobenius 内积，即
+\[
+\mathrm{D}f(X)[H]=\operatorname{tr}((\nabla_X f)^\top H).
+\]
+若变量带有对称、正定或正交约束，表中会单独标明普通梯度、可行增量和投影条件，避免把无约束公式直接套用到受约束问题中。
+
+\subsection{无约束标量值函数}
+
+\begingroup
+\scriptsize
+\[
+\begin{array}{c|c|c|c}
+\hline
+f(X) & \text{Condition} & \mathrm{D}f(X)[H] & \nabla_X f \\
+\hline
+\langle C,X\rangle_F=\operatorname{tr}(C^\top X)
+& -
+& \operatorname{tr}(C^\top H)
+& C \\
+\hline
+\operatorname{tr}(AXB)
+& -
+& \operatorname{tr}(AHB)
+& A^\top B^\top  \\
+\hline
+\det X
+& \det X\ne 0
+& \det(X)\operatorname{tr}(X^{-1}H)
+& \det(X)X^{-\top} \\
+\hline
+\det(AXB)
+& \det(AXB)\ne 0
+& \det(AXB)\operatorname{tr}((AXB)^{-1}AHB)
+& \det(AXB)A^\top(AXB)^{-\top}B^\top \\
+\hline
+\log\det(AXB)
+& \det(AXB)>0
+& \operatorname{tr}((AXB)^{-1}AHB)
+& A^\top(AXB)^{-\top}B^\top \\
+\hline
+\frac{1}{2}\|X-B\|_F^2
+& -
+& \langle X-B,H\rangle_F
+& X-B \\
+\hline
+\frac{1}{2}\|AX-B\|_F^2
+& -
+& \langle AX-B,AH\rangle_F
+& A^\top(AX-B) \\
+\hline
+\frac{1}{2}\|XA-B\|_F^2
+& -
+& \langle XA-B,HA\rangle_F
+& (XA-B)A^\top \\
+\hline
+\operatorname{tr}(X^\top AX)
+& -
+& \operatorname{tr}(H^\top AX)+\operatorname{tr}(X^\top AH)
+& (A+A^\top)X \\
+\hline
+\operatorname{tr}(XAX^\top)
+& -
+& \operatorname{tr}(HAX^\top)+\operatorname{tr}(XAH^\top)
+& X(A+A^\top) \\
+\hline
+\operatorname{tr}(X^\top AXB)
+& -
+& \operatorname{tr}(H^\top AXB)+\operatorname{tr}(X^\top AHB)
+& AXB+A^\top XB^\top \\
+\hline
+\log\det(X^\top AX)
+& A=A^\top,\ \det(X^\top AX)>0
+& \operatorname{tr}((X^\top AX)^{-1}(H^\top AX+X^\top AH))
+& 2AX(X^\top AX)^{-1} \\
+\hline
+\operatorname{tr}(AX^{-1})
+& \det X\ne 0
+& -\operatorname{tr}(AX^{-1}HX^{-1})
+& -X^{-\top}A^{\top}X^{-\top} \\
+\hline
+\log|\det X|
+& \det X\ne 0
+& \operatorname{tr}(X^{-1}H)
+& X^{-\top} \\
+\hline
+-\log\det X+\operatorname{tr}(CX)
+& X\succ 0,\ C=C^\top
+& \operatorname{tr}\bigl((-X^{-1}+C)H\bigr),\ H=H^\top
+& -X^{-1}+C \\
+\hline
+\end{array}
+\]
+\endgroup
+
+上述公式的使用方式相同：先确定变量 \(X\) 和增量 \(H\)，再确认一阶主项是否已经写成 Frobenius 内积形式。特别地，\(\operatorname{tr}(X^\top A X)\) 只有在 \(A=A^\top\) 时梯度才化为 \(2AX\)。
+
+\subsection{矩阵值函数与线性映射}
+
+\[
+\begin{array}{c|c|c|c}
+\hline
+F(X) & \text{Condition} & \mathrm{D}F(X)[H] & \text{Vectorized Coordinate Representation} \\
+\hline
+X
+& -
+& H
+& \operatorname{vec}(H) \\
+\hline
+AXB
+& -
+& AHB
+& (B^\top \otimes A)\operatorname{vec}(H) \\
+\hline
+X^\top
+& -
+& H^\top
+& K_{m,n}\operatorname{vec}(H) \\
+\hline
+X^\top X
+& \text{无}
+& H^\top X+X^\top H
+& - \\
+\hline
+XX^\top
+& -
+& HX^\top+XH^\top
+& - \\
+\hline
+X^{-1}
+& \det X\ne 0
+& -X^{-1}HX^{-1}
+& -(X^{-\top}\otimes X^{-1})\operatorname{vec}(H) \\
+\hline
+\end{array}
+\]
+
+矩阵值函数的导数应优先理解为 \(H\mapsto \mathrm{D}F(X)[H]\) 的线性映射。向量化坐标表示只是在需要显式 Jacobian 矩阵时使用；例如 \(H\mapsto AHB\) 的坐标矩阵是 \(B^\top\otimes A\)，但导数本身仍然是左右乘规则。
+
+\subsection{二阶信息}
+
+\[
+\begin{array}{c|c|c}
+\hline
+f(X)
+& \mathcal{H}_X[H]
+& \frac{1}{2} \mathrm{D}^2 f(X)[H,H] \\
+\hline
+\frac{1}{2}\|X-B\|_F^2
+& H
+& \frac{1}{2}\|H\|_F^2 \\
+\hline
+\frac{1}{2}\|AX-B\|_F^2
+& A^\top AH
+& \frac{1}{2}\|AH\|_F^2 \\
+\hline
+\frac{1}{2}\|XA-B\|_F^2
+& HAA^{\mathrm T}
+& \frac{1}{2}\|HA\|_F^2 \\
+\hline
+\operatorname{tr}(X^\top AX)
+& (A+A^{\mathrm T})H
+& \frac{1}{2}\langle H,(A+A^\top)H\rangle_F \\
+\hline
+\end{array}
+\]
+
+Hessian 表中的 \(\mathcal{H}_X[H]\) 是梯度增量的一阶主项，本身可以保留为作用在 \(H\) 上的线性映射。若需要坐标矩阵，可以再对 \(H\) 向量化；例如 \(H\mapsto A^\top A H\) 的坐标矩阵是 \(I_n\otimes A^\top A\)。
+
+这些表格应作为推导结果的索引使用，不能替代推导。每个公式在使用前都需要检查三件事：变量所在空间是否正确，矩阵乘法是否匹配，是否存在对称、正定、\(\det X\ne0\) 或正交等附加条件。只要这些条件明确，表中的公式都可以回到同一个来源，即函数增量中关于输入增量的线性主项。

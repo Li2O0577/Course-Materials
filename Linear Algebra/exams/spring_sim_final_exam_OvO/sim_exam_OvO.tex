@@ -1,0 +1,285 @@
+% \PassOptionsToClass{ctexbook}
+\documentclass[11pt,a4paper]{exam-zh}
+
+% ---------- Configuration ----------
+\examsetup{
+  question/show-points = false,
+  problem/show-points  = true,
+  choices/label        = \Alph*.,
+  choices/label-align  = right,
+  choices/label-sep    = 0.5em,
+  choices/max-columns  = 2,
+  choices/column-sep   = 2em,
+  fillin/type          = line,
+  fillin/no-answer-type = none,
+  sealline/show        = false,
+}
+
+% ---------- Compact layout ----------
+\geometry{top=1.5cm, bottom=1.5cm, left=1.8cm, right=1.8cm}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+\setlist[enumerate,2]{itemsep=0pt, topsep=0pt, parsep=0pt}
+
+% ---------- Math packages ----------
+\usepackage{extarrows}
+
+% ---------- Fix unicode-math compatibility ----------
+\ExplSyntaxOn
+\cs_set_eq:NN \mathbb \symbb
+\cs_set_eq:NN \mathcal \symcal
+\cs_set_eq:NN \boldsymbol \symbf
+\ExplSyntaxOff
+
+% ---------- Custom commands ----------
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+\newcommand{\ct}{\mathsf{H}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Span}{\mathrm{span}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% ---------- Document ----------
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{高等代数 II\quad 期末试卷 OvO}}\\[1em]
+{\large 考试时间：90 分钟 \quad 满分：100 分\\作者：evilayuria，狐梶，DeepSeek，ChatGPT}\\[0.5em]
+\end{center}
+
+% ============================================================
+\section{选择题：本题共 5 小题，每小题 2 分，共 10 分。每题只有一个正确选项。}
+% ============================================================
+
+\begin{question}
+  设损失函数 $L\left(\bvec{\theta}\right)$ 可微，学习率 $\eta>0$。
+  梯度下降法的基本参数更新公式为
+  \begin{choices}
+    \item $\bvec{\theta}_{t+1}
+      = \bvec{\theta}_t-\eta\nabla L\left(\bvec{\theta}_t\right)$
+    \item $\bvec{\theta}_{t+1}
+      = \bvec{\theta}_t+\eta\nabla L\left(\bvec{\theta}_t\right)$
+    \item $\bvec{\theta}_{t+1}
+      = \bvec{\theta}_t-\eta L\left(\bvec{\theta}_t\right)$
+    \item $\bvec{\theta}_{t+1}
+      = \nabla L\left(\bvec{\theta}_t\right)$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  设 $W_1, W_2$ 为线性空间 $V$ 的子空间，则 $V = W_1 \oplus W_2$ 的充要条件是
+  \begin{choices}
+    \item $W_1 \cap W_2 = \{\bvec{0}\}$
+    \item $W_1 \cap W_2 = \{\bvec{0}\}$ 且 $W_1 + W_2 = V$
+    \item $\dim W_1 + \dim W_2 = \dim V$
+    \item $W_1 \cup W_2 = V$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  设 $A$ 为 $m \times n$ 实矩阵，$B$ 为 $n \times m$ 实矩阵，则下列等式\textbf{不一定}成立的是
+  \begin{choices}
+    \item $\det\left(I_m + AB\right) = \det\left(I_n + BA\right)$
+    \item $\tr\left(AB\right) = \tr\left(BA\right)$
+    \item $\det\left(AB\right) = \det\left(BA\right)$
+    \item $\tr\left(AA^\top+B^\top B\right)=\tr\left(A^\top A+BB^\top \right)$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  设 $A, B$ 为 $n$ 阶方阵且 $A$ 与 $B$ 相似，则下列选项\textbf{不一定}成立的是
+  \begin{choices}
+    \item $\tr\left(A\right) = \tr\left(B\right)$
+    \item $A$ 与 $B$ 有相同的特征值
+    \item $\det\left(A\right) = \det\left(B\right)$
+    \item $A$ 与 $B$ 有相同的特征向量
+  \end{choices}
+\end{question}
+
+\begin{question}
+  约定半双线性型对第一个变量共轭线性、对第二个变量线性。设
+  $\varphi\left(\bvec{x}, \bvec{y}\right)$ 为复线性空间 $V$ 上的半双线性型，
+  $\alpha,\beta\in\C$，则下列等式\textbf{正确}的是
+  \begin{choices}
+    \item $\varphi\left(\alpha\bvec{x},\beta\bvec{y}\right)
+      = \bar{\alpha}\beta\,\varphi\left(\bvec{x},\bvec{y}\right)$
+    \item $\varphi\left(\alpha\bvec{x},\beta\bvec{y}\right)
+      = \alpha\beta\,\varphi\left(\bvec{x},\bvec{y}\right)$
+    \item $\varphi\left(\alpha\bvec{x},\beta\bvec{y}\right)
+      = \bar{\alpha}\bar{\beta}\,\varphi\left(\bvec{x},\bvec{y}\right)$
+    \item $\varphi\left(\alpha\bvec{x},\beta\bvec{y}\right)
+      = \alpha\bar{\beta}\,\varphi\left(\bvec{x},\bvec{y}\right)$
+  \end{choices}
+\end{question}
+
+
+% ============================================================
+\section{填空题：本题共 5 小题，每小题 2 分，共 10 分。}
+% ============================================================
+
+\begin{question}
+  二次型 $Q\left(x, y\right) = 2x^2 + 4xy + 5y^2$ 通过配方法化为标准形后，正惯性指数为 \fillin 。
+\end{question}
+
+\begin{question}
+  双线性型 $g\left(\bvec{x}, \bvec{y}\right) = 2x_1y_1 + 3x_1y_2 - x_2y_1 + 4x_2y_2$ 在标准基 $\bvec{e}_1, \bvec{e}_2$ 下的 Gram 矩阵为 \fillin 。
+\end{question}
+
+\begin{question}
+  设 $A = \begin{bmatrix} 1 & 2 \\ 0 & 3 \end{bmatrix}$，则 $W = \Span\left\{\left(1, 0\right)^\top\right\}$ 是否为 $A$ 的不变子空间？\fillin （填“是”或“否”）。
+\end{question}
+
+\begin{question}
+  在 $\left(\R^2,\left\|\cdot\right\|_\infty\right)$ 上定义
+  \[
+  T\left(\bvec{x}\right)=
+  \begin{bmatrix}0&\frac12\\[1mm]\frac13&0\end{bmatrix}\bvec{x}
+  +\begin{pmatrix}1\\0\end{pmatrix}.
+  \]
+  已知 $T$ 为压缩映射，则其唯一不动点为 \fillin 。
+\end{question}
+
+\begin{question}
+  二分类问题中，模型预测概率 $\hat{y} = e^{-1}$，真实标签 $y = 1$，则二元交叉熵损失 $\ell = -y\ln\hat{y} - (1-y)\ln(1-\hat{y})$ 的值为 \fillin 。
+\end{question}
+
+
+% ============================================================
+\section{解答题：本题共 6 小题，共 80 分。解答应写出文字说明、证明过程或演算步骤。}
+% ============================================================
+
+% Q1: 矩阵行列式引理 (13 分)
+\begin{problem}[points = 13]
+
+\begin{enumerate}
+    \item （4 分） 设 $\bvec{u}, \bvec{v} \in \R^n$。证明
+    $$\det\!\left(I_n + \bvec{u}\bvec{v}^\top\right) = 1 + \bvec{v}^\top\bvec{u}.$$
+
+    \item （3 分） 设 $A \in \R^{n \times n}$ 可逆，$\bvec{u}, \bvec{v} \in \R^n$。证明
+    $$\det\!\left(A + \bvec{u}\bvec{v}^\top\right) = \det(A) \cdot \left(1 + \bvec{v}^\top A^{-1}\bvec{u}\right).$$
+
+    \item （6 分） 计算行列式 $$\begin{vmatrix}
+    3   & 1 & 1  & 1  & 1 \\
+    1   & 7 & 1  & 1  & 1 \\
+    1   & 1 & 13 & 1  & 1 \\
+    1   & 1 & 1  & 21 & 1 \\
+    1   & 1 & 1  & 1  & 31
+    \end{vmatrix}.$$
+\end{enumerate}
+\end{problem}
+
+
+% Q2: 矩阵微积分 (8 分)
+\begin{problem}[points = 8]
+设 $\bvec{a} \in \R^n$ 为常向量，$W \in \R^{n \times n}$ 为可逆对称矩阵，考虑 $\bvec{x} \in \R^n$ 的函数
+\[
+f\left(\bvec{x}\right) = \bvec{a}^\top \bvec{x} + \frac12\bvec{x}^\top W \bvec{x}.
+\]
+\begin{enumerate}
+    \item （2 分） 求梯度 $\nabla f(\bvec{x})$。
+
+    \item （2 分） 令 $\nabla f(\bvec{x}) = \bvec{0}$，求驻点 $\bvec{x}^*$（用 $\bvec{a}$ 和 $W$ 表示）。
+
+    \item （4 分） 若 $W$ 为正定矩阵，证明 $\bvec{x}^*$ 为 $f(\bvec{x})$ 的唯一全局极小值点。
+\end{enumerate}
+\end{problem}
+
+
+% Q3: FFT (10 分)
+\begin{problem}[points = 10]
+
+记 $\omega_n = e^{-\frac{2\pi \mathrm{i}}{n}}$。FFT 的核心思想是将长度为 $n=2m$ 的 DFT 分解为两个长度为 $m$ 的子 DFT，再通过蝶形运算合并。
+
+\begin{enumerate}
+    \item （4 分） 设 $\bvec{x} = (x_0, x_1, x_2, x_3)^\top \in \C^4$，$F_2 = \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$ 为 2 阶 Fourier 矩阵。给出用偶奇分解计算 $\bvec{y} = F_4 \bvec{x}$ 的完整公式为
+    \[
+    \bvec{y}^{\text{even}} = F_2\begin{pmatrix} x_0 \\ x_2 \end{pmatrix}, \qquad
+    \bvec{y}^{\text{odd}} = F_2\begin{pmatrix} x_1 \\ x_3 \end{pmatrix},
+    \]
+    然后通过蝶形运算合并得到 $y_0, y_1, y_2, y_3$。写出蝶形合并的四个表达式。
+
+    \item （4 分） 取 $$\bvec{x} = (1,\; 2-\mathrm{i},\; 0,\; 1+\mathrm{i})^\top.$$
+    按上述分解法计算 $\bvec{y} = F_4\bvec{x}$：先分别计算两个 2 点 DFT，再通过蝶形合并得到最终结果。\textbf{不得}直接使用 $4\times4$ 矩阵乘法。
+
+    \item （2 分） 对一般的 $n = 2^p$，写出 FFT 的递推关系
+    \[
+    T(n)=2T\left(\frac n2\right)+cn,
+    \]
+    并求出其渐近复杂度。若直接 DFT 需 $n^2$ 次乘法，FFT 需约
+    $\frac n2\log_2 n$ 次乘法，估算 $n=1024$ 时直接 DFT 的乘法次数
+    约为 FFT 的多少倍（保留 1 位有效数字）。
+\end{enumerate}
+\end{problem}
+
+
+% Q4: SVD + MP 逆 (20 分)
+\begin{problem}[points = 20]
+设矩阵
+\[
+A = \begin{bmatrix}
+1 & 1 & 0 \\
+0 & 1 & 1 \\
+1 & 0 & -1
+\end{bmatrix}.
+\]
+
+\begin{enumerate}
+    \item （10 分） 求 $A$ 的奇异值分解 $A = U \Sigma V^\top$（即明确给出 $U, \Sigma, V$）。
+
+    \item （5 分） 求 $A$ 的 Moore--Penrose 广义逆 $A^+$。
+
+    \item （5 分） 设 $\bvec{b} = (1, 1, 1)^\top$。注意到 $A$ 不可逆，方程组 $A\bvec{x} = \bvec{b}$ 可能无解。求极小范数最小二乘解 $\bvec{x}^* = A^+ \bvec{b}$，并验证 $\bvec{x}^*$ 是所有最小二乘解中二范数最小的。
+\end{enumerate}
+\end{problem}
+
+
+% Q5: Hermite 矩阵 (18 分)
+\begin{problem}[points = 18]
+设 $A \in \C^{n \times n}$ 为 Hermite 矩阵。
+
+\begin{enumerate}
+    \item （5 分） 证明 $A$ 的特征值全为实数，且不同特征值对应的特征向量正交。
+
+    \item （7 分） 设
+    \[
+    A = \begin{bmatrix}
+    1      & 0      & 1 + \mathrm{i} \\
+    0      & 2      & 0              \\
+    1 - \mathrm{i} & 0      & 1
+    \end{bmatrix}.
+    \]
+    验证 $A$ 为 Hermite 矩阵，求其全部特征值，并求酉矩阵 $U$ 使 $U^\ct A U$ 为对角矩阵。
+
+    \item （6 分） 设 $A$ 和 $B$ 均为 $n$ 阶 Hermite 矩阵，且 $A$ 正定，证明以下两个命题。
+    \begin{enumerate}
+        \item （4 分）存在可逆矩阵 $P$ 使 $P^\ct A P = I_n$ 且 $P^\ct B P$ 为实对角矩阵；
+        \item （2 分）广义特征值问题 $B\bvec{x} = \lambda A \bvec{x}$ 的所有广义特征值均为实数。
+    \end{enumerate}
+\end{enumerate}
+\end{problem}
+
+
+% Q6: PCA (11 分)
+\begin{problem}[points = 11]
+
+\begin{enumerate}
+    \item （5 分） 设中心化数据的协方差矩阵为 $\Sigma=\frac1nXX^\top$。利用 Lagrange 乘子法证明
+    \[
+      \max_{\left\|\bvec{w}\right\|_2=1}\bvec{w}^\top\Sigma\bvec{w}
+    \]
+    的解是 $\Sigma$ 的最大特征值对应的单位特征向量，且沿该方向投影的方差为 $\lambda_{\max}(\Sigma)$。
+
+    \item （6 分） 设某中心化数据的协方差矩阵为
+    $\Sigma=\begin{bmatrix}5&2\\2&2\end{bmatrix}$。
+    \begin{enumerate}
+        \item （3 分）求 $\Sigma$ 的特征值与对应的单位特征向量，写出第一、第二主成分方向；
+        \item （2 分）计算各主成分的方差及其占总方差的百分比；
+        \item （1 分）若要求保留 $85\%$ 以上的方差，至少需要几个主成分？
+    \end{enumerate}
+\end{enumerate}
+\end{problem}
+
+\end{document}

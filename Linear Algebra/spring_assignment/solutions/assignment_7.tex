@@ -1,0 +1,102 @@
+\section*{Problem 1}
+
+设线性变换 $\mathcal{A} : \mathbb{R}^3 \to \mathbb{R}^3$ 的矩阵为
+\[
+A =
+\begin{bmatrix}
+2 & 1 & 0 \\
+0 & 2 & 0 \\
+0 & 0 & 3
+\end{bmatrix}.
+\]
+判断下列子空间是否为 $\mathcal{A}$ 的不变子空间，并说明理由：
+\[
+W_1 = \Span\{(1,0,0)^\top\},\quad
+W_2 = \Span\{(1,0,0)^\top,(0,1,0)^\top\},\quad
+W_3 = \Span\{(1,1,0)^\top\}.
+\]
+\begin{proof}
+只需证明对子空间的一组基向量，线性变换后的向量仍在该子空间内即可。
+
+对 $W_1$，有
+\[
+A(1,0,0)^\top = (2,0,0)^\top \in W_1.
+\]
+对 $W_2$，有
+\[
+\begin{cases}
+A(1,0,0)^\top = (2,0,0)^\top \in W_2, \\
+A(0,1,0)^\top = (1,2,0)^\top \in W_2.
+\end{cases}
+\]
+对 $W_3$，有
+\[
+A(1,1,0)^\top = (3,2,0)^\top \notin W_3.
+\]
+因此 \fbox{$W_1$ 和 $W_2$ 是 $\mathcal{A}$ 的不变子空间，而 $W_3$ 不是}。
+
+\end{proof}
+
+\section*{Problem 2}
+
+设
+\[
+A =
+\begin{bmatrix}
+A_1 & A_2 \\
+O & A_3
+\end{bmatrix}
+\]
+为 $n$ 阶分块矩阵，其中 $A_1$ 为 $r$ 阶方阵。证明子空间
+\[
+W_1 = \left\{\left(\alpha_1,\ldots,\alpha_r,0,\ldots,0\right)^\top : \alpha_i \in \mathbb{R}\right\}
+\]
+是 $A$ 的不变子空间；并证明
+\[
+W_2 = \left\{\left(0,\ldots,0,\beta_{r+1},\ldots,\beta_n\right)^\top : \beta_j \in \mathbb{R}\right\}
+\]
+是 $A$ 的不变子空间当且仅当 $A_2 = O$。
+
+\begin{proof}
+不难写出 $W_1$ 的一组基向量为
+\[
+\left\{
+\begin{pmatrix}\bvec e_{r,1}\\ O_{n-r}\end{pmatrix},
+\begin{pmatrix}\bvec e_{r,2}\\ O_{n-r}\end{pmatrix},
+\ldots,
+\begin{pmatrix}\bvec e_{r,r}\\ O_{n-r}\end{pmatrix}
+\right\}.
+\]
+对任意基向量，有
+\[
+A \begin{pmatrix}\bvec{e}_{r, i}\\ O_{n - r}\end{pmatrix} = \begin{bmatrix}
+A_1 & A_2 \\
+O_{\left(n - r\right) \times r} & A_3
+\end{bmatrix}
+\begin{pmatrix}
+\bvec{e}_{r, i} \\
+O_{n - r}
+\end{pmatrix} = \begin{pmatrix}
+A_1 \bvec{e}_{r, i} + A_2 O_{n - r} \\
+O_{\left(n - r\right) \times r}\bvec e_{r,i} + A_3 O_{n - r}
+\end{pmatrix} = \begin{pmatrix}
+A_1 \bvec{e}_{r, i} \\
+O_{n - r}
+\end{pmatrix} \in W_1.
+\]
+因此 \fbox{$W_1$ 是 $A$ 的不变子空间}。
+
+对 $W_2$，有
+\[A \begin{pmatrix}O_r\\ \bvec{e}_{n-r,j}\end{pmatrix} = \begin{bmatrix}
+A_1 & A_2 \\
+O_{\left(n - r\right) \times r} & A_3
+\end{bmatrix}
+\begin{pmatrix}O_r \\
+\bvec{e}_{n - r, j}
+\end{pmatrix} = \begin{pmatrix}A_2 \bvec{e}_{n - r, j} \\
+A_3 \bvec{e}_{n - r, j}
+\end{pmatrix}.
+\]
+因此 $W_2$ 不变当且仅当 $A_2\bvec e_{n-r,j}=O_r$ 对每个 $j$ 都成立，也即 \fbox{$W_2$ 是 $A$ 的不变子空间当且仅当 $A_2 = O$}。
+
+\end{proof}

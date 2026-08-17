@@ -1,0 +1,115 @@
+\section*{Problem 1}
+
+给定数据矩阵 \[
+X = \begin{bmatrix}
+    1 & 2 & 3 & 4 \\
+    2 & 1 & 0 & 3 \\
+\end{bmatrix}
+\]
+\begin{enumerate}
+    \item 求两个特征的样本均值，并写出中心化后的数据矩阵 $\tilde{X}$；
+    \item 求 $\tilde{X}\tilde{X}^\top$ 的第一主成分方向。
+\end{enumerate}
+
+\begin{proof}
+原矩阵已经以列向量作为样本，共有 $4$ 个样本、每个样本含 $2$ 个特征。因此特征均值为
+\[
+\bar{\boldsymbol{x}}
+=\frac14X\begin{pmatrix}1\\1\\1\\1\end{pmatrix}
+=\begin{pmatrix}\frac52\\[1mm]\frac32\end{pmatrix}.
+\]
+中心化后的数据矩阵为
+\[
+\tilde X
+=X-\bar{\boldsymbol{x}}(1,1,1,1)
+=\boxed{\begin{bmatrix}
+-\frac32 & -\frac12 & \frac12 & \frac32\\
+\frac12 & -\frac12 & -\frac32 & \frac32
+\end{bmatrix}}.
+\]
+于是
+\[
+\tilde X\tilde X^\top
+=\begin{bmatrix}5&1\\1&5\end{bmatrix},
+\qquad
+\det\left(\lambda I-\tilde X\tilde X^\top\right)
+=(\lambda-6)(\lambda-4).
+\]
+最大特征值为 $6$，故第一主成分方向可取
+\[
+\boxed{\boldsymbol v_1=\left(\frac1{\sqrt2},\frac1{\sqrt2}\right)^\top}.
+\]
+\end{proof}
+
+\section*{Problem 2}
+
+设随机向量 $\boldsymbol{x}$ 的协方差矩阵为 \[
+\Sigma = \begin{bmatrix}
+    5 & 2 \\
+    2 & 2 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 证明 \[\mathrm{Var} \left(\boldsymbol{a}^\top \boldsymbol{x} \right) = \boldsymbol{a}^\top \Sigma \boldsymbol{a}.\]
+    \item 在约束 $\left\|\boldsymbol{a}\right\| = 1$ 下，求使方差最大的方向。
+    \item 写出最大方差，并说明其所对应方向的意义。
+\end{enumerate}
+
+\begin{proof}
+记 $\boldsymbol{\mu}=\mathbb E[\boldsymbol x]$。利用方差的定义可得 \[
+\begin{aligned}
+    \mathrm{Var} \left(\boldsymbol{a}^\top \boldsymbol{x} \right)
+    &= \mathbb{E} \left[ \left( \boldsymbol{a}^\top(\boldsymbol{x}-\boldsymbol\mu) \right)^2 \right] \\
+    &= \boldsymbol a^\top\mathbb E\left[(\boldsymbol{x}-\boldsymbol\mu)(\boldsymbol{x}-\boldsymbol\mu)^\top\right]\boldsymbol a
+    =\boldsymbol a^\top\Sigma\boldsymbol a.
+\end{aligned}
+\]
+证明完毕。接下来，要求约束 $\left\|\boldsymbol{a}\right\| = 1$ 下使方差最大的方向，即求解 \[\max_{\left\|\boldsymbol{a}\right\| = 1} \boldsymbol{a}^\top \Sigma \boldsymbol{a}.\]
+使方差最大的方向就是 $\Sigma$ 的最大特征值所对应的单位特征向量。解方程 $\det \left(\lambda I - \Sigma\right) = 0$ 可得 \[\begin{aligned}
+    \det \left(\lambda I - \Sigma\right) = 0 &\iff \det\begin{bmatrix}
+        \lambda - 5 & -2 \\
+        -2 & \lambda - 2 \\
+    \end{bmatrix} = 0 \iff \lambda^2 - 7 \lambda + 6 = 0 \iff \boxed{\lambda_1 = 6, \lambda_2 = 1}.
+\end{aligned}\]
+即最大特征值为 $\lambda_1 = 6$，对应的单位特征向量满足 \[\left(6 I - \Sigma\right) \boldsymbol{a} = \boldsymbol{0} \implies \boxed{\boldsymbol{a} = \left(\frac{2\sqrt{5}}{5}, \frac{\sqrt{5}}{5}\right)^\top}.\]
+最大方差为 $\boxed{6}$；该方向是数据投影后方差最大的方向，即第一主成分方向。
+\end{proof}
+
+\section*{Problem 3}
+
+设协方差矩阵 \[\Sigma = \begin{bmatrix}
+    4 & 1 & 0 \\
+    1 & 4 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}.\]
+\begin{enumerate}
+    \item 求 $\Sigma$ 的全部特征值及对应的一组单位特征向量。
+    \item 求前 1 个、前 2 个主成分捕获的总方差。
+    \item 计算前 1 个、前 2 个主成分的方差解释比例，并说明其意义。
+\end{enumerate}
+
+\begin{proof}
+解方程 $\det \left(\lambda I - \Sigma\right) = 0$ 可得 \[\begin{aligned}
+    \det \left(\lambda I - \Sigma\right) = 0 &\iff \det\begin{bmatrix}
+        \lambda - 4 & -1 & 0 \\
+        -1 & \lambda - 4 & 0 \\
+        0 & 0 & \lambda - 1 \\
+    \end{bmatrix} = 0 \iff \left(\lambda - 1\right) \cdot \det\begin{bmatrix}
+        \lambda - 4 & -1 \\
+        -1 & \lambda - 4 \\
+    \end{bmatrix} = 0 \\
+    &\iff \left(\lambda - 1\right) \left[\left(\lambda - 4\right)^2 - 1\right] = 0 \iff \boxed{\lambda_1 = 5, \lambda_2 = 3, \lambda_3 = 1}.
+\end{aligned}\]
+接下来再求对应的单位特征向量。
+
+\begin{enumerate}
+    \item 对于 $\lambda_1 = 5$，有 \[\left(5 I - \Sigma\right) \boldsymbol{v}_1 = \boldsymbol{0} \implies \boxed{\boldsymbol{v}_1 = \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}, 0\right)^\top}.\]
+    \item 对于 $\lambda_2 = 3$，有 \[\left(3 I - \Sigma\right) \boldsymbol{v}_2 = \boldsymbol{0} \implies \boxed{\boldsymbol{v}_2 = \left(\frac{\sqrt{2}}{2}, -\frac{\sqrt{2}}{2}, 0\right)^\top}.\]
+    \item 对于 $\lambda_3 = 1$，有 \[\left(I - \Sigma\right) \boldsymbol{v}_3 = \boldsymbol{0} \implies \boxed{\boldsymbol{v}_3 = \left(0, 0, 1\right)^\top}.\]
+\end{enumerate}
+
+前 1 个主成分捕获的总方差为 $\lambda_1 = \boxed{5}$，前 2 个主成分捕获的总方差为 $\lambda_1 + \lambda_2 = \boxed{8}$。方差解释比例为前 $k$ 个主成分捕获的总方差占全部方差的比例，即 \[
+    \eta_1 = \frac{\lambda_1}{\lambda_1 + \lambda_2 + \lambda_3} = \boxed{\frac{5}{9}}, \quad \eta_2 = \frac{\lambda_1 + \lambda_2}{\lambda_1 + \lambda_2 + \lambda_3} = \boxed{\frac{8}{9}}. \\
+\]
+这表示第一主成分解释了总方差的 $5/9$，前两个主成分合计解释了总方差的 $8/9$。
+\end{proof}

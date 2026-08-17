@@ -1,0 +1,43 @@
+\section*{Problem 1}
+
+已知矩阵
+\[
+    A = \begin{bmatrix}
+        1 & 1 \\
+        1 & -1 \\
+        1 & 0
+    \end{bmatrix}.
+\]
+由于矩阵 $A$ 列满秩，其 Moore-Penrose 广义逆 $A^+$ 可以通过公式
+\[
+    A^+ = \left(A^\top A\right)^{-1}A^\top
+\]
+来计算。请写出详细的计算过程，求出 $A^+$。
+
+\section*{Problem 2}
+
+假设线性方程组 $A\bm{x} = \bm{b}$ 有解。利用广义逆的通解性质可知，该方程组的解可以统一表示为
+\[
+    \bm{x} = A^+\bm{b} + \left(I - A^+A\right)\bm{z},
+\]
+其中 $\bm{z}$ 为任意向量，且 $A^+$ 为 $A$ 的 Moore-Penrose 广义逆。请证明：
+\[
+    \bm{x}^* = A^+\bm{b}
+\]
+是该方程组所有解中二范数（模长）最小的解。
+
+\section*{Problem 3}
+
+已知 $A^+$ 是矩阵 $A$ 的 Moore-Penrose 广义逆，满足以下四条定义性质：
+\[
+    \begin{aligned}
+        &\text{(1)}\quad AA^+A = A; &
+        &\text{(2)}\quad A^+AA^+ = A^+; \\
+        &\text{(3)}\quad \left(AA^+\right)^\top = AA^+; &
+        &\text{(4)}\quad \left(A^+A\right)^\top = A^+A.
+    \end{aligned}
+\]
+请利用上述四条性质，证明 $\left(A^+\right)^\top$ 也是 $A^\top$ 的 Moore-Penrose 广义逆，从而得出结论
+\[
+    \left(A^\top\right)^+ = \left(A^+\right)^\top.
+\]

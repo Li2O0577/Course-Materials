@@ -1,0 +1,59 @@
+\section*{Problem 1}
+
+在 $\mathbb{R}^2$ 上定义无穷范数
+\[
+\|(x,y)\|_\infty = \max\{|x|,|y|\}.
+\]
+设映射 $\mathcal{T} : \mathbb{R}^2 \to \mathbb{R}^2$ 定义为
+\[
+\mathcal{T} \left(x,y\right) = \left(\frac14 x + \frac12 y + 1,\; \frac13 x + \frac16 y - 2\right)^\top.
+\]
+证明 $\mathcal{T}$ 是压缩映射，并求其唯一不动点。
+
+\section*{Problem 2}
+
+设 $\mathcal{T} : \mathbb{R} \to \mathbb{R}$ 定义为
+\[
+\mathcal{T}(x) = \frac12 \cos x.
+\]
+证明方程
+\[
+x = \frac12 \cos x
+\]
+有唯一实根，并说明迭代
+\[
+x_{n+1} = \mathcal{T}(x_n)
+\]
+对任意初值 $x_0 \in \mathbb{R}$ 都收敛到该实根。
+
+\section*{Problem 3}
+
+设
+\[
+A =
+\begin{bmatrix}
+1 & 2 \\
+2 & 4
+\end{bmatrix}.
+\]
+在 $\mathbb{R}^2$ 中取 Euclid 范数 $\|\cdot\|_2$，求算子范数 $\|A\|_2$。
+
+\section*{Problem 4}
+
+考虑初值问题
+\[
+y^\prime \left(x\right) = y\left(x\right),\quad y\left(0\right) = 1.
+\]
+将其改写为积分方程
+\[
+y\left(x\right) = 1 + \int_0^x y\left(t\right)\, \mathrm{d} t.
+\]
+在区间 $[0,a]$ 上的连续函数空间 $C\left[0,a\right]$ 中取范数
+\[
+\left\|y\right\|_\infty = \max_{x \in \left[0,a\right]} \left|y\left(x\right)\right|.
+\]
+定义算子
+\[
+\left(Ay\right)\left(x\right) = 1 + \int_0^x y\left(t\right)\, \mathrm{d} t.
+\]
+证明当 $0 < a < 1$ 时，$A$ 为压缩映射，从而该初值问题在 $C\left[0,a\right]$ 中有唯一解。

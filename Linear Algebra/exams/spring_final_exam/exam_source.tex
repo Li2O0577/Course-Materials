@@ -1,0 +1,227 @@
+% \PassOptionsToClass{fontset=fandol}{ctexbook}
+\documentclass[11pt,a4paper]{exam-zh}
+
+% ---------- Configuration ----------
+\examsetup{
+  question/show-points = false,
+  problem/show-points  = false,
+  choices/label        = \Alph*.,
+  choices/label-align  = right,
+  choices/label-sep    = 0.5em,
+  choices/max-columns  = 2,
+  choices/column-sep   = 2em,
+  fillin/type          = line,
+  fillin/no-answer-type = none,
+  sealline/show        = false,
+}
+
+% ---------- Compact layout ----------
+\geometry{top=1.5cm, bottom=1.5cm, left=1.8cm, right=1.8cm}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+\setlist[enumerate,2]{itemsep=0pt, topsep=0pt, parsep=0pt}
+
+% ---------- Math packages ----------
+\usepackage{extarrows}
+
+% ---------- Fix unicode-math compatibility ----------
+\ExplSyntaxOn
+\cs_set_eq:NN \mathbb \symbb
+\cs_set_eq:NN \mathcal \symcal
+\cs_set_eq:NN \boldsymbol \symbf
+\ExplSyntaxOff
+
+% ---------- Custom commands ----------
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+\newcommand{\ct}{\mathsf{H}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Span}{\mathrm{span}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% ---------- Empty question bodies ----------
+\newcommand{\blankquestion}{\strut}
+
+% ---------- Document ----------
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{中国人民大学 2025-2026 学年春季学期\\高等代数 II \quad 期末试题}}\\[1em]
+{\large 考试时间：90 分钟 \quad 满分：100 分}\\[0.5em]
+\end{center}
+
+% ============================================================
+\section{选择题：本题共 5 小题，每小题 5 分，共 25 分。每题只有一个正确选项。}
+% ============================================================
+
+\begin{question}
+  已知 $z = \mathrm{e}^{\mathrm{i}\theta}$，且 $z^3 = 1$，则 $\theta$ 不能取
+  \begin{choices}
+    \item $\frac{\pi}{3}$
+    \item $\frac{5\pi}{3}$
+    \item $\frac{7\pi}{3}$
+    \item $\frac{8\pi}{3}$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  已知二次型 $f \left(x_1, x_2\right) = x_1^2 + 2t x_1 x_2 + 4 x_2^2$ 正定，则
+  \begin{choices}
+    \item $\left|t\right| < 2$
+    \item $\left|t\right| \le 2$
+    \item $t < -2$
+    \item $t < 2$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  已知某对称矩阵 $A$ 的三个特征值为 $$\left|\lambda_1\right| = 5, \quad \left|\lambda_2\right| = 2, \quad \left|\lambda_3\right| = 0.5,$$
+  取前两个特征向量作截断估计，则估计后的误差范数为
+  \begin{choices}
+    \item $5$
+    \item $2$
+    \item $0.5$
+    \item $7$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  已知 $A = \begin{bmatrix}
+    1 & 0 \\
+    0 & 0 \\
+  \end{bmatrix}, X = \begin{bmatrix}
+    a & b \\
+    c & d \\
+  \end{bmatrix}$，若 $X$ 为其广义逆，则必有
+  \begin{choices}
+    \item $a = 1$
+    \item $a = 0$
+    \item $a = b + c$
+    \item $b = 1$
+  \end{choices}
+\end{question}
+
+\begin{question}
+  用梯度下降算法估计 $f \left(x\right) = \left(x - 2\right)^2$ 的极小值，取 $x_0 = 0$，学习率 $\eta = 0.25$，则一次梯度下降后，$x_1$ 的值为
+  \begin{choices}
+    \item $2$
+    \item $1$
+    \item $0.5$
+    \item $1.5$
+  \end{choices}
+\end{question}
+
+% ============================================================
+\section{解答题：本题共 6 小题，分值待定。解答应写出文字说明、证明过程或演算步骤。}
+% ============================================================
+
+\begin{problem}
+  已知三阶单位根 $$\omega = \mathrm{e}^{\frac{2\pi\mathrm{i}}{3}}.$$
+  \begin{enumerate}
+    \item （5 分）求 3 阶归一化 Fourier 矩阵 $F_3$；
+    \item （5 分）验证 $F_3$ 是酉矩阵。
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  已知 $$A = \begin{bmatrix}
+    3 & 0 \\
+    0 & 2 \\
+    0 & 0 \\
+  \end{bmatrix}.$$
+  \begin{enumerate}
+    \item （5 分）求 $A$ 的奇异值；
+    \item （5 分）给出 $A$ 的一个奇异值分解；
+    \item （5 分）用 $A$ 的前一个奇异值作截断估计，得到 $A_1$，计算 $\left\|A - A_1\right\|_2$。
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  考虑以下最小二乘问题，设数据矩阵为 $X$，结果向量为 $\bvec{y}$，优化函数
+  $$
+    \min_{\bvec{\beta} \in \R^d} \left\| X \bvec{\beta} - \bvec{y} \right\|^2
+  $$
+  \begin{enumerate}
+    \item （5 分）写出 $\bvec{\beta}$ 满足的正规方程，并给出推导过程；
+    \item （5 分）若 $X^\top X$ 不可逆，存在 $\bvec{\beta}_1, \bvec{\beta}_2$ 均为最优解，求证：$X \bvec{\beta}_1 = X \bvec{\beta}_2$。
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  已知矩阵
+  $$
+    A = \begin{bmatrix}
+      2 & 1 - \mathrm{i} \\
+      1 + \mathrm{i} & 3 \\
+    \end{bmatrix},
+  $$
+  又对 $\bvec{w}, \bvec{z} \in \C^2$，定义
+  $$
+    g \left(\bvec{w}, \bvec{z}\right) = \bvec{w}^\mathsf{H} A \bvec{z}, \quad H \left(\bvec{z}\right) = \bvec{z}^\mathsf{H} A \bvec{z}.
+  $$
+  \begin{enumerate}
+    \item （5 分）写出 $H \left(\bvec{z}\right)$ 的具体表达式，并说明 $g \left(\bvec{w}, \bvec{z}\right)$ 为 Hermite 型；
+    \item （5 分）判断 $A$ 的正定性；
+    \item （5 分）用配方法求可逆矩阵 $P$，使得 $$P^\mathsf{H} AP$$ 为对角阵，并写出该对角阵。
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  已知 $$f \left(\bvec{x}\right) = \frac{1}{2} \left\|M \bvec{x} - \bvec{y}\right\|^2 + \frac{1}{2} \left\|\bvec{x}\right\|^2,$$
+  其中 $M \in \R^{3 \times 2}, \bvec{y} \in \R^3$ 已经给定，$\bvec{x} \in \R^2$ 是变量，如下 $$
+    M = \begin{bmatrix}
+      1 & 2 \\
+      0 & 1 \\
+      1 & 0 \\
+    \end{bmatrix}, \quad \bvec{y} = \begin{pmatrix}
+      1 \\
+      0 \\
+      2 \\
+    \end{pmatrix}, \quad \bvec{x} = \begin{pmatrix}
+      x_1 \\
+      x_2 \\
+    \end{pmatrix}.
+  $$
+  并且 $\left\| \cdot \right\|$ 为 Eculid 范数。
+  \begin{enumerate}
+    \item 求梯度 $\nabla f \left(\bvec{x}\right)$；
+    \item 求 $f \left(\bvec{x}\right)$ 的 Hessian 矩阵，并说明 $f \left(\bvec{x}\right)$ 有唯一极小值点；
+    \item 求使得 $f \left(\bvec{x}\right)$ 达到最小值的 $\bvec{x}$。
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  定义 $\R^2$ 上的范数
+  $$
+    \left\|\bvec{x}\right\| = \left\|\left(x_1, x_2\right)\right\| = \max \left\{ \left|x_1\right|, \left|x_2\right| \right\},
+  $$
+  已知
+  $$
+    B = \begin{bmatrix}
+      \frac{1}{4} & \frac{1}{4} \\
+      \frac{1}{6} & \frac{1}{3} \\
+    \end{bmatrix}, \quad \bvec{c} = \begin{pmatrix}
+      1 \\
+      1 \\
+    \end{pmatrix}.
+  $$
+  定义算子
+  $$
+    T \left(\bvec{x}\right) = B \bvec{x} + \bvec{c}.
+  $$
+  \begin{enumerate}
+    \item （3 分）求证：$T$ 是 $\R^2$ 上的压缩算子，并给出一个压缩系数；
+    \item （4 分）求 $T$ 的不动点 $\bvec{x}^*$，并说明 $\bvec{x}^*$ 是方程组 $$\left(I - B\right) \bvec{x} = \bvec{c}$$ 的唯一解；
+    \item （3 分）取 $$\bvec{x}_0 = \begin{pmatrix}
+      0 \\
+      0 \\
+    \end{pmatrix}, \quad \bvec{x}_{k + 1} = T \left(\bvec{x}_k\right).$$
+    证明：$$\lim_{k \to \infty} \bvec{x}_k = \bvec{x}^*,$$
+    并估计使得 $$\left\|\bvec{x}_k - \bvec{x}^*\right\| < 10^{-2}$$ 的最小迭代次数。
+  \end{enumerate}
+\end{problem}
+
+\end{document}

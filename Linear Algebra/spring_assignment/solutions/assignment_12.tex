@@ -1,0 +1,204 @@
+\section*{Problem 1}
+
+设矩阵
+\[
+A = \begin{bmatrix}
+    1 & 2 \\
+    2 & 4 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 求 $A$ 的秩，以及列空间 $C \left(A\right)$ 与零空间 $N \left(A\right)$ 各自的一组基。
+    \item 对 $A$ 进行 SVD，在该矩阵的 SVD 中，说明非零奇异值对应的左、右奇异向量分别张成哪个基本子空间；补齐后的其余左、右奇异向量又分别张成哪个基本子空间。
+    \item 将向量 $\boldsymbol{x} = \left(3, 1\right)^\top$ 分解为行空间分量与零空间分量之和，即写出 $\boldsymbol{x} = \boldsymbol{x}_{R} + \boldsymbol{x}_{N}$。
+\end{enumerate}
+
+\begin{proof}
+    对 $A$，施 Gauss - Jordan 消元法有
+    \[
+        A = \begin{bmatrix}
+            1 & 2 \\
+            2 & 4 \\
+        \end{bmatrix} \implies R = \begin{bmatrix}
+            1 & 2 \\
+            0 & 0 \\
+        \end{bmatrix}.
+    \]
+    这说明
+    \[
+    \mathrm{rank} \left(A\right) = 1,
+    \]
+    并且 $A$ 的列空间有一组基
+    \[
+        C \left(A\right) = \mathrm{span} \left\{ \left(1, 2\right)^\top \right\},
+    \]
+    并且 $A$ 的零空间有一组基
+    \[
+        N \left(A\right) = \mathrm{span} \left\{ \left(-2, 1\right)^\top \right\}.
+    \]
+    为求 $A$ 的 SVD，计算特征值
+    \[
+        \det \left(\lambda I - A^\top A\right) = \det\begin{bmatrix}
+            \lambda - 5 & -10 \\
+            -10 & \lambda - 20 \\
+        \end{bmatrix} = 0 \implies \lambda_1 = 25, \lambda_2 = 0 \implies \sigma_1 = \sqrt{25} = 5.
+    \]
+    对应得到分解
+    \[
+        A = U \Sigma V^\top = \begin{bmatrix}
+            \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+            \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}} \\
+        \end{bmatrix} \begin{bmatrix}
+            5 & 0 \\
+            0 & 0 \\
+        \end{bmatrix} \begin{bmatrix}
+            \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+            \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}} \\
+        \end{bmatrix}^\top.
+    \]
+    从而有 $U, V$ 与 $A$ 的四个子空间的关系
+    \[
+    \begin{aligned}
+        N \left(A\right) &= \mathrm{span} \left\{\boldsymbol{v}_2\right\}, \\
+        C \left(A^\top\right) &= \mathrm{span} \left\{\boldsymbol{v}_1\right\}, \\
+        N \left(A^\top\right) &= \mathrm{span} \left\{\boldsymbol{u}_2\right\}, \\
+        C \left(A\right) &= \mathrm{span} \left\{\boldsymbol{u}_1\right\}. \\
+    \end{aligned}
+    \]
+    对 $\boldsymbol{x} = \left(3, 1\right)^\top$，行空间由右奇异向量 $\boldsymbol v_1$ 张成，故
+    \[
+        \boldsymbol{x}_{R} = \frac{\boldsymbol{x}^\top \boldsymbol{v}_1}{\boldsymbol{v}_1^\top \boldsymbol{v}_1} \boldsymbol{v}_1 = \frac{3 \cdot \frac{1}{\sqrt{5}} + 1 \cdot \frac{2}{\sqrt{5}}}{1} \boldsymbol{v}_1 = \sqrt{5} \boldsymbol{v}_1, \quad \boldsymbol{x}_{N} = \boldsymbol{x} - \boldsymbol{x}_{R},
+    \]
+    即 \[
+        \boldsymbol{x}_{R} = \left(1, 2\right)^\top, \quad \boldsymbol{x}_{N} = \left(2, -1\right)^\top.
+    \]
+\end{proof}
+
+\section*{Problem 2}
+
+设矩阵
+\[
+A =
+\begin{bmatrix}
+    0 & -1 \\
+    2 & 0 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 对 $A$ 进行 SVD，求 $U, \Sigma, V$。
+    \item 由 SVD 写出极分解 $A = QS$，其中 $Q = UV^\top$，$S = V \Sigma V^\top$，明确给出 $Q$ 和 $S$ 的数值。
+    \item 验证 $S$ 是对称半正定矩阵，并说明 $S$ 的特征值与 $A$ 的奇异值有何关系。
+\end{enumerate}
+
+\begin{proof}
+    对 $A$，计算奇异值
+    \[
+        \det \left(\lambda I - A^\top A\right) = \det\begin{bmatrix}
+            \lambda - 4 & 0 \\
+            0 & \lambda - 1 \\
+        \end{bmatrix} = 0 \implies \lambda_1 = 4, \lambda_2 = 1 \implies \sigma_1 = 2, \sigma_2 = 1.
+    \]
+    从而有 $A$ 的 SVD
+    \[
+        A = U \Sigma V^\top = \begin{bmatrix}
+            0 & -1 \\
+            1 & 0 \\
+        \end{bmatrix} \begin{bmatrix}
+            2 & 0 \\
+            0 & 1 \\
+        \end{bmatrix} \begin{bmatrix}
+            1 & 0 \\
+            0 & 1 \\
+        \end{bmatrix}^\top.
+    \]
+    从而有极分解
+    \[
+        A = QS = UV^\top V\Sigma V^\top = U\Sigma V^\top,
+    \]
+    即
+    \[
+        Q = UV^\top = \begin{bmatrix}
+            0 & -1 \\
+            1 & 0 \\
+        \end{bmatrix}, \quad S = V\Sigma V^\top = \begin{bmatrix}
+            2 & 0 \\
+            0 & 1 \\
+        \end{bmatrix}.
+    \]
+    验证 $S$ 是对称半正定矩阵，计算 $S$ 的特征值
+    \[
+        \det \left(\lambda I - S\right) = \det\begin{bmatrix}
+            \lambda - 2 & 0 \\
+            0 & \lambda - 1 \\
+        \end{bmatrix} = 0 \implies \lambda_1 = 2, \lambda_2 = 1 > 0,
+    \]
+    从而 $S$ 的特征值为 $1, 2$，即 $S$ 的特征值与 $A$ 的奇异值相同。
+\end{proof}
+
+\section*{Problem 3}
+
+设矩阵
+\[
+A = \begin{bmatrix}
+    0 & 2 \\
+    0 & 0 \\
+\end{bmatrix}, \quad A_\varepsilon = \begin{bmatrix}
+    0 & 2 \\
+    \varepsilon & 0 \\
+\end{bmatrix}, \quad \varepsilon > 0.
+\]
+\begin{enumerate}
+    \item 计算 $A$ 的全部特征值；再计算 $A_\varepsilon$ 的特征值，说明当 $\varepsilon$ 很小时特征值的变化情况。
+    \item 分别计算 $A^\top A$ 与 $A_\varepsilon^\top A_\varepsilon$ 的特征值，写出 $A$ 与 $A_\varepsilon$ 各自的奇异值，比较二者的差异。
+    \item 综合以上结果，说明奇异值相比特征值具有更好数值稳定性的原因。
+\end{enumerate}
+
+\begin{proof}
+    计算 $A$ 的特征值
+    \[
+        \det \left(\lambda I - A\right) = \det\begin{bmatrix}
+            \lambda & -2 \\
+            0 & \lambda \\
+        \end{bmatrix} = 0 \implies \lambda_1 = 0, \lambda_2 = 0.
+    \]
+    计算 $A_\varepsilon$ 的特征值
+    \[
+        \det \left(\lambda I - A_\varepsilon\right) = \det\begin{bmatrix}
+            \lambda & -2 \\
+            -\varepsilon & \lambda \\
+        \end{bmatrix} = 0 \implies \lambda_1 = \sqrt{2\varepsilon}, \lambda_2 = -\sqrt{2\varepsilon}.
+    \]
+    当 $\varepsilon$ 很小时，$A_\varepsilon$ 的特征值从 $0$ 分裂为 $\pm\sqrt{2\varepsilon}$；其变化量是 $O(\sqrt{\varepsilon})$，大于扰动本身的 $O(\varepsilon)$。
+
+    计算 $A^\top A$ 的特征值
+    \[
+        A^\top A = \begin{bmatrix}
+            0 & 0 \\
+            2 & 0 \\
+        \end{bmatrix} \begin{bmatrix}
+            0 & 2 \\
+            0 & 0 \\
+        \end{bmatrix} = \begin{bmatrix}
+            0 & 0 \\
+            0 & 4 \\
+        \end{bmatrix},
+    \]
+    从而 $A$ 的奇异值为 $\sigma_1 = 2, \sigma_2 = 0$。计算 $A_\varepsilon^\top A_\varepsilon$
+    \[
+        A_\varepsilon^\top A_\varepsilon =
+        \begin{bmatrix}
+            0 & \varepsilon \\
+            2 & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+            0 & 2 \\
+            \varepsilon & 0
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \varepsilon^2 & 0 \\
+            0 & 4
+        \end{bmatrix},
+    \]
+    因此当 $0<\varepsilon<2$ 时，$A_\varepsilon$ 的奇异值为 $\sigma_1=2,\sigma_2=\varepsilon$。与 $A$ 的奇异值 $2,0$ 相比，变化量为 $O(\varepsilon)$，与矩阵扰动同阶；这说明奇异值相较于非正规矩阵的特征值具有更好的数值稳定性。
+\end{proof}
