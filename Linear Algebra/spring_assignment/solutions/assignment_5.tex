@@ -1,0 +1,220 @@
+\section*{Problem 1}
+
+给定线性映射 $T : \mathbb{R}^3 \to \mathbb{R}^3$，其在标准基下对应的矩阵为
+\[
+A =
+\begin{bmatrix}
+1 & 2 & 3 \\
+2 & 4 & 6 \\
+1 & 2 & 3
+\end{bmatrix}.
+\]
+请计算矩阵 $A$ 的秩 $\rank \left(A\right)$，并依此求出 $T$ 的像空间维数 $\dim \im \left(\mathcal{T}\right)$ 与核空间维数 $\dim \ker\left(\mathcal{T}\right)$，最后说明其计算结果是否满足秩零化度定理.
+
+\begin{proof}
+对 $A$ 施 Gauss - Jordan 消元法有
+\[
+A = \begin{bmatrix}
+    1 & 2 & 3 \\
+    2 & 4 & 6 \\
+    1 & 2 & 3 \\
+\end{bmatrix}
+\implies
+R = \begin{bmatrix}
+    1 & 2 & 3 \\
+    0 & 0 & 0 \\
+    0 & 0 & 0 \\
+\end{bmatrix}
+\implies
+\boxed{\begin{cases}
+    \rank \left(A\right) = 1, \\
+    \dim \im \left(\mathcal{T}\right) = \dim C \left(A\right) = 1, \\
+    \dim \ker \left(\mathcal{T}\right) = \dim N \left(A\right) = 2. \\
+\end{cases}}
+\]
+注意到 $\dim \im \left(\mathcal{T}\right) + \dim \ker\left(\mathcal{T}\right) = 1 + 2 = 3 = \dim \mathbb{R}^3$，因此 $\boxed{\text{满足秩零化度定理}}$.
+
+\end{proof}
+
+\section*{Problem 2}
+
+设线性变换 $T : \mathbb{R}^2 \to \mathbb{R}^2$ 定义为
+\[
+T\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+=
+\begin{pmatrix}
+2x_1 + x_2 \\
+x_1 + 2x_2
+\end{pmatrix}.
+\]
+\begin{enumerate}
+\item 求 $T$ 在标准基 $\bvec{e}_1 = \begin{pmatrix}1\\0\end{pmatrix},\;
+\bvec{e}_2 = \begin{pmatrix}0\\1\end{pmatrix}$ 下对应的矩阵 $A$；
+\item 给定新基（已固定顺序）
+\[
+\tilde{\bvec{e}}_1 = \begin{pmatrix}1\\1\end{pmatrix}, \quad
+\tilde{\bvec{e}}_2 = \begin{pmatrix}-1\\1\end{pmatrix},
+\]
+求从标准基到新基的过渡矩阵 $P$，并计算 $T$ 在该新基下对应的矩阵 $B$.
+\end{enumerate}
+
+\begin{proof}
+依据线性变换性质进行代换
+\[
+\begin{aligned}
+    T \begin{pmatrix}
+        x_1 \\
+        x_2 \\
+    \end{pmatrix} &= T \left(\alpha_1 \bvec{e}_1 + \alpha_2 \bvec{e}_2\right), \\
+    &= \alpha_1 T \left(\bvec{e}_1\right) + \alpha_2 T \left(\bvec{e}_2\right) = \begin{bmatrix}
+        T \left(\bvec{e}_1\right) & T \left(\bvec{e}_2\right)
+    \end{bmatrix} \begin{pmatrix}
+        \alpha_1 \\
+        \alpha_2 \\
+    \end{pmatrix}, \\
+    &= \begin{bmatrix}
+        \bvec{e}_1 & \bvec{e}_2 \\
+    \end{bmatrix} \underbrace{\begin{bmatrix}
+        2 & 1 \\
+        1 & 2 \\
+    \end{bmatrix}}_{A} \begin{pmatrix}
+        \alpha_1 \\
+        \alpha_2 \\
+    \end{pmatrix}.
+\end{aligned}
+\]
+从而
+\[
+A = \boxed{\begin{bmatrix}
+    2 & 1 \\
+    1 & 2 \\
+\end{bmatrix}}.
+\]
+按新基向量由旧基坐标组成矩阵的约定，过渡矩阵 $P$ 满足
+\[
+\begin{bmatrix}
+    \tilde{\bvec{e}_1} & \tilde{\bvec{e}_2} \\
+\end{bmatrix}
+= \begin{bmatrix}
+    \bvec{e}_1 & \bvec{e}_2 \\
+\end{bmatrix} P
+\implies
+P = \boxed{\begin{bmatrix}
+    1 & -1 \\
+    1 & 1 \\
+\end{bmatrix}}, P^{-1} = \begin{bmatrix}
+    1/2 & 1/2 \\
+    -1/2 & 1/2 \\
+\end{bmatrix}.
+\]
+其中 $P$ 将新基坐标变为标准坐标，而 $P^{-1}$ 将标准坐标变为新基坐标。
+在两组基下的坐标满足
+\[
+\begin{aligned}
+    \begin{bmatrix}
+        \tilde{\bvec{e}_1} & \tilde{\bvec{e}_2} \\
+    \end{bmatrix} \begin{pmatrix}
+        \tilde{\alpha}_1 \\
+        \tilde{\alpha}_2 \\
+    \end{pmatrix} = \begin{bmatrix}
+        \bvec{e}_1 & \bvec{e}_2 \\
+    \end{bmatrix} \begin{pmatrix}
+        \alpha_1 \\
+        \alpha_2 \\
+    \end{pmatrix}
+\implies
+P \begin{pmatrix}
+    \tilde{\alpha}_1 \\
+    \tilde{\alpha}_2 \\
+\end{pmatrix} = \begin{pmatrix}
+    \alpha_1 \\
+    \alpha_2 \\
+\end{pmatrix}.
+\end{aligned}
+\]
+因此
+\[
+\begin{aligned}
+    \begin{bmatrix}
+        \bvec{e}_1 & \bvec{e}_2 \\
+    \end{bmatrix} A \begin{pmatrix}
+        \alpha_1 \\
+        \alpha_2 \\
+    \end{pmatrix} = \mathcal{T} \left(\alpha_1 \bvec{e}_1 + \alpha_2 \bvec{e}_2\right) &= \mathcal{T} \left(\bvec{x}\right), \\
+    &= \begin{bmatrix}
+        \tilde{\bvec{e}_1} & \tilde{\bvec{e}_2} \\
+    \end{bmatrix} P^{-1} A \begin{pmatrix}
+        \alpha_1 \\
+        \alpha_2 \\
+    \end{pmatrix} = \begin{bmatrix}
+        \tilde{\bvec{e}_1} & \tilde{\bvec{e}_2} \\
+    \end{bmatrix} \underbrace{P^{-1} A P}_{B} \begin{pmatrix}
+        \tilde{\alpha}_1 \\
+        \tilde{\alpha}_2 \\
+    \end{pmatrix}.
+\end{aligned}
+\]
+最终得到 $B = \begin{bmatrix}
+    3 & 0 \\
+    0 & 1 \\
+\end{bmatrix}$.
+
+
+\end{proof}
+\section*{Problem 3}
+
+设矩阵
+\[
+A =
+\begin{bmatrix}
+4 & -2 \\
+1 & 1
+\end{bmatrix}.
+\]
+求矩阵 $A$ 的所有特征值.对于每一个特征值，求其对应的特征子空间的维数（即几何重数），并据此判断矩阵 $A$ 是否可对角化.
+
+\begin{proof}
+为求 $A$ 的特征值 $\lambda_i$，解方程
+\[
+\det \left(\lambda I - A\right) = 0 \iff \det \begin{bmatrix}
+    \lambda - 4 & 2 \\
+    -1 & \lambda - 1 \\
+\end{bmatrix} = \lambda^2 - 5 \lambda + 6 = 0 \iff \begin{cases}
+    \lambda_1 = 2, \\
+    \lambda_2 = 3. \\
+\end{cases}
+\]
+对于 $\lambda_1 = 2$，解方程
+\[
+\left(\lambda_1 I - A\right) \bvec{x} = \bvec{0} \iff \begin{bmatrix}
+    -2 & 2 \\
+    -1 & 1 \\
+\end{bmatrix} \bvec{x} = \bvec{0} \implies \bvec{x} = t \begin{pmatrix}
+    1 \\
+    1 \\
+\end{pmatrix}, t \in \mathbb{R}.
+\]因此 $\lambda_1$ 的特征子空间为 $\Span \left\{\begin{pmatrix}
+    1 \\
+    1 \\
+\end{pmatrix}\right\}$，其维数为 $1$.同样地，对于 $\lambda_2 = 3$，解方程
+\[
+\left(\lambda_2 I - A\right) \bvec{x} = \bvec{0} \iff \begin{bmatrix}
+    -1 & 2 \\
+    -1 & 2 \\
+\end{bmatrix} \bvec{x} = \bvec{0} \implies \bvec{x} = t \begin{pmatrix}
+    2 \\
+    1 \\
+\end{pmatrix}, t \in \mathbb{R}.
+\]因此 $\lambda_2$ 的特征子空间为 $\Span \left\{\begin{pmatrix}
+    2 \\
+    1 \\
+\end{pmatrix}\right\}$，其维数为 $1$.由于两个特征值的几何重数之和等于矩阵的阶数（即 $1 + 1 = 2$），因此 $\boxed{A \text{ 可对角化}}$.
+
+更直接的方式是给出对角化所用矩阵 $P = \begin{bmatrix}
+    1 & 2 \\
+    1 & 1 \\
+\end{bmatrix}$，从而
+\[
+AP = P \Lambda \iff P^{-1}AP = \Lambda = \diag \left(2, 3\right).
+\]
+\end{proof}

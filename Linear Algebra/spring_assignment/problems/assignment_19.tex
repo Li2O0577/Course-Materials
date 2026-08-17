@@ -1,0 +1,54 @@
+\section*{Problem 1}
+
+一个人工神经元的输入为
+\[
+\bm{x} = (1, -2, 3)^\top,\quad
+\bm{w} = (2, -1, 0.5)^\top,\quad
+b = -1.
+\]
+记净输入为 $z = \bm{w}^\top \bm{x} + b$。
+\begin{enumerate}
+    \item 计算该神经元的净输入 $z$。
+    \item 若激活函数为阶梯函数
+    \[
+    h(z) = \begin{cases}
+        1, & z \ge 0,\\
+        0, & z < 0,
+    \end{cases}
+    \]
+    求神经元输出。
+    \item 若激活函数分别为 $\operatorname{ReLU}(z) = \max\{0, z\}$ 和 LeakyReLU，其中
+    \[
+    \operatorname{LeakyReLU}(z) = \begin{cases}
+        z,      & z \ge 0,\\
+        0.01z,  & z < 0,
+    \end{cases}
+    \]
+    分别求神经元输出，并说明二者在 $z < 0$ 时的主要区别。
+\end{enumerate}
+
+\section*{Problem 2}
+
+Logistic 激活函数定义为
+\[
+\sigma(z) = \frac{1}{1 + \exp(-z)}.
+\]
+已知其导数为 $\sigma'(z) = \sigma(z)(1 - \sigma(z))$。
+\begin{enumerate}
+    \item 计算 $\sigma(0)$ 与 $\sigma'(0)$。
+    \item 近似计算 $\sigma(4), \sigma'(4), \sigma(-4), \sigma'(-4)$。可使用 $\exp(-4) \approx 0.0183$, $\exp(4) \approx 54.6$。
+    \item 根据以上结果，解释为什么 Logistic 激活函数在 $|z|$ 较大时容易导致梯度消失。
+\end{enumerate}
+
+\section*{Problem 3}
+
+考虑一个使用 ReLU 激活函数的神经元
+\[
+z = \bm{w}^\top \bm{x} + b,\quad a = \operatorname{ReLU}(z),
+\]
+设训练集中所有样本都满足 $\bm{x} \ge 0$（逐分量非负）。
+\begin{enumerate}
+    \item 写出 ReLU 的函数表达式及其在 $z \neq 0$ 处的导数。
+    \item 设 $\bm{w} = (-1, -2)^\top$, $b = 0$，对任意满足 $\bm{x} \ge 0$ 的样本，说明为什么有 $z \le 0$。
+    \item 若某个神经元对所有训练样本都有 $z < 0$，说明其权重为什么难以通过梯度下降更新，并说明 LeakyReLU 为什么可以缓解这一问题。
+\end{enumerate}

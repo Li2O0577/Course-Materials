@@ -1,0 +1,96 @@
+\section{矩阵值函数的导数}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Trickery.png}
+\end{center}
+
+标量值矩阵函数的一阶主项 \(\mathrm{D}f(X)[H]\) 是标量，可以借助 Frobenius 内积表示为矩阵梯度。若函数的输出本身也是矩阵，一阶主项也位于输出矩阵空间中。矩阵值函数的导数首先应被理解为从输入增量到输出增量主项的线性映射。
+
+设 \(F:\mathbb{R}^{m\times n}\to\mathbb{R}^{p\times q}\)，若在 \(X\) 处存在关于 \(H\in\mathbb{R}^{m\times n}\) 的线性规则 \(\mathrm{D}F(X)\)，使得
+\[
+F(X+H)=F(X)+\mathrm{D}F(X)[H]+o(\|H\|),
+\]
+则 \(\mathrm{D}F(X)[H]\in\mathbb{R}^{p\times q}\)。这里的 \(\mathrm{D}F(X)\) 是把输入矩阵增量 \(H\) 变成输出矩阵主项的规则，一般不能理解为一个与 \(X\) 同型的矩阵。只有在输出是标量时，才需要进一步用内积代表这个规则并得到梯度。
+
+恒等映射给出最简单的例子。设 \(F(X)=X\)，其中 \(X,H\in\mathbb{R}^{m\times n}\)。由于
+\[
+F(X+H)-F(X)=H,
+\]
+可得
+\[
+\mathrm{D}F(X)[H]=H.
+\]
+这个导数把输入增量原样送到输出增量，不需要读出梯度；若强行寻找一个“梯度矩阵”，反而会遮蔽导数作为映射的本质。
+
+固定矩阵左乘和右乘是最常用的线性映射。设 \(A\in\mathbb{R}^{p\times m}\)、\(B\in\mathbb{R}^{n\times q}\)，定义
+\[
+F(X)=A X B,\qquad X\in\mathbb{R}^{m\times n}.
+\]
+则
+\[
+F(X+H)-F(X)=A H B.
+\]
+因此
+\[
+\mathrm{D}F(X)[H]=A H B.
+\]
+这个公式中的导数与基点 \(X\) 无关，因为 \(F\) 本身就是线性映射。维度上，\(H\in\mathbb{R}^{m\times n}\)，而 \(AHB\in\mathbb{R}^{p\times q}\)，正好属于输出空间。
+
+转置映射表明导数可以改变矩阵形状。设 \(F(X)=X^\top\)，其中 \(X\in\mathbb{R}^{m\times n}\)。则
+\[
+F(X+H)-F(X)=H^\top,
+\]
+所以
+\[
+\mathrm{D}F(X)[H]=H^\top.
+\]
+这里输入增量属于 \(\mathbb{R}^{m\times n}\)，输出主项属于 \(\mathbb{R}^{n\times m}\)。
+
+非线性矩阵值函数中，一阶主项通常依赖于基点。考虑 \(F(X)=X^\top X\)，其中 \(X\in\mathbb{R}^{m\times n}\)，输出属于 \(\mathbb{R}^{n\times n}\)。当 \(X\) 变为 \(X+H\) 时，
+\[
+F(X+H)-F(X)=(X+H)^\top(X+H)-X^\top X
+=H^\top X+X^\top H+H^\top H.
+\]
+最后一项是二阶小量，因此
+\[
+\mathrm{D}F(X)[H]=H^\top X+X^\top H.
+\]
+该表达式关于 \(H\) 线性，但系数依赖于基点 \(X\)。同时，输出矩阵是对称矩阵，因为 \(H^\top X+X^\top H\) 等于其自身的转置，这与 \(X^\top X\) 的输出结构一致。
+
+另一个常见例子是 \(F(X)=XX^\top\)，其中 \(X\in\mathbb{R}^{m\times n}\)，输出属于 \(\mathbb{R}^{m\times m}\)。展开可得
+\[
+(X+H)(X+H)^\top-XX^\top=H X^\top+XH^\top+HH^\top,
+\]
+从而
+\[
+\mathrm{D}F(X)[H]=H X^\top+XH^\top.
+\]
+这个例子与 \(X^\top X\) 只有乘法顺序的差别，但输出空间和导数形式都不同，不能把两者混为同一个公式。
+
+逆矩阵作为矩阵值函数的导数已经在第六章中出现。设 \(X\in\mathbb{R}^{n\times n}\) 可逆，\(F(X)=X^{-1}\)，则
+\[
+F(X+H)-F(X)=-X^{-1}H X^{-1}+o(\|H\|),
+\]
+因此
+\[
+\mathrm{D}F(X)[H]=-X^{-1}H X^{-1}.
+\]
+这里 \(\mathrm{D}F(X)\) 把输入增量 \(H\) 左右各乘一个固定矩阵 \(-X^{-1}\) 和 \(X^{-1}\)，仍然是关于 \(H\) 的线性映射。可逆性是该公式的基本条件，乘法顺序也不能改变。
+
+矩阵值函数同样满足链式法则，但链式法则应按线性映射的复合来理解。设 \(G:\mathbb{R}^{m\times n}\to\mathbb{R}^{r\times s}\)，\(F:\mathbb{R}^{r\times s}\to\mathbb{R}^{p\times q}\)，并令 \(Y=G(X)\)。若二者均可微，则
+\[
+\mathrm{D}(F\circ G)(X)[H]=\mathrm{D}F(Y)[\mathrm{D}G(X)[H]].
+\]
+先由 \(G\) 把输入增量 \(H\) 送到输出增量主项 \(\mathrm{D}G(X)[H]\)，再由 \(F\) 的导数把这个矩阵主项送到最终输出的一阶主项。这个公式的关键在于两个线性规则的连续作用，矩阵相乘只是具体表示中可能出现的形式。
+
+一个简单复合例子展示了这种写法。设 \(G(X)=AXB\)，\(F(Y)=Y^\top Y\)。由前面的公式，\(\mathrm{D}G(X)[H]=AHB\)，而
+\[
+\mathrm{D}F(Y)[K]=K^\top Y+Y^\top K.
+\]
+因此
+\[
+\mathrm{D}(F\circ G)(X)[H]=(AHB)^\top(AXB)+(AXB)^\top(AHB).
+\]
+整个表达式仍然关于 \(H\) 线性，并且输出属于与 \(Y^\top Y\) 相同的矩阵空间。
+
+矩阵值函数也可以坐标化，但坐标化不构成导数的定义。若把输入矩阵和输出矩阵都按元素排成向量，线性映射 \(H\mapsto \mathrm{D}F(X)[H]\) 可以表示为一个普通矩阵乘法；这个普通矩阵就是向量化坐标下的 Jacobian。坐标表示会用到向量化和 Kronecker 积，但在概念上，矩阵值函数的导数仍是作用在矩阵增量上的线性映射，不能与标量函数情形中的梯度矩阵混同。

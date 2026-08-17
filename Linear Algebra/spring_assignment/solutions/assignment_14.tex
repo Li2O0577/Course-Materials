@@ -1,0 +1,126 @@
+\section*{Problem 1}
+
+设 \[
+A = \begin{bmatrix}
+    1 & 1 + \mathrm{i} \\
+    1 - \mathrm{i} & 3 \\
+\end{bmatrix}.
+\]
+
+\begin{enumerate}
+    \item 证明 $A$ 是 Hermite 正定矩阵。
+    \item 求可逆矩阵 $P$ 使得 $P^\ct A P = I$。
+    \item 写出 $A$ 对应的 Hermite 二次型 $H \left(\bm{x}\right) = \bm{x}^\ct A \bm{x}$ 在某组新基下的标准形。
+\end{enumerate}
+
+\begin{proof}
+    直接计算得 $A^\ct=A$，故 $A$ 是 Hermite 矩阵。其特征方程为
+    \[
+        \det\begin{bmatrix}
+            \lambda - 1 & -1 - \mathrm{i} \\
+            -1 + \mathrm{i} & \lambda - 3 \\
+        \end{bmatrix} = 0 \iff \lambda^2 - 4\lambda + 1 = 0 \implies \lambda = 2 \pm \sqrt{3}.
+    \]
+    两个特征值 $2\pm\sqrt3$ 均为正数，因此 $A$ 是 Hermite 正定矩阵。注意到
+    \[
+        A=R^\ct R,\qquad
+        R=\begin{bmatrix}1&1+\mathrm{i}\\0&1\end{bmatrix}.
+    \]
+    取
+    \[
+        P=R^{-1}
+        =\begin{bmatrix}1&-1-\mathrm{i}\\0&1\end{bmatrix},
+    \]
+    则
+    \[
+        P^\ct A P=P^\ct R^\ct RP=(RP)^\ct(RP)=I.
+    \]
+    令 $\bm x=P\bm y$，等价地 $\bm y=R\bm x$，则
+    \[
+        H(\bm x)=\bm x^\ct A\bm x=\bm y^\ct\bm y
+        =|y_1|^2+|y_2|^2.
+    \]
+    因此在由 $P$ 的列向量组成的新基
+    \[
+        \begin{pmatrix}1\\0\end{pmatrix},\qquad
+        \begin{pmatrix}-1-\mathrm{i}\\1\end{pmatrix}
+    \]
+    下，Hermite 二次型的标准形为 $|y_1|^2+|y_2|^2$。
+\end{proof}
+
+\section*{Problem 2}
+
+设 $M$ 是 $m \times n$ 的复矩阵。证明：
+
+\begin{enumerate}
+    \item $M^\ct M$ 是 Hermite 半正定矩阵。
+    \item $M^\ct M$ 是正定矩阵当且仅当 $M$ 的列向量线性无关。
+    \item 任意 Hermite 正定矩阵 $A$ 都可以写成 $A = B^\ct B$，其中 $B$ 是某可逆矩阵。
+\end{enumerate}
+
+\begin{proof}
+    首先 $\left(M^\ct M\right)^\ct = M^\ct \left(M^\ct\right)^\ct = M^\ct M$。其次，对任意非零向量 $\bm{x}$ 都满足
+    \[
+        \bm{x}^\ct M^\ct M \bm{x} = \left(M \bm{x}\right)^\ct \left(M \bm{x}\right) \ge 0.
+    \]
+    从而 $M^\ct M$ 是 Hermite 半正定矩阵。当 $M$ 的列向量线性无关，即 $M$ 列满秩时，由秩 - 零化度定理知 $N \left(M\right) = \Span \left\{\bm{0}\right\}$，则
+    \[
+        \bm{x} \neq \bm{0} \iff M \bm{x} \neq \bm{0} \implies \left(M \bm{x}\right)^\ct \left(M \bm{x}\right) > 0,
+    \]
+    即 $M^\ct M$ 是 Hermite 正定矩阵。反之，若 $M^\ct M$ 正定而 $M$ 的列向量线性相关，则存在非零向量 $\bm x$ 使 $M\bm x=\bm0$，于是
+    \[
+        \bm x^\ct M^\ct M\bm x=\|M\bm x\|^2=0,
+    \]
+    与正定性矛盾。因此 $M^\ct M$ 正定当且仅当 $M$ 的列向量线性无关。
+
+    一般地，取 Hermite 正定矩阵 $A$，由谱定理可知 $A$ 可对角化为
+    \[
+        A = U \Lambda U^\ct, \quad \Lambda = \diag \left(\lambda_1, \lambda_2, \cdots, \lambda_n\right), \quad U^\ct U = I, \quad \lambda_i > 0, \forall i.
+    \]
+    变形得到
+    \[
+        \begin{aligned}
+            A &= U \diag \left(\lambda_1, \lambda_2, \cdots, \lambda_n\right) U^\ct = U \diag \left(\sqrt{\lambda_1}, \sqrt{\lambda_2}, \cdots, \sqrt{\lambda_n}\right) \diag \left(\sqrt{\lambda_1}, \sqrt{\lambda_2}, \cdots, \sqrt{\lambda_n}\right) U^\ct, \\
+            &= \left(U \diag \left(\sqrt{\lambda_1}, \sqrt{\lambda_2}, \cdots, \sqrt{\lambda_n}\right)\right) \left(U \diag \left(\sqrt{\lambda_1}, \sqrt{\lambda_2}, \cdots, \sqrt{\lambda_n}\right)\right)^\ct,
+        \end{aligned}
+    \]
+    取
+    \[
+        B = \left(U \diag \left(\sqrt{\lambda_1}, \sqrt{\lambda_2}, \cdots, \sqrt{\lambda_n}\right)\right)^\ct,
+    \]
+    即满足题意。
+\end{proof}
+
+\section*{Problem 3}
+
+设 $V$ 为有限维复内积空间（内积为 Hermite 内积），$\mathcal{A}, \mathcal{B}$ 为 $V$ 上的线性算子，$\mathcal{A^*}, \mathcal{B^*}$ 分别为其伴随算子。证明：
+
+\begin{enumerate}
+    \item $\left(\mathcal{AB}\right)^* = \mathcal{B^*}\mathcal{A^*}.$
+    \item 若 $\lambda$ 为 $\mathcal{A}$ 的特征值，则 $\bar\lambda$ 是 $\mathcal{A^*}$ 的特征值。
+    \item 若 $\mathcal{A}$ 是 Hermite 算子（即 $\mathcal{A^*} = \mathcal{A}$）且可逆，则 $\mathcal{A}^{-1}$ 也是 Hermite 算子。
+\end{enumerate}
+
+\begin{proof}
+    利用伴随算子的性质立即可得 \[
+        \langle \mathcal{A} \bm{x}, \bm{y} \rangle = \langle \bm{x}, \mathcal{A^*} \bm{y} \rangle, \quad \langle \mathcal{B} \bm{x}, \bm{y} \rangle = \langle \bm{x}, \mathcal{B^*} \bm{y} \rangle, \quad \forall \bm{x}, \bm{y} \in V,
+    \]
+    从而 \[
+        \langle \mathcal{AB} \bm{x}, \bm{y} \rangle = \langle \mathcal{B} \bm{x}, \mathcal{A^*} \bm{y} \rangle = \langle \bm{x}, \mathcal{B^*} \mathcal{A^*} \bm{y} \rangle, \quad \forall \bm{x}, \bm{y} \in V.
+    \]
+    即 $\left(\mathcal{AB}\right)^* = \mathcal{B^*}\mathcal{A^*}.$
+
+    设标准正交基下 $\mathcal{A}$ 的矩阵为 $A$，则 $\mathcal{A^*}$ 的矩阵为 $A^\ct$。由于
+    \[
+        \det\left(\mu I-A^\ct\right)
+        =\overline{\det\left(\bar\mu I-A\right)},
+    \]
+    若 $\det(\lambda I-A)=0$，取 $\mu=\bar\lambda$ 即得
+    $\det(\bar\lambda I-A^\ct)=0$。因此 $\bar\lambda$ 是 $A^\ct$ 的特征值。
+
+    对 Hermite 算子 $\mathcal{A}$，其对应矩阵 $A$ 满足 $A^\ct = A$。又由于 $\mathcal{A}$ 可逆，$A$ 也是可逆的。于是 \[
+        A^{-1} = \left(A^\ct\right)^{-1} = \left(A^{-1}\right)^\ct,
+    \]
+    即 $\mathcal{A}^{-1}$ 也是 Hermite 算子。
+
+\end{proof}

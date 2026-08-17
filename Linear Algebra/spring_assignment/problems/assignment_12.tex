@@ -1,0 +1,48 @@
+\section*{Problem 1}
+
+设矩阵
+\[
+A = \begin{bmatrix}
+    1 & 2 \\
+    2 & 4 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 求 $A$ 的秩，以及列空间 $C \left(A\right)$ 与零空间 $N \left(A\right)$ 各自的一组基。
+    \item 对 $A$ 进行 SVD，在该矩阵的 SVD 中，说明非零奇异值对应的左、右奇异向量分别张成哪个基本子空间；补齐后的其余左、右奇异向量又分别张成哪个基本子空间。
+    \item 将向量 $\boldsymbol{x} = \left(3, 1\right)^\top$ 分解为行空间分量与零空间分量之和，即写出 $\boldsymbol{x} = \boldsymbol{x}_{R} + \boldsymbol{x}_{N}$。
+\end{enumerate}
+
+\section*{Problem 2}
+
+设矩阵
+\[
+A =
+\begin{bmatrix}
+    0 & -1 \\
+    2 & 0 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 对 $A$ 进行 SVD，求 $U, \Sigma, V$。
+    \item 由 SVD 写出极分解 $A = QS$，其中 $Q = UV^\top$，$S = V \Sigma V^\top$，明确给出 $Q$ 和 $S$ 的数值。
+    \item 验证 $S$ 是对称半正定矩阵，并说明 $S$ 的特征值与 $A$ 的奇异值有何关系。
+\end{enumerate}
+
+\section*{Problem 3}
+
+设矩阵
+\[
+A = \begin{bmatrix}
+    0 & 2 \\
+    0 & 0 \\
+\end{bmatrix}, \quad A_\varepsilon = \begin{bmatrix}
+    0 & 2 \\
+    \varepsilon & 0 \\
+\end{bmatrix}, \quad \varepsilon > 0.
+\]
+\begin{enumerate}
+    \item 计算 $A$ 的全部特征值；再计算 $A_\varepsilon$ 的特征值，说明当 $\varepsilon$ 很小时特征值的变化情况。
+    \item 分别计算 $A^\top A$ 与 $A_\varepsilon^\top A_\varepsilon$ 的特征值，写出 $A$ 与 $A_\varepsilon$ 各自的奇异值，比较二者的差异。
+    \item 综合以上结果，说明奇异值相比特征值具有更好数值稳定性的原因。
+\end{enumerate}

@@ -1,0 +1,203 @@
+\section*{Problem 1}
+
+已知矩阵
+\[
+    A = \begin{bmatrix}
+        1 & 1 \\
+        1 & -1 \\
+        1 & 0
+    \end{bmatrix}.
+\]
+由于矩阵 $A$ 列满秩，其 Moore-Penrose 广义逆 $A^+$ 可以通过公式
+\[
+    A^+ = \left(A^\top A\right)^{-1}A^\top
+\]
+来计算。请写出详细的计算过程，求出 $A^+$。
+
+\begin{proof}
+    首先计算
+    \[
+        A^\top
+        = \begin{bmatrix}
+            1 & 1 & 1 \\
+            1 & -1 & 0
+        \end{bmatrix},
+    \]
+    从而
+    \[
+        A^\top A
+        = \begin{bmatrix}
+            1 & 1 & 1 \\
+            1 & -1 & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 1 \\
+            1 & -1 \\
+            1 & 0
+        \end{bmatrix}
+        = \begin{bmatrix}
+            3 & 0 \\
+            0 & 2
+        \end{bmatrix}.
+    \]
+    因此
+    \[
+        \left(A^\top A\right)^{-1}
+        = \begin{bmatrix}
+            \frac{1}{3} & 0 \\
+            0 & \frac{1}{2}
+        \end{bmatrix}.
+    \]
+    代入列满秩矩阵的广义逆公式，得到
+    \[
+        \begin{aligned}
+            A^+
+            &= \left(A^\top A\right)^{-1}A^\top \\
+            &= \begin{bmatrix}
+                \frac{1}{3} & 0 \\
+                0 & \frac{1}{2}
+            \end{bmatrix}
+            \begin{bmatrix}
+                1 & 1 & 1 \\
+                1 & -1 & 0
+            \end{bmatrix} \\
+            &= \boxed{\begin{bmatrix}
+                \frac{1}{3} & \frac{1}{3} & \frac{1}{3} \\
+                \frac{1}{2} & -\frac{1}{2} & 0
+            \end{bmatrix}}.
+        \end{aligned}
+    \]
+\end{proof}
+
+\section*{Problem 2}
+
+假设线性方程组 $A\bm{x} = \bm{b}$ 有解。利用广义逆的通解性质可知，该方程组的解可以统一表示为
+\[
+    \bm{x} = A^+\bm{b} + \left(I - A^+A\right)\bm{z},
+\]
+其中 $\bm{z}$ 为任意向量，且 $A^+$ 为 $A$ 的 Moore-Penrose 广义逆。请证明：
+\[
+    \bm{x}^* = A^+\bm{b}
+\]
+是该方程组所有解中二范数（模长）最小的解。
+
+\begin{proof}
+    因为方程组有解，可取 $\bm{x}_0$ 使得 $\bm{b} = A\bm{x}_0$。由 Moore-Penrose 广义逆的性质 $AA^+A = A$，有
+    \[
+        A\bm{x}^*
+        = AA^+\bm{b}
+        = AA^+A\bm{x}_0
+        = A\bm{x}_0
+        = \bm{b},
+    \]
+    因此 $\bm{x}^*$ 确实是方程组的一个解。
+
+    记
+    \[
+        P = A^+A.
+    \]
+    由 Moore-Penrose 广义逆的性质可知
+    \[
+        P^\top = P, \qquad
+        P^2 = A^+AA^+A = A^+A = P,
+    \]
+    因此 $P$ 是正交投影矩阵。又由 $A^+AA^+ = A^+$，有
+    \[
+        P\bm{x}^*
+        = A^+AA^+\bm{b}
+        = A^+\bm{b}
+        = \bm{x}^*.
+    \]
+    对任意解
+    \[
+        \bm{x} = \bm{x}^* + (I - P)\bm{z},
+    \]
+    计算两个分量的内积可得
+    \[
+        \begin{aligned}
+            \left(\bm{x}^*\right)^\top(I - P)\bm{z}
+            &= \left(P\bm{x}^*\right)^\top(I - P)\bm{z} \\
+            &= \left(\bm{x}^*\right)^\top P^\top(I - P)\bm{z} \\
+            &= \left(\bm{x}^*\right)^\top\left(P - P^2\right)\bm{z}
+             = 0.
+        \end{aligned}
+    \]
+    因此 $\bm{x}^*$ 与 $(I - P)\bm{z}$ 正交，由勾股定理得到
+    \[
+        \|\bm{x}\|^2
+        = \|\bm{x}^*\|^2 + \|(I - P)\bm{z}\|^2
+        \ge \|\bm{x}^*\|^2.
+    \]
+    等号当且仅当 $(I - P)\bm{z} = \bm{0}$，即 $\bm{x} = \bm{x}^*$。故
+    \[
+        \boxed{\bm{x}^* = A^+\bm{b}}
+    \]
+    是该方程组所有解中唯一的最小二范数解。
+\end{proof}
+
+\section*{Problem 3}
+
+已知 $A^+$ 是矩阵 $A$ 的 Moore-Penrose 广义逆，满足以下四条定义性质：
+\[
+    \begin{aligned}
+        &\text{(1)}\quad AA^+A = A; &
+        &\text{(2)}\quad A^+AA^+ = A^+; \\
+        &\text{(3)}\quad \left(AA^+\right)^\top = AA^+; &
+        &\text{(4)}\quad \left(A^+A\right)^\top = A^+A.
+    \end{aligned}
+\]
+请利用上述四条性质，证明 $\left(A^+\right)^\top$ 也是 $A^\top$ 的 Moore-Penrose 广义逆，从而得出结论
+\[
+    \left(A^\top\right)^+ = \left(A^+\right)^\top.
+\]
+
+\begin{proof}
+    令
+    \[
+        B = \left(A^+\right)^\top.
+    \]
+    对性质 (1) 和 (2) 分别取转置，得到
+    \[
+        A^\top B A^\top
+        = \left(AA^+A\right)^\top
+        = A^\top,
+    \]
+    以及
+    \[
+        B A^\top B
+        = \left(A^+AA^+\right)^\top
+        = B.
+    \]
+    再由性质 (4)，有
+    \[
+        A^\top B
+        = A^\top\left(A^+\right)^\top
+        = \left(A^+A\right)^\top
+        = A^+A,
+    \]
+    所以
+    \[
+        \left(A^\top B\right)^\top
+        = \left(A^+A\right)^\top
+        = A^+A
+        = A^\top B.
+    \]
+    同理由性质 (3)，有
+    \[
+        BA^\top
+        = \left(A^+\right)^\top A^\top
+        = \left(AA^+\right)^\top
+        = AA^+,
+    \]
+    所以
+    \[
+        \left(BA^\top\right)^\top
+        = \left(AA^+\right)^\top
+        = AA^+
+        = BA^\top.
+    \]
+    因此 $B$ 满足 $A^\top$ 的全部四条 Moore-Penrose 广义逆定义性质。由 Moore-Penrose 广义逆的唯一性，得到
+    \[
+        \boxed{\left(A^\top\right)^+ = B = \left(A^+\right)^\top}.
+    \]
+\end{proof}

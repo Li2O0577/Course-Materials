@@ -1,0 +1,170 @@
+\section*{Problem 1}
+
+给定二次型
+\[
+Q \left(x_1, x_2, x_3\right) = 2x_1^2 + 3x_2^2 + x_3^2 + 4x_1x_2 - 2x_1x_3 + 6x_2x_3.
+\]
+写出其对应的对称矩阵.
+
+\begin{proof}
+
+设 $\boldsymbol{x} = \left(x_1, x_2, x_3\right)^\top$，则有
+\[
+\begin{aligned}
+Q \left(\boldsymbol{x}\right) &= 2 x_1^2 + 3 x_2^2 + x_3^2 + 2 x_1x_2 + 2 x_2x_1 - x_1x_3 - x_3x_1 + 3x_2x_3 + 3x_3x_2 \\
+&= \left(x_1, x_2, x_3\right) \begin{bmatrix}
+    2 & 2 & -1 \\
+    2 & 3 & 3 \\
+    -1 & 3 & 1 \\
+\end{bmatrix} \left(x_1, x_2, x_3\right)^\top = \boldsymbol{x}^\top A \boldsymbol{x}
+\end{aligned}
+\]
+于是 $\boxed{A = \begin{bmatrix}
+    2 & 2 & -1 \\
+    2 & 3 & 3 \\
+    -1 & 3 & 1 \\
+\end{bmatrix}}.$
+
+\end{proof}
+
+\section*{Problem 2}
+
+判断下列二次型的正定性：
+
+\begin{enumerate}[]
+    \item $Q_1 \left(x, y\right) = x^2 + 2xy + 2y^2, $
+    \item $Q_2 \left(x, y, z\right) = x^2 + y^2 + z^2 - xy - xz - yz.$
+\end{enumerate}
+
+\begin{proof}
+对 $Q_1 \left(x, y\right) = x^2 + 2xy + 2y^2 = \left(x, y\right) A_1 \left(x, y\right)^\top$，易见
+\[
+A_1 = \begin{bmatrix}
+    1 & 1 \\
+    1 & 2 \\
+\end{bmatrix}.
+\]
+为求 $A_1$ 的特征值，解方程
+\[
+\det \left(\lambda I - A_1\right) = 0 \iff \det \begin{bmatrix}
+    \lambda - 1 & -1 \\
+    -1 & \lambda - 2 \\
+\end{bmatrix} = \lambda^2 - 3 \lambda + 1 = 0.
+\]
+即有 $\lambda_1 + \lambda_2 = 3, \lambda_1 \lambda_2 = 1 \iff \lambda_1, \lambda_2 > 0$，因此 $\boxed{Q_1 \textrm{ 是正定的}}$.
+
+对 $Q_2 \left(x, y, z\right) = x^2 + y^2 + z^2 - xy - xz - yz = \left(x, y, z\right) A_2 \left(x, y, z\right)^\top$，易见
+\[
+A_2 = \begin{bmatrix}
+    1 & -1/2 & -1/2 \\
+    -1/2 & 1 & -1/2 \\
+    -1/2 & -1/2 & 1 \\
+\end{bmatrix}.
+\]
+为求 $A_2$ 的特征值，解方程
+\[
+\begin{aligned}
+\det \left(\lambda I - A_2\right) &= 0 \iff \det \begin{bmatrix}
+    \lambda - 1 & 1/2 & 1/2 \\
+    1/2 & \lambda - 1 & 1/2 \\
+    1/2 & 1/2 & \lambda - 1 \\
+\end{bmatrix} = 0, \\
+&= \left(\lambda - 1\right) \det \begin{bmatrix}
+    \lambda - 1 & 1/2 \\
+    1/2 & \lambda - 1 \\
+\end{bmatrix} - \frac{1}{2} \det \begin{bmatrix}
+    1/2 & 1/2 \\
+    1/2 & \lambda - 1 \\
+\end{bmatrix} + \frac{1}{2} \det \begin{bmatrix}
+    1/2 & \lambda - 1 \\
+    1/2 & 1/2 \\
+\end{bmatrix}, \\
+&= \left(\lambda - 1\right) \left[\left(\lambda - 1\right)^2 - \frac{1}{4}\right] - \frac{1}{4} \left(\lambda - \frac{3}{2}\right) + \frac{1}{4} \left(\frac{3}{2} - \lambda\right), \\
+&= \lambda \left(\lambda^2 - 3\lambda + \frac{9}{4}\right) = \lambda \left(\lambda - \frac{3}{2}\right)^2 = 0 \implies \lambda_i \ge 0.
+\end{aligned}
+\]
+因此 $\boxed{Q_2 \textrm{ 是半正定的}}.$
+
+\end{proof}
+
+\section*{Problem 3}
+
+设 $f(\boldsymbol{x}) = \boldsymbol{x}^\top A \boldsymbol{x}$，定义双线性形
+\[
+g\left(\boldsymbol{x}, \boldsymbol{y}\right) = \frac{1}{2} \left[f \left(\boldsymbol{x} + \boldsymbol{y}\right) - f\left(\boldsymbol{x}\right) - f\left(\boldsymbol{y}\right)\right].
+\]
+若
+\[
+A =
+\begin{bmatrix}
+2 & 1 \\
+1 & 3
+\end{bmatrix},
+\]
+求 $g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right)$，其中 $\boldsymbol{e}_1 = \left(1, 0\right)^\top, \boldsymbol{e}_2 = \left(0, 1\right)^\top$.
+
+\begin{proof}
+为求 $g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right) = \frac{1}{2} \left[f \left(\boldsymbol{e}_1 + \boldsymbol{e}_2\right) - f\left(\boldsymbol{e}_1\right) - f\left(\boldsymbol{e}_2\right)\right]$，先求
+\[
+\begin{cases}
+f \left(\boldsymbol{e}_1\right) &= \left(1, 0\right) \begin{bmatrix}
+2 & 1 \\
+1 & 3
+\end{bmatrix} \left(1, 0\right)^\top = 2, \\
+f \left(\boldsymbol{e}_2\right) &= \left(0, 1\right) \begin{bmatrix}
+2 & 1 \\
+1 & 3
+\end{bmatrix} \left(0, 1\right)^\top = 3, \\
+f \left(\boldsymbol{e}_1 + \boldsymbol{e}_2\right) &= \left(1, 1\right) \begin{bmatrix}
+2 & 1 \\
+1 & 3
+\end{bmatrix} \left(1, 1\right)^\top = 7. \\
+\end{cases}
+\]
+于是
+\[
+g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right) = \frac{7 - 2 - 3}{2} = \boxed{1}.
+\]
+\end{proof}
+
+\section*{Problem 4}
+
+将二次型
+\[
+Q \left(x, y\right) = 2x^2 + 4xy + 5y^2
+\]
+化为标准形，并写出所用的可逆变换矩阵 $P$.
+
+\begin{proof}
+注意到
+\[
+\begin{aligned}
+    Q \left(x, y\right) = \left(x, y\right) \underbrace{\begin{bmatrix}
+        2 & 2 \\
+        2 & 5 \\
+    \end{bmatrix}}_{A} \left(x, y\right)^\top &= 2x^2 + 4xy + 5y^2, \\
+    &= 2 \left(x + y\right)^2 + 3 y^2 = \left(x + y, y\right) \underbrace{\begin{bmatrix}
+        2 & 0 \\
+        0 & 3 \\
+    \end{bmatrix}}_{B} \left(x + y, y\right)^\top.
+\end{aligned}
+\]
+引入矩阵 $P^{-1}$ 有
+\[
+\left(x + y, y\right)^\top = \underbrace{\begin{bmatrix}
+    1 & 1 \\
+    0 & 1 \\
+\end{bmatrix}}_{P^{-1}} \left(x, y\right)^\top.
+\]
+求解 $P$ 可得
+\[
+P^{-1} = \begin{bmatrix}
+    1 & 1 \\
+    0 & 1 \\
+\end{bmatrix}, P^{-1}P = I \implies
+\boxed{P = \begin{bmatrix}
+    1 & -1 \\
+    0 & 1 \\
+\end{bmatrix}}.
+\]
+\end{proof}

@@ -1,0 +1,142 @@
+\section*{Problem 1}
+
+一个前馈全连接神经网络有输入层、一个隐藏层和输出层。输入维度为 $d = 4$，隐藏层神经元个数为 $n_1 = 3$，输出层神经元个数为 $n_2 = 2$。忽略偏置项时，前向传播为
+\[
+\bm{a}^{(0)} = \bm{x},\quad
+\bm{z}^{(1)} = W^{(1)} \bm{a}^{(0)},\quad
+\bm{a}^{(1)} = \sigma_1(\bm{z}^{(1)}),\quad
+\bm{z}^{(2)} = W^{(2)} \bm{a}^{(1)}.
+\]
+\begin{enumerate}
+    \item 写出 $W^{(1)}$ 与 $W^{(2)}$ 的维度。
+    \item 分别计算忽略偏置项时和加入偏置项时的参数总数。
+    \item 简要说明为什么全连接前馈网络中“相邻两层之间的神经元全部两两连接”会使参数量随层宽快速增大。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 由矩阵乘法的维度匹配，
+        \[
+            W^{(1)}\in\mathbb{R}^{3\times4},\qquad
+            W^{(2)}\in\mathbb{R}^{2\times3}.
+        \]
+        \item 忽略偏置时共有
+        \[
+            3\cdot4+2\cdot3=\boxed{18}
+        \]
+        个参数。加入隐藏层的 $3$ 个偏置和输出层的 $2$ 个偏置后，共有
+        \[
+            18+3+2=\boxed{23}
+        \]
+        个参数。
+        \item 相邻两层的宽度分别为 $n_{l-1}$ 和 $n_l$ 时，权重矩阵含有 $n_ln_{l-1}$ 个参数。该数量是两层宽度的乘积，因此同时增宽相邻两层时，参数量按宽度的二次量级增长。
+    \end{enumerate}
+\end{proof}
+
+\section*{Problem 2}
+
+考虑一个一层隐藏层的前馈神经网络：
+\[
+\bm{a}^{(0)} = \bm{x},\quad
+\bm{z}^{(1)} = W^{(1)} \bm{x},\quad
+\bm{a}^{(1)} = \operatorname{ReLU}(\bm{z}^{(1)}),\quad
+\hat{\bm{y}} = W^{(2)} \bm{a}^{(1)},
+\]
+其中
+\[
+\bm{x} = \begin{pmatrix} 1 \\ -1 \end{pmatrix},\quad
+W^{(1)} = \begin{bmatrix}
+    1 & 2 \\
+    -1 & 1 \\
+    2 & 0
+\end{bmatrix},\quad
+W^{(2)} = \begin{bmatrix} 1 & -2 & 0.5 \end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 计算隐藏层净输入 $\bm{z}^{(1)}$。
+    \item 计算隐藏层输出 $\bm{a}^{(1)}$。
+    \item 计算网络输出 $\hat{\bm{y}}$；若真实标签为 $y = 2$，采用平方损失 $\ell = (\hat{y} - y)^2$，求该样本的损失值。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 隐藏层净输入为
+        \[
+            \bm{z}^{(1)}
+            = \begin{bmatrix}
+                1 & 2 \\
+                -1 & 1 \\
+                2 & 0
+              \end{bmatrix}
+              \begin{pmatrix}1\\-1\end{pmatrix}
+            = \boxed{\begin{pmatrix}-1\\-2\\2\end{pmatrix}}.
+        \]
+        \item ReLU 逐分量作用，故
+        \[
+            \bm{a}^{(1)}
+            = \boxed{\begin{pmatrix}0\\0\\2\end{pmatrix}}.
+        \]
+        \item 网络输出与平方损失分别为
+        \[
+            \hat y
+            = \begin{bmatrix}1&-2&0.5\end{bmatrix}
+              \begin{pmatrix}0\\0\\2\end{pmatrix}
+            = \boxed{1},
+            \qquad
+            \ell=(1-2)^2=\boxed{1}.
+        \]
+    \end{enumerate}
+\end{proof}
+
+\section*{Problem 3}
+
+某三分类模型最后一层输出的 logits 为
+\[
+\bm{z} = (1, 2, 0)^\top.
+\]
+经过 softmax 后得到预测概率
+\[
+\hat{y}_c = \frac{\exp(z_c)}{\sum_{j=1}^{3} \exp(z_j)},\quad c = 1, 2, 3.
+\]
+设真实标签为第 2 类，即 $\bm{y} = (0, 1, 0)^\top$。
+\begin{enumerate}
+    \item 写出 $\hat{\bm{y}} = \operatorname{softmax}(\bm{z})$ 的各个分量表达式。
+    \item 取 $\exp(1) \approx 2.718$, $\exp(2) \approx 7.389$, $\exp(0) = 1$，近似计算 $\hat{\bm{y}}$。
+    \item 计算交叉熵损失
+    \[
+    \ell(\bm{y}, \hat{\bm{y}}) = -\bm{y}^\top \log \hat{\bm{y}}.
+    \]
+    并记 $\frac{\partial \ell}{\partial \bm{z}} = \hat{\bm{y}} - \bm{y}$，写出该样本对 logits 的梯度。
+\end{enumerate}
+
+\begin{proof}
+    记
+    \[
+        S=e+e^2+1.
+    \]
+    \begin{enumerate}
+        \item 各分量为
+        \[
+            \hat{\bm{y}}
+            = \frac{1}{S}\begin{pmatrix}e\\e^2\\1\end{pmatrix}.
+        \]
+        \item 由 $S\approx2.718+7.389+1=11.107$，得到
+        \[
+            \hat{\bm{y}}
+            \approx \boxed{\begin{pmatrix}0.2447\\0.6652\\0.0900\end{pmatrix}}.
+        \]
+        \item 真实类别为第 $2$ 类，因此
+        \[
+            \ell=-\log\hat y_2
+            =-\log\frac{e^2}{S}
+            =\log S-2
+            \approx \boxed{0.4076}.
+        \]
+        对 logits 的梯度为
+        \[
+            \frac{\partial\ell}{\partial\bm{z}}
+            =\hat{\bm{y}}-\bm{y}
+            \approx \boxed{\begin{pmatrix}0.2447\\-0.3348\\0.0900\end{pmatrix}}.
+        \]
+    \end{enumerate}
+\end{proof}

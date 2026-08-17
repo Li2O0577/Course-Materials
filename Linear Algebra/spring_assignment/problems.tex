@@ -1,0 +1,126 @@
+\documentclass[11pt,a4paper]{ctexart}
+
+% ---------- Page geometry ----------
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+% ---------- Math ----------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{extarrows}
+
+% ---------- Enumeration ----------
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{itemsep=0mm}
+
+% ---------- Custom commands (same as assignment.cls) ----------
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+\newcommand{\ct}{\mathsf{H}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Span}{\mathrm{span}}
+
+\begin{document}
+
+\title{高等代数 II\quad 习题集}
+\author{evilayuria \quad 2025999999}
+\date{\today}
+\maketitle
+
+\tableofcontents
+\newpage
+
+% ============================================
+\section{二次型与对称矩阵、正定性}
+\input{problems/assignment_1.tex}
+
+\newpage
+\section{二次型的标准形、惯性指数与正定判别}
+\input{problems/assignment_2.tex}
+
+\newpage
+\section{双线性型、Gram 矩阵与对称双线性型}
+\input{problems/assignment_3.tex}
+
+\newpage
+\section{线性映射与线性变换、核与像、矩阵表示}
+\input{problems/assignment_4.tex}
+
+\newpage
+\section{秩--零化度定理、基变换与相似矩阵、可对角化判定}
+\input{problems/assignment_5.tex}
+
+\newpage
+\section{子空间的直和、维数公式与对称/反对称分解}
+\input{problems/assignment_6.tex}
+
+\newpage
+\section{不变子空间与分块矩阵}
+\input{problems/assignment_7.tex}
+
+\newpage
+\section{赋范向量空间、Banach 不动点定理与算子范数}
+\input{problems/assignment_8.tex}
+
+\newpage
+\section{主成分分析（PCA）：特征值分解与低秩近似}
+\input{problems/assignment_9.tex}
+
+\newpage
+\section{PCA 与协方差矩阵、方差最大化与主成分方向}
+\input{problems/assignment_10.tex}
+
+\newpage
+\section{奇异值分解（SVD）、奇异值与低秩近似}
+\input{problems/assignment_11.tex}
+
+\newpage
+\section{SVD 与四个基本子空间、极分解与数值稳定性}
+\input{problems/assignment_12.tex}
+
+\newpage
+\section{复矩阵与 Hermite 矩阵、酉对角化与 Fourier 矩阵}
+\input{problems/assignment_13.tex}
+
+\newpage
+\section{Hermite 正定矩阵、伴随算子与复内积空间}
+\input{problems/assignment_14.tex}
+
+\newpage
+\section{Fourier 变换与 FFT：蝶形算法、多项式插值与复杂度分析}
+\input{problems/assignment_15.tex}
+
+\newpage
+\section{矩阵微积分：向量/矩阵求导、迹的导数与行列式求导}
+\input{problems/assignment_16.tex}
+
+\newpage
+\section{正规方程、Sigmoid 导数与 PCA 的 Lagrange 对偶}
+\input{problems/assignment_17.tex}
+
+\newpage
+\section{Moore--Penrose 广义逆与最小二范数解}
+\input{problems/assignment_18.tex}
+
+\newpage
+\section{人工神经元：前向计算、激活函数与梯度消失}
+\input{problems/assignment_19.tex}
+
+\newpage
+\section{全连接网络：结构、参数量、前向计算与 Softmax 回归}
+\input{problems/assignment_20.tex}
+
+\newpage
+\section{ReLU 激活模式、仿射映射、卷积参数量与 Softmax 梯度}
+\input{problems/assignment_21.tex}
+
+\newpage
+\section{反向传播、自动微分与一维卷积的矩阵形式}
+\input{problems/assignment_22.tex}
+
+\end{document}

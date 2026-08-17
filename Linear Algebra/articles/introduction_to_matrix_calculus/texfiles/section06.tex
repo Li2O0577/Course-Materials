@@ -1,0 +1,156 @@
+\section{一些矩阵函数的微分公式}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Sky.png}
+\end{center}
+
+前面已经说明，标量矩阵函数的梯度可以从一阶主项中读出。本章按函数类型整理常用公式；对已经完整计算过的例子只保留关键步骤，逆矩阵和对数行列式则展开推导。
+
+对于迹线性函数，我们直接给出它们的梯度。设 \(X\in\mathbb{R}^{m\times n}\)，\(C\in\mathbb{R}^{m\times n}\)，若 \(f(X)=\langle C,X\rangle_F=\operatorname{tr}(C^\top X)\)，则
+\[
+\nabla_X f=C.
+\]
+若 \(f(X)=\operatorname{tr}(A X B)\)，其中 \(A\in\mathbb{R}^{p\times m}\)、\(B\in\mathbb{R}^{n\times p}\)，则
+\[
+\nabla_X f=A^\top B^\top.
+\]
+这类公式的共同点是：函数本身关于 \(X\) 已经线性，梯度就是与 \(\mathrm{d}X\) 配对的系数矩阵。
+
+Frobenius 范数平方是最基本的二次型。设 \(B\in\mathbb{R}^{m\times n}\)，若 \(f(X)=\frac12\|X-B\|_F^2\)，则
+\[
+\nabla_X f=X-B.
+\]
+特别地，\(\nabla_X\frac12\|X\|_F^2=X\)。若带有左侧线性变换，
+\[
+f(X)=\frac12\|AX-B\|_F^2,
+\]
+其中 \(A\in\mathbb{R}^{p\times m}\)、\(X\in\mathbb{R}^{m\times n}\)、\(B\in\mathbb{R}^{p\times n}\)，则
+\[
+\nabla_X f=A^\top(AX-B).
+\]
+若线性变换在右侧，即 \(f(X)=\frac12\|XA-B\|_F^2\)，其中 \(A\in\mathbb{R}^{n\times q}\)、\(B\in\mathbb{R}^{m\times q}\)，则
+\[
+\nabla_X f=(XA-B)A^\top.
+\]
+左右乘的两个公式不同，原因是增量分别以 \(AH\) 和 \(HA\) 的形式进入残差，矩阵乘法顺序不能交换。
+
+迹二次型也是前面已经推导过的核心例子。设 \(X\in\mathbb{R}^{m\times n}\)，\(A\in\mathbb{R}^{m\times m}\)，若 \(f(X)=\operatorname{tr}(X^\top A X)\)，则
+\[
+\nabla_X f=(A+A^\top)X.
+\]
+只有在 \(A=A^\top\) 时，公式才能简化为 \(\nabla_X f=2AX\)。
+
+逆矩阵公式需要单独推导，因为它不能由多项式展开直接得到。设 \(X\in\mathbb{R}^{n\times n}\) 可逆，\(H\) 足够小时 \(X+H\) 也可逆。记
+\[
+\Delta=(X+H)^{-1}-X^{-1}.
+\]
+这里 \(\Delta\) 是逆矩阵输出的增量，目标是从 \(\Delta\) 中分离关于 \(H\) 的线性主项。由 \((X+H)(X+H)^{-1}=I\) 和 \(XX^{-1}=I\)，有
+\[
+(X+H)(X^{-1}+\Delta)-XX^{-1}=0.
+\]
+展开并消去 \(XX^{-1}\) 得
+\[
+X\Delta+HX^{-1}+H\Delta=0.
+\]
+若只保留一阶项，则乘积 \(H\Delta\) 暂时不参与主项，因为 \(\Delta\) 本身随 \(H\) 趋于零。于是线性主项 \(L\) 应满足
+\[
+XL+HX^{-1}=0,
+\]
+从而
+\[
+L=-X^{-1}HX^{-1}.
+\]
+
+还需要验证 \(H\Delta\) 确实只影响高阶余项。由上面的精确等式可得
+\[
+\Delta=-X^{-1}HX^{-1}-X^{-1}H\Delta.
+\]
+另一方面，由恒等式
+\[
+(X+H)^{-1}-X^{-1}=-X^{-1}H(X+H)^{-1}
+\]
+可知，\(\Delta\) 至少含有一个因子 \(H\)。当 \(H\) 足够小时，\(X+H\) 仍可逆，并且 \((X+H)^{-1}\) 在 \(X\) 的一个小邻域内有界；也就是说，存在常数 \(M\)，使得 \(\|(X+H)^{-1}\|\le M\)。于是
+\[
+\|\Delta\|
+\le \|X^{-1}\|\,\|H\|\,\|(X+H)^{-1}\|
+\le M\|X^{-1}\|\,\|H\|.
+\]
+这正是 \(\Delta=O(\|H\|)\) 的含义，即逆矩阵输出的增量与输入增量同阶。
+于是 \(\|H\Delta\|=O(\|H\|^2)\)，从而 \(X^{-1}H\Delta=o(\|H\|)\)。代回 \(\Delta\) 的表达式，得到
+\[
+(X+H)^{-1}-X^{-1}=-X^{-1}HX^{-1}+o(\|H\|).
+\]
+因此
+\[
+\mathrm{D}(X^{-1})[H]=-X^{-1}HX^{-1}.
+\]
+这个公式要求基点 \(X\) 可逆，并且乘法顺序必须保留。
+
+含逆矩阵的标量函数可由上一公式直接推出。设 \(A\in\mathbb{R}^{n\times n}\)，定义 \(f(X)=\operatorname{tr}(A X^{-1})\)，其中 \(X\) 可逆。由逆矩阵增量公式，
+\[
+f(X+H)-f(X)=\operatorname{tr}(A((X+H)^{-1}-X^{-1}))
+=-\operatorname{tr}(A X^{-1}H X^{-1})+o(\|H\|).
+\]
+利用迹的循环性，
+\[
+-\operatorname{tr}(A X^{-1}H X^{-1})
+=-\operatorname{tr}(X^{-1}A X^{-1}H)
+=\operatorname{tr}((-X^{-\top}A^\top X^{-\top})^\top H).
+\]
+因此
+\[
+\nabla_X f=-X^{-\top}A^\top X^{-\top}.
+\]
+若 \(A\) 或 \(X\) 具有对称性，可以在这个公式的基础上进一步化简，但化简必须写明相应条件。
+
+对数行列式的增量展开来自行列式乘法公式。设 \(X\in\mathbb{R}^{n\times n}\) 可逆，且 \(H\) 足够小时 \(X+H\) 与 \(X\) 位于同一个 \(\det\ne0\) 的连通区域内。由于
+\[
+\det(X+H)=\det X\cdot \det(I+X^{-1}H),
+\]
+有
+\[
+\log|\det(X+H)|-\log|\det X|=\log|\det(I+X^{-1}H)|.
+\]
+设 $E=(e_{ij})\in\mathbb{R}^{n\times n}$，记 $I+E=(\delta_{ij}+e_{ij})$，其中 $\delta_{ij}$ 为 Kronecker 符号。由行列式定义，
+
+$$
+\det(I+E)
+=\sum_{\sigma\in S_n}\text{sgn}(\sigma)
+\prod_{i=1}^n(\delta_{i,\sigma(i)}+e_{i,\sigma(i)}).
+$$
+
+先考虑恒等置换 $\sigma=\mathrm{id}$。此时
+
+$$
+\prod_{i=1}^n(1+e_{ii})
+=1+\sum_{i=1}^n e_{ii}
++\sum_{1\le i<j\le n}e_{ii}e_{jj}
++\cdots
++e_{11}e_{22}\cdots e_{nn}.
+$$
+
+其中常数项为 $1$，一次项为 $\sum_{i=1}^n e_{ii}$，所有含两个或更多 $e_{ii}$ 的项都是 $O(\|E\|^2)$。
+
+再考虑非恒等置换 $\sigma\ne\mathrm{id}$。若某个指标 $i$ 满足 $\sigma(i)\ne i$，则 $\delta_{i,\sigma(i)}=0$，对应因子只能取 $e_{i,\sigma(i)}$。由于置换不能只移动一个指标，非恒等置换至少存在两个指标 $i$ 使得 $\sigma(i)\ne i$。因此每个非恒等置换对应的乘积至少含有两个 $E$ 的元素，从而整体为 $O(\|E\|^2)$。
+
+于是 $\det(I+E)$ 的常数项与一次项完全由恒等置换贡献，得到
+\[
+\det(I+E)=1+\sum_i e_{ii}+O(\|E\|^2)=1+\operatorname{tr}(E)+O(\|E\|^2).
+\]
+再由一元展开 \(\log(1+s)=s+O(s^2)\) 得到
+\[
+\log|\det(I+E)|=\operatorname{tr}(E)+o(\|E\|).
+\]
+取 \(E=X^{-1}H\) 得
+\[
+\log|\det(X+H)|-\log|\det X|
+=\operatorname{tr}(X^{-1}H)+o(\|H\|)
+=\operatorname{tr}((X^{-\top})^\top H)+o(\|H\|).
+\]
+因此
+\[
+\nabla_X \log|\det X|=X^{-\top}.
+\]
+在对称正定矩阵空间中，\(\log\det X\) 是实值函数，且 \(X^{-\top}=X^{-1}\)，所以普通矩阵空间中的梯度表达化为 \(X^{-1}\)。若变量还受到对称约束，后文需要进一步讨论可行增量与梯度投影。
+
+这些公式可以直接复用，但适用条件必须同时保留，尤其是可逆性、正定性、对称性和维度匹配。当输出不再是标量时，导数本身应保留为从输入增量到输出增量主项的线性映射，而不一定能读成一个梯度矩阵。

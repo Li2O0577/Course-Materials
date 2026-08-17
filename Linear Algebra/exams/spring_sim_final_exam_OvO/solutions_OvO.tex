@@ -1,0 +1,1132 @@
+\PassOptionsToClass{fontset=fandol}{ctexbook}
+\documentclass[10pt,a4paper]{exam-zh}
+
+% ---------- Configuration ----------
+\examsetup{
+  question/show-points = false,
+  problem/show-points  = true,
+  choices/label        = \Alph*.,
+  choices/label-align  = right,
+  choices/label-sep    = 0.5em,
+  choices/max-columns  = 2,
+  choices/column-sep   = 2em,
+  fillin/type          = line,
+  sealline/show        = false,
+  % font                 = xits,
+  % math-font            = xits,
+  paren/show-answer    = true,
+  fillin/show-answer   = true,
+  solution/show-solution = show-stay,
+}
+
+% ---------- Compact layout ----------
+\geometry{top=1.0cm, bottom=1.0cm, left=1.8cm, right=1.8cm}
+\usepackage{enumitem}
+\usepackage{needspace}
+\setlist[enumerate]{itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+\setlist[enumerate,2]{itemsep=0pt, topsep=0pt, parsep=0pt}
+
+% ---------- Math packages ----------
+\usepackage{extarrows}
+
+% ---------- Fix unicode-math compatibility ----------
+\ExplSyntaxOn
+\cs_set_eq:NN \mathbb \symbb
+\cs_set_eq:NN \mathcal \symcal
+\cs_set_eq:NN \boldsymbol \symbf
+\ExplSyntaxOff
+
+% ---------- Custom commands ----------
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+\newcommand{\ct}{\mathsf{H}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Span}{\mathrm{span}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\definecolor{gradingred}{RGB}{165,35,35}
+\newenvironment{grading}
+  {\par\smallskip\Needspace{5\baselineskip}\small
+   \noindent\textcolor{gradingred}{\textbf{评分要点：}}
+   \begin{enumerate}[label=\textcolor{gradingred}{\arabic*.},
+     leftmargin=2.4em,itemsep=0pt,topsep=2pt,parsep=0pt]}
+  {\end{enumerate}\smallskip}
+\newcommand{\gradeitem}[2]{\item #1（\textcolor{gradingred}{#2 分}）}
+\newcommand{\shortgrading}[1]{%
+  \par\smallskip\noindent\textcolor{gradingred}{\textbf{评分：}}#1\par}
+\newenvironment{answersteps}
+  {\begin{enumerate}[label=\textbf{步骤 \arabic*.},
+    leftmargin=4.8em,labelsep=0.6em,itemsep=2pt,topsep=3pt,parsep=0pt]}
+  {\end{enumerate}}
+\newcommand{\subanswer}[1]{%
+  \par\medskip\Needspace{6\baselineskip}\noindent\textbf{#1}\par}
+
+% ---------- Document ----------
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{高等代数 II\quad 期末试卷参考答案与评分细则}}\\[0.4em]
+\end{center}
+
+\noindent\textbf{阅卷说明：}
+各得分点原则上独立计分；采用等价方法且论证完整者按对应得分点给分。
+前一步出现非原则性计算错误、后续方法正确时，后续方法分照给，计算结果分酌扣；
+仅写结论而缺少题目明确要求的证明或计算过程，不得获得相应过程分。
+
+
+\section{选择题}
+
+\begin{question}
+  设机器学习模型的损失函数 $L(\bvec{\theta})$ 可微，学习率 $\eta>0$。
+  梯度下降法的基本参数更新公式为 \paren[A]
+  \begin{choices}
+    \item $\bvec{\theta}_{t+1}
+      = \bvec{\theta}_t-\eta\nabla L(\bvec{\theta}_t)$
+    \item $\bvec{\theta}_{t+1}
+      = \bvec{\theta}_t+\eta\nabla L(\bvec{\theta}_t)$
+    \item $\bvec{\theta}_{t+1}
+      = \bvec{\theta}_t-\eta L(\bvec{\theta}_t)$
+    \item $\bvec{\theta}_{t+1}
+      = \nabla L(\bvec{\theta}_t)$
+  \end{choices}
+  \textbf{解析：}梯度给出函数增长最快的方向，下降迭代应沿负梯度方向更新。
+  \shortgrading{选择 A 得 2 分；错选、多选或未选得 0 分。}
+\end{question}
+
+\begin{question}
+  设 $W_1, W_2$ 为线性空间 $V$ 的子空间。$V = W_1 \oplus W_2$ 的充要条件是 \paren[B]
+  \begin{choices}
+    \item $W_1 \cap W_2 = \{0\}$
+    \item $W_1 \cap W_2 = \{0\}$ 且 $W_1 + W_2 = V$
+    \item $\dim W_1 + \dim W_2 = \dim V$
+    \item $W_1 \cup W_2 = V$
+  \end{choices}
+  \textbf{解析：}直和要求每个向量可唯一写成两子空间中向量之和，等价于
+  $W_1+W_2=V$ 且 $W_1\cap W_2=\{\bvec 0\}$。
+  \shortgrading{选择 B 得 2 分；错选、多选或未选得 0 分。}
+\end{question}
+
+\begin{question}
+  设 $A$ 为 $m \times n$ 实矩阵，$B$ 为 $n \times m$ 实矩阵，则下列等式\textbf{不一定}成立的是 \paren[C]
+  \begin{choices}
+    \item $\det\left(I_m+AB\right)=\det\left(I_n+BA\right)$
+    \item $\tr\left(AB\right)=\tr\left(BA\right)$
+    \item $\det(AB) = \det(BA)$
+    \item $\tr\left(AA^\top+B^\top B\right)
+      =\tr\left(A^\top A+BB^\top\right)$
+  \end{choices}
+  \textbf{解析：}取 $m=1,n=2$、$A=\begin{bmatrix}1&0\end{bmatrix}$、
+  $B=\begin{bmatrix}1&0\end{bmatrix}^{\top}$，则 $\det(AB)=1$ 而 $\det(BA)=0$。
+  其余三式分别由 Sylvester 行列式恒等式、迹的循环性及
+  $\tr(AA^\top)=\tr(A^\top A)$、$\tr(B^\top B)=\tr(BB^\top)$ 得到。
+  \shortgrading{选择 C 得 2 分；错选、多选或未选得 0 分。}
+\end{question}
+
+\begin{question}
+  设 $A, B$ 为 $n$ 阶方阵且 $A \sim B$，则下列选项\textbf{不一定}成立的是 \paren[D]
+  \begin{choices}
+    \item $\tr(A) = \tr(B)$
+    \item $A$ 与 $B$ 有相同的特征值
+    \item $\det(A) = \det(B)$
+    \item $A$ 与 $B$ 有相同的特征向量
+  \end{choices}
+  \textbf{解析：}相似变换保持特征多项式、迹和行列式，但一般不保持特征向量本身。
+  \shortgrading{选择 D 得 2 分；错选、多选或未选得 0 分。}
+\end{question}
+
+\begin{question}
+  约定半双线性型对第一个变量共轭线性、对第二个变量线性。设
+  $\varphi(\bvec{x}, \bvec{y})$ 为复线性空间 $V$ 上的半双线性型，
+  $\alpha,\beta\in\C$，则下列等式\textbf{正确}的是 \paren[A]
+  \begin{choices}
+    \item $\varphi(\alpha\bvec{x},\beta\bvec{y})
+      = \bar{\alpha}\beta\,\varphi(\bvec{x},\bvec{y})$
+    \item $\varphi(\alpha\bvec{x},\beta\bvec{y})
+      = \alpha\beta\,\varphi(\bvec{x},\bvec{y})$
+    \item $\varphi(\alpha\bvec{x},\beta\bvec{y})
+      = \bar{\alpha}\bar{\beta}\,\varphi(\bvec{x},\bvec{y})$
+    \item $\varphi(\alpha\bvec{x},\beta\bvec{y})
+      = \alpha\bar{\beta}\,\varphi(\bvec{x},\bvec{y})$
+  \end{choices}
+  \textbf{解析：}第一个变量共轭线性给出因子 $\bar\alpha$，第二个变量线性给出因子 $\beta$。
+  \shortgrading{选择 A 得 2 分；错选、多选或未选得 0 分。}
+\end{question}
+
+
+\section{填空题}
+
+\begin{question}
+  二次型 $Q(x, y) = 2x^2 + 4xy + 5y^2$ 通过配方法化为标准形后，正惯性指数为 \fillin[2] 。
+  因为 $Q=2(x+y)^2+3y^2$，两个平方项系数均为正。
+  \shortgrading{填写 $2$ 得 2 分；其他答案得 0 分。}
+\end{question}
+
+\begin{question}
+  双线性型 $g(\bvec{x}, \bvec{y}) = 2x_1y_1 + 3x_1y_2 - x_2y_1 + 4x_2y_2$ 在标准基 $\bvec{e}_1, \bvec{e}_2$ 下的 Gram 矩阵为 \fillin[{$\begin{bmatrix} 2 & 3 \\ -1 & 4 \end{bmatrix}$}] 。
+  由 $x_i y_j$ 的系数直接读取矩阵元。
+  \shortgrading{四个矩阵元每个 0.5 分；位置错误的矩阵元不得分。}
+\end{question}
+
+\begin{question}
+  设 $A = \begin{bmatrix} 1 & 2 \\ 0 & 3 \end{bmatrix}$，则 $W = \Span\{(1, 0)^\top\}$ 是否为 $A$ 的不变子空间？答：\fillin[是] （填"是"或"否"）。
+  因为 $A(1,0)^\top=(1,0)^\top\in W$。
+  \shortgrading{填写“是”得 2 分；其他答案得 0 分。}
+\end{question}
+
+\begin{question}
+  在 $(\R^2,\|\cdot\|_\infty)$ 上定义
+  \[
+  T(\bvec{x})=
+  \begin{bmatrix}0&\frac12\\[1mm]\frac13&0\end{bmatrix}\bvec{x}
+  +\begin{pmatrix}1\\0\end{pmatrix}.
+  \]
+  已知 $T$ 为压缩映射，则其唯一不动点为
+  \fillin[{$\left(\frac65,\frac25\right)^\top$}] 。
+  令 $\bvec x=(x_1,x_2)^\top$，由 $T(\bvec x)=\bvec x$ 得
+  $x_1=\frac12x_2+1$、$x_2=\frac13x_1$，解得上述结果。
+  \shortgrading{第一坐标 $6/5$ 得 1 分，第二坐标 $2/5$ 得 1 分；行、列向量写法均可。}
+\end{question}
+
+\begin{question}
+  二分类问题中，模型预测概率 $\hat{y} = e^{-1}$，真实标签 $y = 1$，则二元交叉熵损失 $\ell = -y\ln\hat{y} - (1-y)\ln(1-\hat{y})$ 的值为 \fillin[1] 。
+  此时 $\ell=-\ln(e^{-1})=1$。
+  \shortgrading{填写 $1$ 得 2 分；其他答案得 0 分。}
+\end{question}
+
+
+\section{解答题}
+
+% Q1
+\begin{problem}[points = 13]
+
+\begin{enumerate}
+    \item （4 分） 设 $\bvec{u}, \bvec{v} \in \R^n$。证明：
+    \[
+    \det(I_n + \bvec{u}\bvec{v}^\top) = 1 + \bvec{v}^\top\bvec{u}.
+    \]
+
+    \item （3 分） 设 $A \in \R^{n \times n}$ 可逆，$\bvec{u}, \bvec{v} \in \R^n$。证明：
+    \[
+    \det(A + \bvec{u}\bvec{v}^\top) = \det(A) \cdot (1 + \bvec{v}^\top A^{-1}\bvec{u}).
+    \]
+
+    \item （6 分） 计算行列式
+    \[
+    \begin{vmatrix}
+    3   & 1 & 1  & 1  & 1 \\
+    1   & 7 & 1  & 1  & 1 \\
+    1   & 1 & 13 & 1  & 1 \\
+    1   & 1 & 1  & 21 & 1 \\
+    1   & 1 & 1  & 1  & 31
+    \end{vmatrix}.
+    \]
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subanswer{(1)}
+\begin{answersteps}
+  \item 构造分块矩阵
+  \[
+  M=
+  \begin{bmatrix}
+  I_n&-\bvec u\\
+  \bvec v^\top&1
+  \end{bmatrix}.
+  \]
+  \item 左乘行列式为 $1$ 的消元矩阵，得到
+  \[
+  \begin{bmatrix}I_n&0\\-\bvec v^\top&1\end{bmatrix}M
+  =
+  \begin{bmatrix}
+  I_n&-\bvec u\\
+  0&1+\bvec v^\top\bvec u
+  \end{bmatrix},
+  \qquad
+  \det(M)=1+\bvec v^\top\bvec u.
+  \]
+  \item 从另一方向消元：
+  \[
+  \begin{bmatrix}I_n&\bvec u\\0&1\end{bmatrix}
+  M
+  \begin{bmatrix}I_n&0\\-\bvec v^\top&1\end{bmatrix}
+  =
+  \begin{bmatrix}
+  I_n+\bvec u\bvec v^\top&0\\
+  0&1
+  \end{bmatrix},
+  \]
+  因而
+  \[
+  \det(M)=\det(I_n+\bvec u\bvec v^\top).
+  \]
+  \item 比较两种计算结果，得到
+  \[
+  \boxed{\det(I_n+\bvec u\bvec v^\top)=1+\bvec v^\top\bvec u}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{构造可用于两种消元的分块矩阵 $M$，或写出等价的行列式变换框架}{1}
+  \gradeitem{由第一次块消元得到 $\det(M)=1+\bvec v^\top\bvec u$}{1}
+  \gradeitem{由第二次块消元得到 $\det(M)=\det(I_n+\bvec u\bvec v^\top)$}{1}
+  \gradeitem{比较两式并写出待证恒等式}{1}
+\end{grading}
+
+\subanswer{(2)}
+\begin{answersteps}
+  \item 利用 $A$ 可逆，将矩阵分解为
+  \[
+  A+\bvec u\bvec v^\top
+  =A\bigl(I_n+A^{-1}\bvec u\bvec v^\top\bigr).
+  \]
+  \item 取行列式，并令 $\widetilde{\bvec u}=A^{-1}\bvec u$：
+  \[
+  \det(A+\bvec u\bvec v^\top)
+  =\det(A)\det(I_n+\widetilde{\bvec u}\bvec v^\top).
+  \]
+  由第 (1) 问，
+  \[
+  \det(I_n+\widetilde{\bvec u}\bvec v^\top)
+  =1+\bvec v^\top\widetilde{\bvec u}
+  =1+\bvec v^\top A^{-1}\bvec u.
+  \]
+  \item 因此
+  \[
+  \boxed{\det(A+\bvec u\bvec v^\top)
+  =\det(A)\bigl(1+\bvec v^\top A^{-1}\bvec u\bigr)}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{利用 $A$ 可逆，正确分解
+  $A+\bvec u\bvec v^\top=A(I_n+A^{-1}\bvec u\bvec v^\top)$}{1}
+  \gradeitem{取行列式并将第 (1) 问用于 $(A^{-1}\bvec u)\bvec v^\top$}{1}
+  \gradeitem{化简得到完整的矩阵行列式引理公式}{1}
+\end{grading}
+
+\subanswer{(3)}
+\begin{answersteps}
+  \item 记 $\mathbf1=(1,1,1,1,1)^\top$。原矩阵可写成
+  \[
+  A=D+\mathbf1\mathbf1^\top,
+  \qquad
+  D=\diag(2,6,12,20,30).
+  \]
+  \item 计算对角矩阵的行列式：
+  \[
+  \det(D)=2\cdot6\cdot12\cdot20\cdot30=86\,400.
+  \]
+  \item 计算秩一修正项：
+  \[
+  \begin{aligned}
+  \mathbf1^\top D^{-1}\mathbf1
+  &=\sum_{k=1}^{5}\frac1{k(k+1)}
+    =\sum_{k=1}^{5}\left(\frac1k-\frac1{k+1}\right)\\
+  &=1-\frac16=\frac56.
+  \end{aligned}
+  \]
+  \item 套用第 (2) 问的结论：
+  \[
+  \det(A)
+  =\det(D)\left(1+\mathbf1^\top D^{-1}\mathbf1\right)
+  =86\,400\cdot\frac{11}{6}.
+  \]
+  因而
+  \[
+  \boxed{\det(A)=158\,400}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{识别并写出 $A=D+\mathbf1\mathbf1^\top$，
+  $D=\diag(2,6,12,20,30)$}{1}
+  \gradeitem{算出 $\det(D)=86\,400$}{1}
+  \gradeitem{写出 $\mathbf1^\top D^{-1}\mathbf1
+  =\sum_{k=1}^5 1/[k(k+1)]$}{1}
+  \gradeitem{利用裂项求和得到 $\mathbf1^\top D^{-1}\mathbf1=5/6$}{1}
+  \gradeitem{正确套用第 (2) 问：
+  $\det(A)=\det(D)(1+\mathbf1^\top D^{-1}\mathbf1)$}{1}
+  \gradeitem{完成数值计算，得到 $158\,400$}{1}
+\end{grading}
+\end{solution}
+
+
+% Q2
+\begin{problem}[points = 8]
+设 $\bvec{a} \in \R^n$ 为常向量，$W \in \R^{n \times n}$ 为可逆对称矩阵，考虑 $\bvec{x} \in \R^n$ 的函数
+\[
+f(\bvec{x}) = \bvec{a}^\top \bvec{x} + \frac{1}{2}\bvec{x}^\top W \bvec{x}.
+\]
+\begin{enumerate}
+    \item （2 分） 求梯度 $\nabla f(\bvec{x})$。
+    \item （2 分） 令 $\nabla f(\bvec{x}) = \bvec{0}$，求驻点 $\bvec{x}^*$（用 $\bvec{a}$ 和 $W$ 表示）。
+    \item （4 分） 设 $W$ 为正定矩阵，证明 $\bvec{x}^*$ 为 $f(\bvec{x})$ 的唯一全局极小值点。
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subanswer{(1)}
+\begin{answersteps}
+  \item 线性项的梯度为
+  \[
+  \nabla(\bvec a^\top\bvec x)=\bvec a.
+  \]
+  \item 二次项的一般梯度为
+  \[
+  \nabla\left(\frac12\bvec x^\top W\bvec x\right)
+  =\frac12(W+W^\top)\bvec x.
+  \]
+  由于 $W^\top=W$，所以
+  \[
+  \boxed{\nabla f(\bvec x)=\bvec a+W\bvec x}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{写出 $\nabla(\bvec a^\top\bvec x)=\bvec a$}{1}
+  \gradeitem{利用 $W^\top=W$ 得二次项梯度 $W\bvec x$，并合并为
+  $\nabla f=\bvec a+W\bvec x$}{1}
+\end{grading}
+
+\subanswer{(2)}
+\begin{answersteps}
+  \item 驻点满足
+  \[
+  \nabla f(\bvec x)=\bvec0
+  \quad\Longleftrightarrow\quad
+  W\bvec x=-\bvec a.
+  \]
+  \item 由于 $W$ 可逆，驻点唯一，且
+  \[
+  \boxed{\bvec x^*=-W^{-1}\bvec a}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{由驻点条件写出 $W\bvec x=-\bvec a$}{1}
+  \gradeitem{利用 $W$ 可逆解得 $\bvec x^*=-W^{-1}\bvec a$}{1}
+\end{grading}
+
+\subanswer{(3)}
+\begin{answersteps}
+  \item 任取 $\bvec x=\bvec x^*+\bvec h$，其中 $\bvec h\in\R^n$。二次函数可精确展开为
+  \[
+  f(\bvec x^*+\bvec h)
+  =f(\bvec x^*)+\nabla f(\bvec x^*)^\top\bvec h
+   +\frac12\bvec h^\top W\bvec h.
+  \]
+  \item 因为 $\bvec x^*$ 是驻点，
+  \[
+  \nabla f(\bvec x^*)=\bvec0,
+  \]
+  从而
+  \[
+  f(\bvec x^*+\bvec h)-f(\bvec x^*)
+  =\frac12\bvec h^\top W\bvec h.
+  \]
+  \item 当 $\bvec h\ne\bvec0$ 时，由 $W\succ0$ 可得
+  \[
+  \bvec h^\top W\bvec h>0,
+  \qquad
+  f(\bvec x^*+\bvec h)>f(\bvec x^*).
+  \]
+  \item 上式对任意非零 $\bvec h$ 成立，因此
+  \[
+  \boxed{\bvec x^*\text{ 是 }f\text{ 的唯一全局极小值点}}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{令任意 $\bvec x=\bvec x^*+\bvec h$，写出二次函数的精确展开式}{1}
+  \gradeitem{利用 $\nabla f(\bvec x^*)=\bvec0$ 消去一次项}{1}
+  \gradeitem{利用 $W\succ0$ 得 $\bvec h^\top W\bvec h>0$（$\bvec h\ne\bvec0$）}{1}
+  \gradeitem{由对所有非零 $\bvec h$ 的严格不等式同时推出“全局极小”与“唯一”}{1}
+\end{grading}
+\end{solution}
+
+
+% Q3
+\begin{problem}[points = 10]
+
+记 $\omega_n = e^{-2\pi i/n}$。FFT 的核心思想是将长度为 $n=2m$ 的 DFT 分解为两个长度为 $m$ 的子 DFT，再通过蝶形运算合并。
+
+\begin{enumerate}
+    \item （4 分） 设 $\bvec{x} = (x_0, x_1, x_2, x_3)^\top \in \C^4$，$F_2 = \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$ 为 2 阶 Fourier 矩阵。写出用偶奇分解计算 $\bvec{y} = F_4 \bvec{x}$ 的完整公式：
+    \[
+    \bvec{y}^{\text{even}} = F_2\begin{pmatrix} x_0 \\ x_2 \end{pmatrix}, \qquad
+    \bvec{y}^{\text{odd}} = F_2\begin{pmatrix} x_1 \\ x_3 \end{pmatrix},
+    \]
+    然后通过蝶形运算合并得到 $y_0, y_1, y_2, y_3$。写出蝶形合并的四个表达式。
+
+    \item （4 分） 取 $\bvec{x} = (1,\; 2-i,\; 0,\; 1+i)^\top$。按上述分解法计算 $\bvec{y} = F_4\bvec{x}$：先分别计算两个 2 点 DFT，再通过蝶形合并得到最终结果。\textbf{不得}直接使用 $4\times4$ 矩阵乘法。
+
+    \item （2 分） 对一般的 $n = 2^p$，写出 FFT 的递推关系
+    $T(n) = 2T(n/2) + cn$，并求出其渐近复杂度。若直接 DFT 需
+    $n^2$ 次乘法，FFT 需约 $\frac{n}{2}\log_2 n$ 次乘法，估算
+    $n = 1024$ 时直接 DFT 的乘法次数约为 FFT 的多少倍
+    （保留 1 位有效数字）。
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subanswer{(1)}
+\begin{answersteps}
+  \item 分别对偶序列和奇序列做 2 点 DFT：
+  \[
+  \bvec y^{\mathrm{even}}
+  =
+  \begin{pmatrix}x_0+x_2\\x_0-x_2\end{pmatrix},
+  \qquad
+  \bvec y^{\mathrm{odd}}
+  =
+  \begin{pmatrix}x_1+x_3\\x_1-x_3\end{pmatrix}.
+  \]
+  \item 对频率指标 $k=0$，蝶形合并为
+  \[
+  \begin{aligned}
+  y_0&=y_0^{\mathrm{even}}+y_0^{\mathrm{odd}}
+      =(x_0+x_2)+(x_1+x_3),\\
+  y_2&=y_0^{\mathrm{even}}-y_0^{\mathrm{odd}}
+      =(x_0+x_2)-(x_1+x_3).
+  \end{aligned}
+  \]
+  \item 由 $\omega_4=-i$，对频率指标 $k=1$ 合并为
+  \[
+  \begin{aligned}
+  y_1&=y_1^{\mathrm{even}}-i\,y_1^{\mathrm{odd}}
+      =(x_0-x_2)-i(x_1-x_3),\\
+  y_3&=y_1^{\mathrm{even}}+i\,y_1^{\mathrm{odd}}
+      =(x_0-x_2)+i(x_1-x_3).
+  \end{aligned}
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{正确写出偶序列的 2 点 DFT：
+  $(x_0+x_2,\ x_0-x_2)^\top$}{1}
+  \gradeitem{正确写出奇序列的 2 点 DFT：
+  $(x_1+x_3,\ x_1-x_3)^\top$}{1}
+  \gradeitem{正确写出 $y_0,y_2$ 的加减蝶形}{1}
+  \gradeitem{使用 $\omega_4=-i$，正确写出 $y_1,y_3$ 的旋转因子与符号}{1}
+\end{grading}
+
+\subanswer{(2)}
+\begin{answersteps}
+  \item 偶序列的 2 点 DFT 为
+  \[
+  \bvec y^{\mathrm{even}}
+  =F_2\begin{pmatrix}1\\0\end{pmatrix}
+  =\begin{pmatrix}1\\1\end{pmatrix}.
+  \]
+  \item 奇序列的 2 点 DFT 为
+  \[
+  \bvec y^{\mathrm{odd}}
+  =F_2\begin{pmatrix}2-i\\1+i\end{pmatrix}
+  =\begin{pmatrix}
+  (2-i)+(1+i)\\
+  (2-i)-(1+i)
+  \end{pmatrix}
+  =\begin{pmatrix}3\\1-2i\end{pmatrix}.
+  \]
+  \item 合并偶数频率分量：
+  \[
+  y_0=1+3=4,
+  \qquad
+  y_2=1-3=-2.
+  \]
+  \item 合并奇数频率分量：
+  \[
+  \begin{aligned}
+  y_1&=1-i(1-2i)=-1-i,\\
+  y_3&=1+i(1-2i)=3+i.
+  \end{aligned}
+  \]
+  因此
+  \[
+  \boxed{\bvec y=(4,\,-1-i,\,-2,\,3+i)^\top}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{偶序列 2 点 DFT 算得 $(1,1)^\top$}{1}
+  \gradeitem{奇序列 2 点 DFT 算得 $(3,1-2i)^\top$}{1}
+  \gradeitem{蝶形算得 $y_0=4,\ y_2=-2$}{1}
+  \gradeitem{正确处理复数旋转因子，算得 $y_1=-1-i,\ y_3=3+i$}{1}
+\end{grading}
+
+\subanswer{(3)}
+\begin{answersteps}
+  \item 递推关系为
+  \[
+  T(n)=2T(n/2)+cn.
+  \]
+  展开或使用主定理可得
+  \[
+  \boxed{T(n)=O(n\log n)}.
+  \]
+  \item 当 $n=1024=2^{10}$ 时，
+  \[
+  N_{\mathrm{DFT}}=n^2=1\,048\,576,
+  \qquad
+  N_{\mathrm{FFT}}\approx\frac n2\log_2n=5120.
+  \]
+  \item 两者的倍数为
+  \[
+  \frac{N_{\mathrm{DFT}}}{N_{\mathrm{FFT}}}
+  =\frac{1\,048\,576}{5120}
+  =204.8.
+  \]
+  保留 1 位有效数字：
+  \[
+  \boxed{\text{直接 DFT 的乘法次数约为 FFT 的 }2\times10^2\text{ 倍}}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{由递推式正确得到 $T(n)=O(n\log n)$}{1}
+  \gradeitem{算出两种方法的乘法次数及其比值，得到约 $2\times10^2$ 倍}{1}
+\end{grading}
+\end{solution}
+
+
+% Q4
+\begin{problem}[points = 20]
+设矩阵
+\[
+A = \begin{bmatrix}
+1 & 1 & 0 \\
+0 & 1 & 1 \\
+1 & 0 & -1
+\end{bmatrix}.
+\]
+
+\begin{enumerate}
+    \item （10 分） 求 $A$ 的奇异值分解 $A = U \Sigma V^\top$（即明确给出 $U, \Sigma, V$）。
+
+    \item （5 分） 求 $A$ 的 Moore--Penrose 广义逆 $A^+$。
+
+    \item （5 分） 设 $\bvec{b} = (1, 1, 1)^\top$。注意到 $A$ 不可逆，方程组 $A\bvec{x} = \bvec{b}$ 可能无解。求极小范数最小二乘解 $\bvec{x}^* = A^+ \bvec{b}$，并验证 $\bvec{x}^*$ 是所有最小二乘解中二范数最小的。
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subanswer{(1)}
+\begin{answersteps}
+  \item 计算
+  \[
+  A^\top A=
+  \begin{bmatrix}
+  2&1&-1\\
+  1&2&1\\
+  -1&1&2
+  \end{bmatrix},
+  \qquad
+  \det(\lambda I-A^\top A)=\lambda(\lambda-3)^2.
+  \]
+  因而
+  \[
+  \sigma_1=\sigma_2=\sqrt3,\qquad \sigma_3=0.
+  \]
+  \item 在特征值 $3$ 的特征子空间中取标准正交向量
+  \[
+  \bvec v_1=\frac1{\sqrt2}(1,1,0)^\top,
+  \qquad
+  \bvec v_2=\frac1{\sqrt6}(-1,1,2)^\top.
+  \]
+  对特征值 $0$，取
+  \[
+  \bvec v_3=\frac1{\sqrt3}(1,-1,1)^\top.
+  \]
+  \item 对非零奇异值，计算左奇异向量
+  \[
+  \bvec u_i=\frac{A\bvec v_i}{\sigma_i}\quad(i=1,2),
+  \]
+  得
+  \[
+  \bvec u_1=\frac1{\sqrt6}(2,1,1)^\top,
+  \qquad
+  \bvec u_2=\frac1{\sqrt2}(0,1,-1)^\top.
+  \]
+  再补全标准正交基：
+  \[
+  \bvec u_3=\frac1{\sqrt3}(-1,1,1)^\top.
+  \]
+  \item 组成
+  \[
+  U=
+  \begin{bmatrix}
+  2/\sqrt6&0&-1/\sqrt3\\
+  1/\sqrt6&1/\sqrt2&1/\sqrt3\\
+  1/\sqrt6&-1/\sqrt2&1/\sqrt3
+  \end{bmatrix},
+  \quad
+  \Sigma=
+  \begin{bmatrix}
+  \sqrt3&0&0\\
+  0&\sqrt3&0\\
+  0&0&0
+  \end{bmatrix},
+  \]
+  \[
+  V=
+  \begin{bmatrix}
+  1/\sqrt2&-1/\sqrt6&1/\sqrt3\\
+  1/\sqrt2&1/\sqrt6&-1/\sqrt3\\
+  0&2/\sqrt6&1/\sqrt3
+  \end{bmatrix}.
+  \]
+  因此
+  \[
+  \boxed{A=U\Sigma V^\top}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{正确计算 $A^\top A$}{1}
+  \gradeitem{求得特征多项式 $\lambda(\lambda-3)^2$、特征值
+  $3,3,0$，并据此写出奇异值 $\sqrt3,\sqrt3,0$}{2}
+  \gradeitem{在 $\lambda=3$ 的特征子空间内取两个标准正交的右奇异向量
+  $\bvec v_1,\bvec v_2$}{2}
+  \gradeitem{求出零特征值对应的单位右奇异向量 $\bvec v_3$}{1}
+  \gradeitem{由 $\bvec u_i=A\bvec v_i/\sigma_i$ 正确求出
+  $\bvec u_1,\bvec u_2$}{2}
+  \gradeitem{补出与前两列正交的单位向量 $\bvec u_3$}{1}
+  \gradeitem{正确组装 $U,\Sigma,V$，满足 $A=U\Sigma V^\top$；列向量同步变号或重排不扣分}{1}
+\end{grading}
+
+\subanswer{(2)}
+\begin{answersteps}
+  \item 将非零奇异值取倒数：
+  \[
+  \Sigma^+=\diag\left(\frac1{\sqrt3},\frac1{\sqrt3},0\right).
+  \]
+  \item 由 SVD 的广义逆公式，
+  \[
+  A^+=V\Sigma^+U^\top
+  =\frac1{\sqrt3}\bvec v_1\bvec u_1^\top
+   \frac1{\sqrt3}\bvec v_2\bvec u_2^\top.
+  \]
+  \item 完成矩阵乘法：
+  \[
+  A^+
+  =\frac16
+  \begin{bmatrix}
+  2&0&2\\
+  2&2&0\\
+  0&2&-2
+  \end{bmatrix}
+  =
+  \boxed{
+  \begin{bmatrix}
+  1/3&0&1/3\\
+  1/3&1/3&0\\
+  0&1/3&-1/3
+  \end{bmatrix}}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{由非零奇异值取倒数，写出
+  $\Sigma^+=\diag(1/\sqrt3,1/\sqrt3,0)$}{1}
+  \gradeitem{写出 $A^+=V\Sigma^+U^\top$}{1}
+  \gradeitem{将乘积化为两个秩一矩阵之和，或进行等价的正确矩阵乘法}{1}
+  \gradeitem{正确算出中间结果
+  $\frac16\begin{bmatrix}2&0&2\\2&2&0\\0&2&-2\end{bmatrix}$}{1}
+  \gradeitem{化简并给出完整、正确的最终 $A^+$ 矩阵}{1}
+\end{grading}
+
+\subanswer{(3)}
+\begin{answersteps}
+  \item 计算
+  \[
+  \bvec x^*=A^+\bvec b
+  =
+  \begin{bmatrix}
+  1/3&0&1/3\\
+  1/3&1/3&0\\
+  0&1/3&-1/3
+  \end{bmatrix}
+  \begin{pmatrix}1\\1\\1\end{pmatrix}
+  =
+  \boxed{\begin{pmatrix}2/3\\2/3\\0\end{pmatrix}}.
+  \]
+  \item 验证最小二乘条件。先求
+  \[
+  A\bvec x^*=
+  \begin{pmatrix}4/3\\2/3\\2/3\end{pmatrix},
+  \qquad
+  \bvec r=\bvec b-A\bvec x^*
+  =
+  \begin{pmatrix}-1/3\\1/3\\1/3\end{pmatrix}.
+  \]
+  直接计算得
+  \[
+  A^\top\bvec r=\bvec0,
+  \]
+  因此 $\bvec x^*$ 满足最小二乘正规方程。
+  \item 任意最小二乘解均可写成
+  \[
+  \bvec x=\bvec x^*+\bvec z,
+  \qquad
+  \bvec z\in N(A).
+  \]
+  \item 由 Moore--Penrose 逆的性质，$\bvec x^*\perp N(A)$，故
+  \[
+  \|\bvec x\|_2^2
+  =\|\bvec x^*\|_2^2+\|\bvec z\|_2^2
+  \ge \|\bvec x^*\|_2^2.
+  \]
+  所以 $\bvec x^*$ 是所有最小二乘解中二范数最小者。
+\end{answersteps}
+\begin{grading}
+  \gradeitem{写出 $\bvec x^*=A^+\bvec b$}{1}
+  \gradeitem{完成乘法，得到 $\bvec x^*=(2/3,2/3,0)^\top$}{1}
+  \gradeitem{求残差并验证 $A^\top(\bvec b-A\bvec x^*)=\bvec0$，从而确认其为最小二乘解}{1}
+  \gradeitem{指出任意最小二乘解均可写成
+  $\bvec x=\bvec x^*+\bvec z$，其中 $\bvec z\in N(A)$}{1}
+  \gradeitem{利用 $\bvec x^*\perp N(A)$ 写出勾股关系并推出极小范数性}{1}
+\end{grading}
+\end{solution}
+
+
+% Q5
+\begin{problem}[points = 18]
+设 $A \in \C^{n \times n}$ 为 Hermite 矩阵。
+
+\begin{enumerate}
+    \item （5 分） 证明：$A$ 的特征值全为实数，且不同特征值对应的特征向量正交。
+
+    \item （7 分） 设
+    \[
+    A = \begin{bmatrix}
+    1      & 0      & 1 + i \\
+    0      & 2      & 0              \\
+    1 - i & 0      & 1
+    \end{bmatrix}.
+    \]
+    验证 $A$ 为 Hermite 矩阵，求其全部特征值，并求酉矩阵 $U$ 使 $U^\ct A U$ 为对角矩阵。
+
+    \item （6 分） 设 $A$ 和 $B$ 均为 $n$ 阶 Hermite 矩阵，且 $A$ 正定。证明：
+    \begin{enumerate}
+        \item （4 分）存在可逆矩阵 $P$ 使 $P^\ct A P = I_n$ 且 $P^\ct B P$ 为实对角矩阵；
+        \item （2 分）广义特征值问题 $B\bvec{x} = \lambda A \bvec{x}$ 的所有广义特征值均为实数。
+    \end{enumerate}
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subanswer{(1)}
+\begin{answersteps}
+  \item 设
+  \[
+  A\bvec x=\lambda\bvec x,
+  \qquad
+  \bvec x\ne\bvec0.
+  \]
+  左乘 $\bvec x^\ct$ 得
+  \[
+  \lambda\|\bvec x\|^2=\bvec x^\ct A\bvec x.
+  \]
+  \item 由于 $A^\ct=A$，
+  \[
+  \overline{\bvec x^\ct A\bvec x}
+  =\bvec x^\ct A^\ct\bvec x
+  =\bvec x^\ct A\bvec x,
+  \]
+  故 $\bvec x^\ct A\bvec x\in\R$。又 $\|\bvec x\|^2>0$，所以
+  \[
+  \boxed{\lambda\in\R}.
+  \]
+  \item 设
+  \[
+  A\bvec x_1=\lambda_1\bvec x_1,
+  \qquad
+  A\bvec x_2=\lambda_2\bvec x_2,
+  \qquad
+  \lambda_1\ne\lambda_2.
+  \]
+  则
+  \[
+  \bvec x_2^\ct A\bvec x_1
+  =\lambda_1\bvec x_2^\ct\bvec x_1.
+  \]
+  \item 另一方面，由 Hermite 性及特征值为实数，
+  \[
+  \bvec x_2^\ct A\bvec x_1
+  =(A\bvec x_2)^\ct\bvec x_1
+  =\lambda_2\bvec x_2^\ct\bvec x_1.
+  \]
+  因而
+  \[
+  (\lambda_1-\lambda_2)\bvec x_2^\ct\bvec x_1=0,
+  \qquad
+  \boxed{\bvec x_2^\ct\bvec x_1=0}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{从 $A\bvec x=\lambda\bvec x$ 得
+  $\lambda\|\bvec x\|^2=\bvec x^\ct A\bvec x$}{1}
+  \gradeitem{利用 $A^\ct=A$ 说明 $\bvec x^\ct A\bvec x\in\R$，推出 $\lambda\in\R$}{1}
+  \gradeitem{对两个特征向量写出
+  $\bvec x_2^\ct A\bvec x_1=\lambda_1\bvec x_2^\ct\bvec x_1$}{1}
+  \gradeitem{再利用 Hermite 性得到同一内积等于
+  $\lambda_2\bvec x_2^\ct\bvec x_1$}{1}
+  \gradeitem{由 $\lambda_1\ne\lambda_2$ 推出
+  $\bvec x_2^\ct\bvec x_1=0$}{1}
+\end{grading}
+
+\subanswer{(2)}
+\begin{answersteps}
+  \item 对角元均为实数，且
+  \[
+  a_{31}=1-i=\overline{a_{13}},
+  \]
+  其余非对角元也满足共轭对称，因此
+  \[
+  A^\ct=A.
+  \]
+  \item 计算特征多项式：
+  \[
+  \begin{aligned}
+  \det(\lambda I-A)
+  &=(\lambda-2)\bigl[(\lambda-1)^2-2\bigr]\\
+  &=(\lambda-2)(\lambda^2-2\lambda-1).
+  \end{aligned}
+  \]
+  故特征值为
+  \[
+  \lambda_1=2,\qquad
+  \lambda_2=1+\sqrt2,\qquad
+  \lambda_3=1-\sqrt2.
+  \]
+  \item 求解各特征方程并单位化，可取
+  \[
+  \bvec u_1=(0,1,0)^\top,
+  \]
+  \[
+  \bvec u_2=\frac12(\sqrt2,0,1-i)^\top,
+  \qquad
+  \bvec u_3=\frac12(-\sqrt2,0,1-i)^\top.
+  \]
+  三个向量两两正交且均为单位向量。
+  \item 令
+  \[
+  U=[\,\bvec u_1\ \bvec u_2\ \bvec u_3\,],
+  \]
+  则 $U$ 为酉矩阵，且
+  \[
+  \boxed{U^\ct A U=\diag(2,1+\sqrt2,1-\sqrt2)}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{核对对角元为实数、非对角元共轭对称，确认 $A^\ct=A$}{1}
+  \gradeitem{正确建立并化简特征多项式
+  $(\lambda-2)[(\lambda-1)^2-2]$}{2}
+  \gradeitem{求得全部特征值 $2,1+\sqrt2,1-\sqrt2$}{1}
+  \gradeitem{求得三个相应的非零特征向量}{1}
+  \gradeitem{将特征向量单位化，并确认它们两两正交}{1}
+  \gradeitem{按对应次序组成酉矩阵 $U$，写出正确的对角化结果}{1}
+\end{grading}
+
+\subanswer{(3)(i)}
+\begin{answersteps}
+  \item 由于 $A\succ0$，存在可逆矩阵 $C$，使
+  \[
+  C^\ct AC=I_n.
+  \]
+  例如可取 $C=A^{-1/2}$。
+  \item 令
+  \[
+  \widetilde B=C^\ct BC.
+  \]
+  因为 $B^\ct=B$，所以
+  \[
+  \widetilde B^\ct
+  =C^\ct B^\ct C
+  =\widetilde B,
+  \]
+  即 $\widetilde B$ 仍为 Hermite 矩阵。
+  \item 由 Hermite 矩阵的谱定理，存在酉矩阵 $U$，使
+  \[
+  U^\ct\widetilde B U=\Lambda,
+  \]
+  其中 $\Lambda$ 为实对角矩阵。
+  \item 取 $P=CU$，则
+  \[
+  P^\ct AP=U^\ct(C^\ct AC)U=I_n,
+  \]
+  且
+  \[
+  P^\ct BP=U^\ct(C^\ct BC)U=\Lambda.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{由 $A\succ0$ 构造可逆 $C$，使 $C^\ct AC=I_n$}{1}
+  \gradeitem{令 $\widetilde B=C^\ct BC$ 并验证其仍为 Hermite 矩阵}{1}
+  \gradeitem{利用 Hermite 矩阵酉对角化，得到
+  $U^\ct\widetilde BU=\Lambda$，其中 $\Lambda$ 为实对角矩阵}{1}
+  \gradeitem{取 $P=CU$，分别验证 $P^\ct AP=I_n$ 与 $P^\ct BP=\Lambda$}{1}
+\end{grading}
+
+\subanswer{(3)(ii)}
+\begin{answersteps}
+  \item 在广义特征值方程
+  \[
+  B\bvec x=\lambda A\bvec x
+  \]
+  中令 $\bvec x=P\bvec y$，再左乘 $P^\ct$，得到
+  \[
+  P^\ct BP\bvec y
+  =\lambda P^\ct AP\bvec y.
+  \]
+  \item 利用第 (i) 问的结论，
+  \[
+  \Lambda\bvec y=\lambda\bvec y.
+  \]
+  因为 $\Lambda$ 为实对角矩阵，所以
+  \[
+  \boxed{\text{所有广义特征值 }\lambda\text{ 均为实数}}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{用 $\bvec x=P\bvec y$ 将广义特征值问题化为
+  $\Lambda\bvec y=\lambda\bvec y$}{1}
+  \gradeitem{由 $\Lambda$ 为实对角矩阵推出所有 $\lambda$ 均为实数}{1}
+\end{grading}
+\end{solution}
+
+
+% Q6
+\begin{problem}[points = 11]
+
+\begin{enumerate}
+    \item （5 分） 设中心化数据的协方差矩阵为 $\Sigma=\frac1nXX^\top$。利用 Lagrange 乘子法证明：
+    \[
+      \max_{\|\bvec{w}\|_2=1}\bvec{w}^\top\Sigma\bvec{w}
+    \]
+    的解是 $\Sigma$ 的最大特征值对应的单位特征向量，且沿该方向投影的方差为 $\lambda_{\max}(\Sigma)$。
+
+    \item （6 分） 设某中心化数据的协方差矩阵为
+    $\Sigma=\begin{bmatrix}5&2\\2&2\end{bmatrix}$。
+    \begin{enumerate}
+        \item （3 分）求 $\Sigma$ 的特征值与对应的单位特征向量，写出第一、第二主成分方向；
+        \item （2 分）计算各主成分的方差及其占总方差的百分比；
+        \item （1 分）若要求保留 $85\%$ 以上的方差，至少需要几个主成分？
+    \end{enumerate}
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\subanswer{(1)}
+\begin{answersteps}
+  \item 对约束 $\bvec w^\top\bvec w=1$ 构造 Lagrange 函数
+  \[
+  \mathcal L(\bvec w,\lambda)
+  =\bvec w^\top\Sigma\bvec w
+  -\lambda(\bvec w^\top\bvec w-1).
+  \]
+  \item 对 $\bvec w$ 求偏导并令其为零：
+  \[
+  \nabla_{\bvec w}\mathcal L
+  =2\Sigma\bvec w-2\lambda\bvec w=\bvec0.
+  \]
+  因而
+  \[
+  \Sigma\bvec w=\lambda\bvec w.
+  \]
+  \item 若 $\bvec w$ 是单位特征向量，则
+  \[
+  \bvec w^\top\Sigma\bvec w
+  =\bvec w^\top(\lambda\bvec w)
+  =\lambda.
+  \]
+  \item 因此最大目标值是最大特征值，对应方向为其单位特征向量：
+  \[
+  \boxed{\bvec w_1\text{ 为 }\lambda_{\max}(\Sigma)\text{ 对应的单位特征向量}}.
+  \]
+  \item 沿该方向投影的方差为
+  \[
+  \boxed{\bvec w_1^\top\Sigma\bvec w_1=\lambda_{\max}(\Sigma)}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{写出带单位范数约束的 Lagrange 函数}{1}
+  \gradeitem{求驻点条件并得到 $\Sigma\bvec w=\lambda\bvec w$}{1}
+  \gradeitem{说明单位特征向量处目标函数值等于相应特征值 $\lambda$}{1}
+  \gradeitem{比较所有特征值，确定最大值对应 $\lambda_{\max}$ 及其单位特征向量}{1}
+  \gradeitem{明确写出沿第一主成分方向的投影方差为 $\lambda_{\max}$}{1}
+\end{grading}
+
+\subanswer{(2)(i)}
+\begin{answersteps}
+  \item 特征方程为
+  \[
+  \det(\lambda I-\Sigma)
+  =\lambda^2-7\lambda+6
+  =(\lambda-6)(\lambda-1)=0.
+  \]
+  所以
+  \[
+  \lambda_1=6,\qquad \lambda_2=1.
+  \]
+  \item 对 $\lambda_1=6$，
+  \[
+  (\Sigma-6I)\bvec v=\bvec0
+  \quad\Longrightarrow\quad
+  v_1=2v_2.
+  \]
+  对 $\lambda_2=1$，
+  \[
+  (\Sigma-I)\bvec v=\bvec0
+  \quad\Longrightarrow\quad
+  2v_1+v_2=0.
+  \]
+  \item 单位化后，第一、第二主成分方向可取
+  \[
+  \boxed{
+  \bvec v_1=\frac1{\sqrt5}(2,1)^\top,
+  \qquad
+  \bvec v_2=\frac1{\sqrt5}(1,-2)^\top}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{正确求特征方程并得到特征值 $6,1$}{1}
+  \gradeitem{分别求出两个特征向量的方向关系
+  $v_1=2v_2$ 与 $2v_1+v_2=0$}{1}
+  \gradeitem{单位化并按特征值从大到小写出第一、第二主成分方向}{1}
+\end{grading}
+
+\subanswer{(2)(ii)}
+\begin{answersteps}
+  \item 各主成分的方差等于相应特征值：
+  \[
+  \operatorname{Var}(\mathrm{PC1})=6,
+  \qquad
+  \operatorname{Var}(\mathrm{PC2})=1.
+  \]
+  总方差为
+  \[
+  6+1=7.
+  \]
+  \item 两个主成分的方差贡献率分别为
+  \[
+  \boxed{
+  \frac67\approx85.7\%,
+  \qquad
+  \frac17\approx14.3\%}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{写出两主成分方差分别为 $6,1$，总方差为 $7$}{1}
+  \gradeitem{正确计算贡献率 $85.7\%$ 与 $14.3\%$}{1}
+\end{grading}
+
+\subanswer{(2)(iii)}
+\begin{answersteps}
+  \item 第一主成分的累计贡献率为
+  \[
+  85.7\%>85\%.
+  \]
+  因此
+  \[
+  \boxed{k=1}.
+  \]
+\end{answersteps}
+\begin{grading}
+  \gradeitem{比较累计贡献率与 $85\%$，并得出至少需要 $1$ 个主成分}{1}
+\end{grading}
+\end{solution}
+
+\end{document}

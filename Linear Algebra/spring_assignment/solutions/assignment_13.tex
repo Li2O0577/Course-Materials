@@ -1,0 +1,141 @@
+\section*{Problem 1}
+
+设 \[A = \begin{bmatrix}
+    3 & 2 - \mathrm{i} \\
+    2 + \mathrm{i} & 7 \\
+\end{bmatrix}.\]
+
+\begin{enumerate}
+    \item 证明 $A$ 是 Hermite 矩阵。
+    \item 求 $A$ 的特征值与对应的特征向量。
+    \item 求酉矩阵 $U$ 使得 $U^\ct AU$ 为对角矩阵，并写出该对角矩阵。
+\end{enumerate}
+
+\begin{proof}
+    取 $A$ 的共轭转置
+    \[
+        A^\ct = \begin{bmatrix}
+            3 & 2 - \mathrm{i} \\
+            2 + \mathrm{i} & 7 \\
+        \end{bmatrix} = A,
+    \]
+    从而 $A$ 是 Hermite 矩阵。求其特征值 $\lambda$ 满足
+    \[
+        \det(\lambda I - A) = \det\begin{bmatrix}
+            \lambda - 3 & -2 + \mathrm{i} \\
+            -2 - \mathrm{i} & \lambda - 7 \\
+        \end{bmatrix} = (\lambda - 3)(\lambda - 7) - (2 - \mathrm{i})(2 + \mathrm{i}) = \lambda^2 - 10\lambda + 16 = 0,
+    \]
+    于是 $\lambda_1 = 8$，$\lambda_2 = 2$。对应的特征向量分别为
+    \[
+        \bm{v}_1 = \begin{pmatrix}
+            1 \\
+            2 + \mathrm{i} \\
+        \end{pmatrix},\quad \bm{v}_2 = \begin{pmatrix}
+            -2 + \mathrm{i} \\
+            1 \\
+        \end{pmatrix}.
+    \]
+    取酉矩阵
+    \[
+        U = \frac{1}{\sqrt{6}} \begin{bmatrix}
+            1 & -2 + \mathrm{i} \\
+            2 + \mathrm{i} & 1 \\
+        \end{bmatrix}, \quad U^\ct U = I,
+    \]
+    得到
+    \[
+        U^\ct A U = \begin{bmatrix}
+            8 & 0 \\
+            0 & 2 \\
+        \end{bmatrix}.
+    \]
+\end{proof}
+
+\section*{Problem 2}
+
+设 $A$ 为 $n$ 阶 Hermite 矩阵。证明：
+\begin{enumerate}
+    \item $I + \mathrm{i}A$ 可逆。
+    \item 矩阵 $U = (I - \mathrm{i}A)(I + \mathrm{i}A)^{-1}$ 是酉矩阵。
+\end{enumerate}
+
+\begin{proof}
+    若 $I + \mathrm{i}A$ 不可逆，则存在非零向量 $\bm x$ 使得 $(I+\mathrm{i}A)\bm x=\bm0$，从而 $A\bm x=\mathrm{i}\bm x$。这与 Hermite 矩阵的特征值均为实数矛盾，故 $I+\mathrm{i}A$ 可逆。同理 $I-\mathrm{i}A$ 也可逆。接下来验证 $U$ 是酉矩阵：
+    \[
+        \begin{aligned}
+            U^\ct U &= \left[\left(I - \mathrm{i}A\right)\left(I + \mathrm{i}A\right)^{-1}\right]^\ct \left[\left(I - \mathrm{i}A\right)\left(I + \mathrm{i}A\right)^{-1}\right], \\
+            &= \left(I - \mathrm{i}A\right)^{-1} \left(I + \mathrm{i}A\right) \left(I - \mathrm{i}A\right) \left(I + \mathrm{i}A\right)^{-1}, \\
+        \end{aligned}
+    \]
+    上面的变形主要利用了 $\left(I + \mathrm{i}A\right)^\ct = I - \mathrm{i}A$，以及 $I \pm \mathrm{i}A$ 的可逆性。又注意到 \[\left(I + \mathrm{i}A\right)\left(I - \mathrm{i}A\right) = I + A^2 = \left(I - \mathrm{i}A\right)\left(I + \mathrm{i}A\right),\]
+    从而 \[
+        \begin{aligned}
+            U^\ct U &= \left(I - \mathrm{i}A\right)^{-1} \left(I + \mathrm{i}A\right) \left(I - \mathrm{i}A\right) \left(I + \mathrm{i}A\right)^{-1}, \\
+            &= \left(I - \mathrm{i}A\right)^{-1} \left(I - \mathrm{i}A\right) \left(I + \mathrm{i}A\right) \left(I + \mathrm{i}A\right)^{-1}, \\
+            &= I.
+        \end{aligned}
+    \]
+    即 $U$ 是酉矩阵。
+\end{proof}
+
+\section*{Problem 3}
+
+设 $F_4$ 为 4 阶 Fourier 矩阵。
+
+\begin{enumerate}
+    \item 写出 $F_4$ 的具体形式（即写出每个元素）；
+    \item 证明 $F_4$ 是酉矩阵；
+    \item 计算 $F_4\bm{v}$，其中 $\bm{v} = (1, \mathrm{i}, -1, -\mathrm{i})^\top$。
+\end{enumerate}
+
+\begin{proof}
+    首先有
+    \[
+        F_4 = \frac{1}{\sqrt{4}} \begin{bmatrix}
+            \omega_0^0 & \omega_0^1 & \omega_0^2 & \omega_0^3 \\
+            \omega_1^0 & \omega_1^1 & \omega_1^2 & \omega_1^3 \\
+            \omega_2^0 & \omega_2^1 & \omega_2^2 & \omega_2^3 \\
+            \omega_3^0 & \omega_3^1 & \omega_3^2 & \omega_3^3 \\
+        \end{bmatrix} = \frac{1}{2} \begin{bmatrix}
+            1 & 1 & 1 & 1 \\
+            1 & \mathrm{i} & -1 & -\mathrm{i} \\
+            1 & -1 & 1 & -1 \\
+            1 & -\mathrm{i} & -1 & \mathrm{i} \\
+         \end{bmatrix},
+    \]
+    求 $F_4$ 的共轭转置
+    \[
+         F_4^\ct = \frac{1}{2} \begin{bmatrix}
+            1 & 1 & 1 & 1 \\
+            1 & -\mathrm{i} & -1 & \mathrm{i} \\
+            1 & -1 & 1 & -1 \\
+            1 & \mathrm{i} & -1 & -\mathrm{i} \\
+         \end{bmatrix},
+    \]
+    验证 $F_4$ 为酉矩阵有
+    \[
+        F_4^\ct F_4 = \frac{1}{4} \begin{bmatrix}
+            1 & 1 & 1 & 1 \\
+            1 & -\mathrm{i} & -1 & \mathrm{i} \\
+            1 & -1 & 1 & -1 \\
+            1 & \mathrm{i} & -1 & -\mathrm{i} \\
+         \end{bmatrix} \begin{bmatrix}
+            1 & 1 & 1 & 1 \\
+            1 & \mathrm{i} & -1 & -\mathrm{i} \\
+            1 & -1 & 1 & -1 \\
+            1 & -\mathrm{i} & -1 & \mathrm{i} \\
+         \end{bmatrix} = \frac{1}{4} \begin{bmatrix}
+            4 & 0 & 0 & 0 \\
+            0 & 4 & 0 & 0 \\
+            0 & 0 & 4 & 0 \\
+            0 & 0 & 0 & 4 \\
+         \end{bmatrix} = I.
+    \]
+    最后求得
+    \[
+        F_4\bm v
+        =\frac12\begin{pmatrix}0\\0\\0\\4\end{pmatrix}
+        =\boxed{\begin{pmatrix}0\\0\\0\\2\end{pmatrix}}.
+    \]
+\end{proof}

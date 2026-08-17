@@ -1,0 +1,77 @@
+\section{向量化与 Kronecker 积}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Worldbearing.png}
+\end{center}
+
+矩阵值函数的导数本身是线性映射 \(H\mapsto \mathrm{D}F(X)[H]\)。为了把这种线性映射交给普通矩阵代数处理，可以把输入矩阵和输出矩阵按固定顺序排成向量。这样得到的矩阵就可以看作导数在选定坐标下的表示。
+
+本章采用列堆叠的向量化约定。若 \(X=[\bm{x}_1,\ldots,\bm{x}_n]\in\mathbb{R}^{m\times n}\)，其中 \(\bm{x}_j\in\mathbb{R}^m\) 是第 \(j\) 列，则
+\[
+\operatorname{vec}(X)=
+\begin{bmatrix}
+x_1\\
+\vdots\\
+x_n
+\end{bmatrix}\in\mathbb{R}^{mn}.
+\]
+因此，矩阵增量 \(H\in\mathbb{R}^{m\times n}\) 可以用 \(\operatorname{vec}(H)\in\mathbb{R}^{mn}\) 表示；若输出 \(\mathrm{D}F(X)[H]\in\mathbb{R}^{p\times q}\)，则它的坐标表示为 \(\operatorname{vec}(\mathrm{D}F(X)[H])\in\mathbb{R}^{pq}\)。
+
+第二章已经在向量值函数中引入过 Jacobian 矩阵；这里使用同一个观念，只是先把矩阵输入和矩阵输出都向量化。设 \(\bm{z}=\operatorname{vec}(X)\)，并把 \(F(X)\) 的输出写成 \(\operatorname{vec}(F(X))\)。若存在矩阵 \(J\in\mathbb{R}^{pq\times mn}\)，使得对任意增量 \(H\) 都有
+\[
+\operatorname{vec}(F(X+H))=\operatorname{vec}(F(X))+J\,\operatorname{vec}(H)+o(\|H\|),
+\]
+则这个矩阵 \(J\) 称为 \(F\) 在 \(X\) 处的 Jacobian 矩阵，或者说是导数 \(\mathrm{D}F(X)\) 在列堆叠坐标下的矩阵表示。等价地，
+\[
+\operatorname{vec}(\mathrm{D}F(X)[H])=J\,\operatorname{vec}(H).
+\]
+因此，Jacobian 矩阵是把线性映射 \(\mathrm{D}F(X)\) 写进固定坐标后的系数矩阵。
+
+Kronecker 积用于描述“左右乘”这类矩阵线性映射的坐标矩阵。若 \(B=(b_{ij})\in\mathbb{R}^{r\times s}\)，\(A\in\mathbb{R}^{p\times q}\)，则
+\[
+B\otimes A=
+\begin{bmatrix}
+b_{11}A&\cdots&b_{1s}A\\
+\vdots&\ddots&\vdots\\
+b_{r1}A&\cdots&b_{rs}A
+\end{bmatrix}\in\mathbb{R}^{pr\times qs}.
+\]
+这个定义把 \(B\) 的每个元素替换成对应倍数的 \(A\)，其主要用途是在向量化后记录矩阵乘法对列的线性组合。
+
+核心恒等式是
+\[
+\operatorname{vec}(A H B)=(B^\top\otimes A)\operatorname{vec}(H),
+\]
+其中 \(A\in\mathbb{R}^{p\times m}\)、\(H\in\mathbb{R}^{m\times n}\)、\(B\in\mathbb{R}^{n\times q}\)。维度上，\(\operatorname{vec}(H)\in\mathbb{R}^{mn}\)，\(\operatorname{vec}(AHB)\in\mathbb{R}^{pq}\)，而 \(B^\top\otimes A\in\mathbb{R}^{pq\times mn}\)，因此该矩阵正好把输入增量的坐标送到输出增量的坐标。
+
+这个恒等式可由列结构直接推出。设 \(B=[b_1,\ldots,b_q]\)，则 \(AHB\) 的第 \(j\) 列为 \(AHb_j\)。若 \(b_j=(b_{1j},\ldots,b_{nj})^\top\)，则 \(Hb_j=\sum_k b_{kj}h_k\)，其中 \(h_k\) 是 \(H\) 的第 \(k\) 列；因此
+\[
+AHb_j=\sum_k b_{kj}A h_k.
+\]
+把所有列按顺序堆叠后，得到的系数矩阵正是由 \(B^\top\) 的元素作为块系数、以 \(A\) 为块组成的 \(B^\top\otimes A\)。
+
+由此可以把第七章中的线性映射 \(H\mapsto AHB\) 写成普通矩阵乘法。若 \(F(X)=AXB\)，则 \(\mathrm{D}F(X)[H]=AHB\)，于是
+\[
+\operatorname{vec}(\mathrm{D}F(X)[H])=(B^\top\otimes A)\operatorname{vec}(H).
+\]
+因此，在向量化坐标下，\(F\) 的 Jacobian 矩阵就是 \(B^\top\otimes A\)。这里的 Jacobian 依赖于列堆叠约定；若改变向量化顺序，坐标矩阵也会随之改变，但线性映射 \(H\mapsto AHB\) 本身不变。
+
+转置映射的导数也可以坐标化。对于 \(F(X)=X^\top\)，导数为 \(\mathrm{D}F(X)[H]=H^\top\)。回忆导数是一个线性映射，则在列堆叠后，存在一个只由维度决定的置换矩阵 \(K_{m,n}\)，使得
+\[
+\operatorname{vec}(H^\top)=K_{m,n}\operatorname{vec}(H).
+\]
+于是转置映射的 Jacobian 是 \(K_{m,n}\)。有些矩阵值函数的坐标表示需要由重排坐标的置换矩阵刻画，不能只依赖普通左右乘形式。
+
+非线性矩阵值函数的 Jacobian 通常依赖于基点。以 \(F(X)=X^\top X\) 为例，第七章已经得到
+\[
+\mathrm{D}F(X)[H]=H^\top X+X^\top H.
+\]
+为了得到 Jacobian，需要分别把 \(H\mapsto H^\top X\) 和 \(H\mapsto X^\top H\) 坐标化。第一项需要先用置换矩阵表示转置，再用 Kronecker 积表示右乘 \(X\)；第二项则直接对应左乘 \(X^\top\)。因此 Jacobian 的具体矩阵由置换矩阵和 Kronecker 积组合而成。重要的是，坐标矩阵虽然形式较长，但其来源仍然是清楚的一阶主项 \(H^\top X+X^\top H\)。
+
+对于标量值函数，也可以使用向量化表示梯度。若 \(f:\mathbb{R}^{m\times n}\to\mathbb{R}\)，并且 \(\nabla_X f=G\)，则
+\[
+\mathrm{D}f(X)[H]=\langle G,H\rangle_F=\operatorname{vec}(G)^\top\operatorname{vec}(H).
+\]
+因此，若把 \(f\) 视为普通函数 \(\tilde f(\operatorname{vec}X)\)，其向量梯度就是 \(\operatorname{vec}(\nabla_X f)\)。矩阵梯度与向量化梯度并不矛盾；前者保留矩阵形状，后者是同一对象在列堆叠坐标下的表示。
+
+向量化和 Kronecker 积的作用可以概括为：把矩阵增量之间的线性规则坐标化。它们适合用于需要显式 Jacobian 矩阵的场合，例如数值实现、线性方程求解或二阶公式推导；但在推导一阶主项时，直接保留 \(H\mapsto \mathrm{D}F(X)[H]\) 往往更简洁。二阶展开与 Hessian 中也会遇到同样的选择：先保留线性映射，需要坐标矩阵时再向量化。
