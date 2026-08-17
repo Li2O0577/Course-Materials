@@ -1,0 +1,139 @@
+\section*{Problem 1}
+
+设 $\bm{a}, \bm{b} \in \mathbb{R}^n$ 为常向量，$A \in \mathbb{R}^{n \times n}$ 为常矩阵（不必对称），$\bm{x} \in \mathbb{R}^n$。计算下列各式对 $\bm{x}$ 的导数：
+
+\begin{enumerate}
+    \item $f_1(\bm{x}) = \bm{a}^\top \bm{x}$；
+    \item $f_2(\bm{x}) = \bm{x}^\top A \bm{x}$（$A$ 不必对称）；
+    \item $f_3(\bm{x}) = \left(\bm{a}^\top \bm{x}\right)\left(\bm{b}^\top \bm{x}\right)$。
+\end{enumerate}
+
+\begin{proof}
+    计算得到
+    \[
+    \begin{aligned}
+        \mathrm{d}\,f_1 &= \bm{a}^\top \mathrm{d}\,\bm{x} = \langle \bm{a}, \mathrm{d}\,\bm{x} \rangle_F, \\
+        &\iff \frac{\partial f_1}{\partial \bm{x}} = \bm{a}.\\
+        \mathrm{d}\,f_2 &= \bm{x}^\top A \mathrm{d}\,\bm{x} + \mathrm{d}\,\bm{x}^\top A \bm{x} = \langle A\bm{x} + A^\top \bm{x}, \mathrm{d}\,\bm{x} \rangle_F, \\
+        &\iff \frac{\partial f_2}{\partial \bm{x}} = A\bm{x} + A^\top \bm{x}.\\
+        \mathrm{d}\,f_3 &= (\bm{a}^\top \bm{x})(\bm{b}^\top \mathrm{d}\,\bm{x}) + (\bm{b}^\top \bm{x})(\bm{a}^\top \mathrm{d}\,\bm{x}) = \langle \bm{b}\bm{x}^\top\bm{a} + \bm{a}\bm{x}^\top\bm{b}, \mathrm{d}\,\bm{x} \rangle_F, \\
+        &\iff \frac{\partial f_3}{\partial \bm{x}} = \bm{b}\bm{x}^\top\bm{a} + \bm{a}\bm{x}^\top\bm{b}.
+    \end{aligned}
+    \]
+\end{proof}
+
+\section*{Problem 2}
+
+设 $X \in \mathbb{R}^{n \times n}$ 为可逆矩阵，$A, B$ 为常矩阵，使下列各式有意义。利用矩阵求导的链式法则及行列式求导公式，计算：
+
+\begin{enumerate}
+    \item $\displaystyle \frac{\partial}{\partial X} \ln \det(X)$（不假设 $X$ 对称）；
+    \item $\displaystyle \frac{\partial}{\partial X} \ln \det(AXB)$（设 $AXB$ 可逆）；
+    \item 验证当 $X$ 为对称可逆矩阵时，
+    \[
+        \frac{\partial}{\partial X} \ln \det(X)
+        =
+        2X^{-1} - \diag(X^{-1}).
+    \]
+\end{enumerate}
+
+\begin{proof}
+    以下假设所出现的行列式为正，使实对数有定义；若改用 $\ln|\det(\cdot)|$，导数公式相同。
+    对 $\ln \det(X)$ 计算得到
+    \[
+        \begin{aligned}
+            \ln \det \left(X + \mathrm{d}\,X\right) - \ln \det(X) &= \ln \det\left(I + X^{-1} \mathrm{d}\,X\right) \\
+            &= \ln \left(1 + \operatorname{tr}\left(X^{-1} \mathrm{d}\,X\right)\right) + o\left(\|\mathrm{d}\,X\|\right) \\
+            &= \operatorname{tr}\left(X^{-1} \mathrm{d}\,X\right) + o\left(\|\mathrm{d}\,X\|\right) \\
+            &= \left\langle \left(X^{-1}\right)^\top, \mathrm{d}\,X \right\rangle_F + o\left(\|\mathrm{d}\,X\|\right) \\
+            &\iff \frac{\partial}{\partial X} \ln \det(X) = \left(X^{-1}\right)^\top.
+        \end{aligned}
+    \]
+    对 $\ln \det(AXB)$ 计算得到
+    \[
+        \begin{aligned}
+            \ln \det \left[A \left(X + \mathrm{d}\,X\right) B\right] - \ln \det AXB &= \ln \left(\frac{\det AXB \cdot \det \left(\left(AXB\right)^{-1} A \left(X + \mathrm{d}\,X\right) B\right)}{\det AXB}\right) \\
+            &= \ln \det\left(I + \left(AXB\right)^{-1} A \mathrm{d}\,X B\right) \\
+            &= \ln \det\left(I + B^{-1}X^{-1} A^{-1}A \mathrm{d}\,X B\right) = \ln \det \left(I + B^{-1}X^{-1}\mathrm{d}\,XB\right)\\
+            &= \ln \left(1 + \operatorname{tr}\left(B^{-1}X^{-1}\mathrm{d}\,XB\right) + o(\|\mathrm{d}\,X\|)\right) \\
+            &= \operatorname{tr}\left(B^{-1}X^{-1}\mathrm{d}\,XB\right) + o(\|\mathrm{d}\,X\|) = \operatorname{tr} \left(B B^{-1} X^{-1} \mathrm{d}\, X\right) + o(\|\mathrm{d}\,X\|) \\
+            &= \left\langle \left(X^{-1}\right)^\top, \mathrm{d}\,X \right\rangle_F + o(\|\mathrm{d}\,X\|) \\
+            &\iff \frac{\partial}{\partial X} \ln \det(AXB) = \left(X^{-1}\right)^\top.
+        \end{aligned}
+    \]
+    在 $X^\top = X$ 且 $X$ 可逆时，若把对称矩阵的上三角元素视为独立变量，则考虑
+    \[
+        \langle G, \mathrm{d}\,X \rangle_F = \left\langle \frac{G + G^\top}{2}, \mathrm{d}\,X \right\rangle_F.
+    \]
+    于是
+    \[
+        \mathrm{D} \left(\ln \det \left(X\right)\right) \left[\mathrm{d}\,X\right] = \langle X^{-1}, \mathrm{d}\,X \rangle_F = \left\langle \frac{X^{-1} + (X^{-1})^\top}{2}, \mathrm{d}\,X \right\rangle_F = \left\langle \left(X^{-1}\right)^\top, \mathrm{d}\,X \right\rangle_F.
+    \]
+    此时 $\mathrm{d}\, X$ 的一组基是 $\left\{E_{ij} + E_{ji}\right\}_{1 \leq i < j \leq n} \cup \left\{E_{ii}\right\}_{1 \leq i \leq n}$，其中 $E_{ij}$ 是 $(i, j)$ 元素为 1，其余元素为 0 的矩阵。对于 $1 \leq i < j \leq n$，有
+    \[
+        \begin{aligned}
+            \left\langle \left(X^{-1}\right)^\top, E_{ij} + E_{ji} \right\rangle_F &= \left\langle \left(X^{-1}\right)^\top, E_{ij} \right\rangle_F + \left\langle \left(X^{-1}\right)^\top, E_{ji} \right\rangle_F = \left(X^{-1}\right)^\top_{ij} + \left(X^{-1}\right)^\top_{ji} = 2\left(X^{-1}\right)^\top_{ij}.
+        \end{aligned}
+    \]
+    对于 $1 \leq i \leq n$，有
+    \[
+        \begin{aligned}
+            \left\langle \left(X^{-1}\right)^\top, E_{ii} \right\rangle_F &= \left(X^{-1}\right)^\top_{ii}.
+        \end{aligned}
+    \]
+    于是
+    \[
+        \frac{\partial}{\partial X} \ln \det \left(X\right) = 2X^{-1} - \diag \left(X^{-1}\right).
+    \]
+    这里的矩阵按独立的上三角变量排列偏导数；若在对称矩阵空间上使用 Frobenius 内积定义梯度，则梯度为 $X^{-1}$。
+\end{proof}
+
+\section*{Problem 3}
+
+设 $X \in \mathbb{R}^{n \times m}$，$A \in \mathbb{R}^{m \times m}$，$B \in \mathbb{R}^{n \times n}$ 均为常矩阵。利用 $\displaystyle \frac{\partial \operatorname{tr}(\cdot)}{\partial X}$ 的求导技巧，证明：
+
+\begin{enumerate}
+    \item $\displaystyle \frac{\partial}{\partial X} \operatorname{tr}\left(XAX^\top\right) = X(A + A^\top)$；
+    \item $\displaystyle \frac{\partial}{\partial X} \operatorname{tr}\left(X^\top BXA\right) = BXA + B^\top XA^\top$；
+    \item 作为 (2) 的应用，设 $B$ 对称且 $X^\top BX$ 可逆，证明
+    \[
+        \frac{\partial}{\partial X} \ln \det\left(X^\top BX\right)
+        =
+        2BX\left(X^\top BX\right)^{-1}.
+    \]
+\end{enumerate}
+
+\begin{proof}
+    对 $\operatorname{tr}(XAX^\top)$ 计算得到
+    \[
+        \begin{aligned}
+            \operatorname{tr}\left[\left(X + \mathrm{d}\,X\right) A \left(X + \mathrm{d}\,X\right)^\top\right] - \operatorname{tr}(XAX^\top)
+            &= \operatorname{tr}\left(X A \mathrm{d}\,X^\top\right) + \operatorname{tr}\left(\mathrm{d}\,X A X^\top\right) + o\left(\|\mathrm{d}\,X\|\right) \\
+            &= \operatorname{tr} \left(\mathrm{d}\,X A^\top X^\top\right) + \operatorname{tr}\left(\mathrm{d}\,X A X^\top\right) + o\left(\|\mathrm{d}\,X\|\right), \\
+            &= \left\langle X\left(A + A^\top\right), \mathrm{d}\,X \right\rangle_F + o\left(\|\mathrm{d}\,X\|\right) \\
+            &\iff \frac{\partial}{\partial X} \operatorname{tr}\left(XAX^\top\right) = X(A + A^\top).
+        \end{aligned}
+    \]
+    对 $\operatorname{tr}\left(X^\top BXA\right)$ 计算得到
+    \[
+        \begin{aligned}
+            \operatorname{tr}\left[\left(X + \mathrm{d}\,X\right)^\top B \left(X + \mathrm{d}\,X\right) A\right] - \operatorname{tr}\left(X^\top BXA\right)
+            &= \operatorname{tr}\left(\mathrm{d}\,X^\top B X A\right) + \operatorname{tr}\left(X^\top B \mathrm{d}\,X A\right) + o(\|\mathrm{d}\,X\|) \\
+            &= \operatorname{tr} \left(\mathrm{d}\,X^\top B X A\right) + \operatorname{tr}\left(\mathrm{d}\,X^\top B^\top X A^\top\right) + o(\|\mathrm{d}\,X\|), \\
+            &= \langle BXA + B^\top XA^\top, \mathrm{d}\,X \rangle_F + o(\|\mathrm{d}\,X\|) \\
+            &\iff \frac{\partial}{\partial X} \operatorname{tr}\left(X^\top BXA\right) = BXA + B^\top XA^\top.
+        \end{aligned}
+    \]
+    以下仍假设 $\det(X^\top BX)>0$；若使用 $\ln|\det(X^\top BX)|$，结论相同。对 $\ln \det\left(X^\top BX\right)$ 计算得到
+    \[
+        \begin{aligned}
+            \Delta f &= \ln \det\left[\left(X + \mathrm{d}\,X\right)^\top B \left(X + \mathrm{d}\,X\right)\right] - \ln \det\left(X^\top BX\right) \\
+            &= \ln \det\left(X^\top BX + X^\top B \mathrm{d}\,X + \mathrm{d}\,X^\top B X\right) - \ln \det\left(X^\top BX\right) \\
+            &= \ln \det\left(I + \left(X^\top BX\right)^{-1} X^\top B \mathrm{d}\,X + \left(X^\top BX\right)^{-1} \mathrm{d}\,X^\top B X\right) \\
+            &= \operatorname{tr}\left[\left(X^\top BX\right)^{-1} X^\top B \mathrm{d}\,X + \left(X^\top BX\right)^{-1} \mathrm{d}\,X^\top B X\right] + o\left(\|\mathrm{d}\,X\|\right) \\
+            &= 2\operatorname{tr}\left[\left(X^\top BX\right)^{-1} X^\top B \mathrm{d}\,X\right] + o\left(\|\mathrm{d}\,X\|\right) \\
+            &= 2\left\langle BX\left(X^\top BX\right)^{-1}, \mathrm{d}\,X \right\rangle_F + o\left(\left\|\mathrm{d}\,X\right\|\right) \\
+            &\iff \frac{\partial}{\partial X} \ln \det\left(X^\top BX\right) = 2BX\left(X^\top BX\right)^{-1}.
+        \end{aligned}
+    \]
+\end{proof}

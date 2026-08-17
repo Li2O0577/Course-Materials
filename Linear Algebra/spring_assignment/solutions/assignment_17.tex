@@ -1,0 +1,116 @@
+\section*{Problem 1}
+
+在多元线性回归中，假设设计矩阵 $X$ 列满秩。为了极小化最小二乘目标函数
+\[
+    \left\|X\bm{\beta} - \bm{y}\right\|^2,
+\]
+请推导参数 $\bm{\beta}$ 的最优解所满足的正规方程（Normal Equation）。
+
+\begin{proof}
+    记最小二乘目标函数为
+    \[
+        f(\bm{\beta})
+        = \left\|X\bm{\beta} - \bm{y}\right\|^2
+        = \left(X\bm{\beta} - \bm{y}\right)^\top
+          \left(X\bm{\beta} - \bm{y}\right).
+    \]
+    展开并对 $\bm{\beta}$ 求梯度，得到
+    \[
+        \begin{aligned}
+            f(\bm{\beta})
+            &= \bm{\beta}^\top X^\top X\bm{\beta}
+               - 2\bm{y}^\top X\bm{\beta}
+               + \bm{y}^\top\bm{y}, \\
+            \nabla_{\bm{\beta}} f
+            &= 2X^\top X\bm{\beta} - 2X^\top\bm{y}
+             = 2X^\top\left(X\bm{\beta} - \bm{y}\right).
+        \end{aligned}
+    \]
+    因此最优解 $\bm{\beta}^*$ 满足
+    \[
+        \nabla_{\bm{\beta}}f(\bm{\beta}^*) = \bm{0}
+        \iff
+        \boxed{X^\top X\bm{\beta}^* = X^\top\bm{y}},
+    \]
+    这就是正规方程。
+
+    由于 $X$ 列满秩，对任意非零向量 $\bm{v}$ 都有
+    \[
+        \bm{v}^\top X^\top X\bm{v} = \|X\bm{v}\|^2 > 0,
+    \]
+    故 $X^\top X$ 正定且可逆。于是目标函数存在唯一的全局最优解
+    \[
+        \boxed{\bm{\beta}^* = \left(X^\top X\right)^{-1}X^\top\bm{y}}.
+    \]
+\end{proof}
+
+\section*{Problem 2}
+
+在单层神经网络
+\[
+    \bm{z} = \sigma\left(W\bm{x} + \bm{b}\right)
+\]
+中，设激活函数为 Sigmoid 函数
+\[
+    \sigma(t) = \frac{1}{1 + e^{-t}}.
+\]
+请推导导数 $\sigma'(t)$，并将其恒等变形为仅包含 $\sigma(t)$ 的表达式。
+
+\begin{proof}
+    对 $\sigma(t)$ 直接求导，得到
+    \[
+        \sigma'(t)
+        = -\left(1 + e^{-t}\right)^{-2}\left(-e^{-t}\right)
+        = \frac{e^{-t}}{\left(1 + e^{-t}\right)^2}.
+    \]
+    另一方面，
+    \[
+        1 - \sigma(t)
+        = 1 - \frac{1}{1 + e^{-t}}
+        = \frac{e^{-t}}{1 + e^{-t}}.
+    \]
+    因此
+    \[
+        \boxed{\sigma'(t)
+        = \frac{1}{1 + e^{-t}}\frac{e^{-t}}{1 + e^{-t}}
+        = \sigma(t)\left(1 - \sigma(t)\right)}.
+    \]
+\end{proof}
+
+\section*{Problem 3}
+
+在主成分分析（PCA）中，求解半正定矩阵 $A^\top A$ 的最大特征值问题等价于求解约束优化问题
+\[
+    \max_{\|\bm{x}\| = 1}\bm{x}^\top A^\top A\bm{x}.
+\]
+请利用拉格朗日（Lagrange）乘子法证明：该优化问题的最大值即为矩阵 $A^\top A$ 的最大特征值 $\lambda_1$。
+
+\begin{proof}
+    记 $B = A^\top A$。由于 $B$ 是实对称半正定矩阵，其特征值均为非负实数。引入拉格朗日乘子 $\lambda$，构造
+    \[
+        L(\bm{x}, \lambda)
+        = \bm{x}^\top B\bm{x}
+          - \lambda\left(\bm{x}^\top\bm{x} - 1\right).
+    \]
+    对 $\bm{x}$ 求梯度并令其为零，得到
+    \[
+        \nabla_{\bm{x}}L
+        = 2B\bm{x} - 2\lambda\bm{x}
+        = \bm{0}
+        \iff
+        B\bm{x} = \lambda\bm{x}.
+    \]
+    单位球面是紧集，目标函数连续，故最大值必然取得。因此每个约束极值点 $\bm{x}$ 都是 $B$ 的单位特征向量，对应的拉格朗日乘子 $\lambda$ 是 $B$ 的特征值。又因为 $\|\bm{x}\| = 1$，
+    \[
+        \bm{x}^\top B\bm{x}
+        = \bm{x}^\top\left(\lambda\bm{x}\right)
+        = \lambda\bm{x}^\top\bm{x}
+        = \lambda.
+    \]
+    故目标函数在各约束极值点的值恰为 $B$ 的相应特征值。取其中最大的特征值 $\lambda_1$ 及其单位特征向量 $\bm{v}_1$，便有
+    \[
+        \max_{\|\bm{x}\| = 1}\bm{x}^\top A^\top A\bm{x}
+        = \bm{v}_1^\top A^\top A\bm{v}_1
+        = \boxed{\lambda_1}.
+    \]
+\end{proof}

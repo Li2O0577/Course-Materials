@@ -1,0 +1,193 @@
+\section*{Problem 1}
+
+设矩阵 \[
+A = \begin{bmatrix}
+    3 & 0 \\
+    0 & 2 \\
+    0 & 0 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 计算 $A^\top A$，求其特征值与单位特征向量，写出 $A$ 的奇异值 $\sigma_1 > \sigma_2$ 及右奇异向量 $\boldsymbol{v}_1, \boldsymbol{v}_2$。
+    \item 利用公式 \[\boldsymbol{u}_i = \frac{A\boldsymbol{v}_i}{\sigma_i},\] 求左奇异向量 $\boldsymbol{u}_1, \boldsymbol{u}_2$，并将其补全为 $\mathbb{R}^3$ 的标准正交基。
+    \item 写出 $A$ 的奇异值分解 $A = U \Sigma V^\top$。
+\end{enumerate}
+
+\begin{proof}
+    计算 $A^\top A$ 得
+    \[
+    A^\top A = \begin{bmatrix}
+        3 & 0 & 0 \\
+        0 & 2 & 0 \\
+    \end{bmatrix} \begin{bmatrix}
+        3 & 0 \\
+        0 & 2 \\
+        0 & 0 \\
+    \end{bmatrix} = \begin{bmatrix}
+        9 & 0 \\
+        0 & 4 \\
+    \end{bmatrix}.
+    \]
+    解特征方程 \[
+    \det \left(\lambda I - A^\top A\right) = \det\begin{bmatrix}
+        \lambda - 9 & 0 \\
+        0 & \lambda - 4 \\
+    \end{bmatrix} = \left(\lambda - 9\right)\left(\lambda - 4\right) = 0,
+    \]
+    得到特征值 $\lambda_1 = 9, \lambda_2 = 4$，从而有 $A$ 的奇异值为 \[
+        \sigma_1 = \sqrt{9} = 3, \quad \sigma_2 = \sqrt{4} = 2,
+    \]
+    对应右奇异向量 \[
+        \boldsymbol{v}_1 = \begin{pmatrix}
+            1 \\
+            0 \\
+        \end{pmatrix}, \quad \boldsymbol{v}_2 = \begin{pmatrix}
+            0 \\
+            1 \\
+        \end{pmatrix}.
+    \]
+    利用公式得到左奇异向量 \[
+    \boldsymbol{u}_1 = \frac{A\boldsymbol{v}_1}{\sigma_1} = \frac{1}{3}\begin{pmatrix}
+        3 \\
+        0 \\
+        0 \\
+    \end{pmatrix} = \begin{pmatrix}
+        1 \\
+        0 \\
+        0 \\
+    \end{pmatrix}, \quad \boldsymbol{u}_2 = \frac{A\boldsymbol{v}_2}{\sigma_2} = \frac{1}{2}\begin{pmatrix}
+        0 \\
+        2 \\
+        0 \\
+    \end{pmatrix} = \begin{pmatrix}
+        0 \\
+        1 \\
+        0 \\
+    \end{pmatrix},
+    \]
+    并补充 $\boldsymbol{u}_3 = \begin{pmatrix}
+        0 \\
+        0 \\
+        1 \\
+    \end{pmatrix}$ 得到 $\boldsymbol{u}_1, \boldsymbol{u}_2, \boldsymbol{u}_3$ 为 $\mathbb{R}^3$ 上的一组标准正交基。
+    于是 $A$ 的奇异值分解为 \[
+A = U \Sigma V^\top = \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix} \begin{bmatrix}
+    3 & 0 \\
+    0 & 2 \\
+    0 & 0 \\
+\end{bmatrix} \begin{bmatrix}
+    1 & 0 \\
+    0 & 1 \\
+\end{bmatrix}^\top.
+    \]
+    其中 \[
+    U = \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+    \end{bmatrix}, \quad V = \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+    \end{bmatrix},
+    \]
+    显然为正交矩阵。
+\end{proof}
+
+\section*{Problem 2}
+
+设矩阵
+\[A =
+\begin{bmatrix}
+    3 & 0 \\
+    0 & 1 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 直接写出 $A$ 的 SVD（该矩阵已是对角形式，奇异值即对角元）。
+    \item 利用谱范数定义 \[\|A\|_2 = \sup_{x \neq 0} \frac{\|Ax\|_2}{\|x\|_2},\]证明 $\|A\|_2 = \sigma_1 = 3$。
+    \item 写出 $A$ 的秩 - 1 近似 $A_1$，计算 $\|A - A_1\|_2$。
+\end{enumerate}
+
+\begin{proof}
+    显然有 \[
+    A = U \Sigma V^\top = \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+    \end{bmatrix} \begin{bmatrix}
+        3 & 0 \\
+        0 & 1 \\
+    \end{bmatrix} \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+    \end{bmatrix}^\top.
+    \]
+    并利用定义有 \[
+\|A\|_2 = \sup_{\boldsymbol{x} \neq \boldsymbol{0}} \frac{\|A\boldsymbol{x}\|_2}{\|\boldsymbol{x}\|_2} = \sup_{\boldsymbol{x} \neq \boldsymbol{0}} \sqrt{\frac{\boldsymbol{x}^\top A^\top A \boldsymbol{x}}{\boldsymbol{x}^\top \boldsymbol{x}}} \le \sqrt{\rho \left(A^\top A\right)} = \sigma_1 = 3.
+    \]
+    取 $\boldsymbol{x}=(1,0)^\top$ 时等号成立，故 $\|A\|_2=3$。
+    还可以得到 $A$ 的秩 - 1 近似 $A_1$ 及 $A - A_1$ 的谱范数
+    \[
+    A_1 = \sigma_1 \boldsymbol{u}_1 \boldsymbol{v}_1^\top = \begin{bmatrix}
+        3 & 0 \\
+        0 & 0 \\
+    \end{bmatrix}, \quad \|A - A_1\|_2 = \sigma_2 = 1.
+    \]
+\end{proof}
+
+\section*{Problem 3}
+
+设矩阵
+\[
+A =
+\begin{bmatrix}
+    3 & 0 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix},
+\]
+其奇异值为 \[\sigma_1 = 3, \quad \sigma_2 = 2, \quad \sigma_3 = 1.\]
+\begin{enumerate}
+    \item 写出 $A$ 的秩 - 1 近似 $A_1$ 与秩 - 2 近似 $A_2$，分别计算近似误差 $\|A - A_1\|_2$ 与 $\|A - A_2\|_2$。
+    \item 由 Eckart – Young 定理，$A_1$ 是 $A$ 的最优秩 - 1 近似。若另取秩 - 1 矩阵 \[B = 3 \boldsymbol{e}_1 \boldsymbol{e}_2^\top,\]其中 $\boldsymbol{e}_1, \boldsymbol{e}_2$ 为标准基向量，计算 $\|A - B\|_2$ 并验证其不小于 $\|A - A_1\|_2$。
+\end{enumerate}
+
+\begin{proof}
+    显然有 \[
+A_1 = \sigma_1 \boldsymbol{u}_1 \boldsymbol{v}_1^\top = \begin{bmatrix}
+    3 & 0 & 0 \\
+    0 & 0 & 0 \\
+    0 & 0 & 0 \\
+\end{bmatrix}, \quad A_2 = \sigma_1 \boldsymbol{u}_1 \boldsymbol{v}_1^\top + \sigma_2 \boldsymbol{u}_2 \boldsymbol{v}_2^\top = \begin{bmatrix}
+    3 & 0 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 0 \\
+\end{bmatrix},
+    \]
+    于是 \[
+\|A - A_1\|_2 = \sigma_2 = 2, \quad \|A - A_2\|_2 = \sigma_3 = 1.
+    \]
+    另一方面，计算 \[B = \begin{bmatrix}
+        0 & 3 & 0 \\
+        0 & 0 & 0 \\
+        0 & 0 & 0 \\
+    \end{bmatrix}, \quad \|A - B\|_2 = \sup_{\boldsymbol{x} \neq \boldsymbol{0}} \frac{\|(A - B)\boldsymbol{x}\|_2}{\|\boldsymbol{x}\|_2} = \sup_{\boldsymbol{x} \neq \boldsymbol{0}} \sqrt{\frac{\boldsymbol{x}^\top (A - B)^\top (A - B) \boldsymbol{x}}{\boldsymbol{x}^\top \boldsymbol{x}}},\]得到 \[
+(A - B)^\top (A - B) = \begin{bmatrix}
+    3 & -3 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}^\top \begin{bmatrix}
+    3 & -3 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix} = \begin{bmatrix}
+    9 & -9 & 0 \\
+    -9 & 13 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}.
+\]
+对应最大特征值 $\lambda_1 = 11 + \sqrt{85}$，从而 \[\|A - B\|_2 = \sqrt{11 + \sqrt{85}} > 2 = \|A - A_1\|_2.\]
+\end{proof}

@@ -1,0 +1,168 @@
+\section*{Problem 1}
+
+定义映射 $\mathcal{T}: \mathbb{R}^3 \to \mathbb{R}^2$ 为
+\[
+T \left(x_1, x_2, x_3\right) = \left(x_1 + 2x_2, 3x_2 - x_3\right)^\top.
+\]
+\begin{enumerate}
+    \item 证明：$\mathcal{T}$ 是线性映射；
+    \item 求 $\ker \left(\mathcal{T}\right)$ 和 $\im \left(\mathcal{T}\right)$ 的维数与一组基.
+\end{enumerate}
+
+\begin{proof}
+我们记
+\[
+\bvec{x}=\left(x_1,x_2,x_3\right)^\top,\qquad
+\mathcal{T} \left(\bvec{x}\right) \xlongequal{\textrm{def}} T \left(x_1, x_2, x_3\right) = \left(x_1 + 2x_2, 3x_2 - x_3\right)^\top,
+\]
+并验证 $\mathcal{T}$ 保加法且保数乘
+\[
+\begin{aligned}
+    \mathcal{T} \left(\alpha \bvec{x} + \beta \bvec{y}\right) &= \begin{pmatrix}
+        \left(\alpha \bvec{x} + \beta \bvec{y}\right)_1 + 2 \left(\alpha \bvec{x} + \beta \bvec{y}\right)_2 \\
+        3\left(\alpha \bvec{x} + \beta \bvec{y}\right)_2 - \left(\alpha \bvec{x} + \beta \bvec{y}\right)_3
+    \end{pmatrix} = \begin{pmatrix}
+        \alpha x_1 + \beta y_1 + 2 \alpha x_2 + 2 \beta y_2 \\
+        3 \alpha x_2 + 3 \beta y_2 - \alpha x_3 - \beta y_3 \\
+    \end{pmatrix}, \\
+    &= \begin{pmatrix}
+        \alpha x_1 + 2 \alpha x_2 + \beta y_1 + 2 \beta y_2 \\
+        3 \alpha x_2 - \alpha x_3 + 3 \beta y_2 - \beta y_3 \\
+    \end{pmatrix} = \begin{pmatrix}
+        \alpha x_1 + 2 \alpha x_2 \\
+        3 \alpha x_2 - \alpha x_3 \\
+    \end{pmatrix} + \begin{pmatrix}
+        \beta y_1 + 2 \beta y_2 \\
+        3 \beta y_2 - \beta y_3 \\
+    \end{pmatrix}, \\
+    &= \alpha \left(x_1 + 2x_2, 3x_2 - x_3\right)^\top + \beta \left(y_1 + 2y_2, 3y_2 - y_3\right)^\top, \\
+    &= \alpha \mathcal{T} \left(\bvec{x}\right) + \beta \mathcal{T} \left(\bvec{y}\right).
+\end{aligned}
+\]
+因此 $\mathcal{T}$ 是线性映射，并且 $\mathcal{T} \left(\bvec{x}\right) = \underbrace{\begin{bmatrix}
+    1 & 2 & 0 \\
+    0 & 3 & -1 \\
+\end{bmatrix}}_{A} \bvec{x}$. 利用 $\mathcal{T}$ 与 $A$ 的关系得到 \[\ker \left(\mathcal{T}\right) = N \left(A\right), \im \left(\mathcal{T}\right) = C \left(A\right).\]
+对 $A$ 施 Gauss - Jordan 消元法有 \[
+A = \begin{bmatrix}
+    1 & 2 & 0 \\
+    0 & 3 & -1 \\
+\end{bmatrix} \implies R = \begin{bmatrix}
+    1 & 0 & \frac{2}{3} \\
+    0 & 1 & -\frac{1}{3} \\
+\end{bmatrix} \implies \begin{cases}
+    \rank \left(A\right) = 2, \\
+    C \left(A\right) = \mathrm{span} \left\{\left(1, 0\right)^\top, \left(2, 3\right)^\top\right\}, \\
+    N \left(A\right) = \mathrm{span} \left\{\left(-\frac{2}{3}, \frac{1}{3}, 1\right)^\top\right\}. \\
+\end{cases}
+\]
+从而
+\[
+\boxed{
+    \begin{aligned}
+        \dim \ker \left(\mathcal{T}\right) = 1, \ker \left(\mathcal{T}\right) = \mathrm{span} \left\{\left(-\frac{2}{3}, \frac{1}{3}, 1\right)^\top\right\}, \\
+        \dim \im \left(\mathcal{T}\right) = 2, \im \left(\mathcal{T}\right) = \mathrm{span} \left\{\left(1, 0\right)^\top, \left(2, 3\right)^\top\right\}. \\
+    \end{aligned}
+}
+\]
+\end{proof}
+
+\section*{Problem 2}
+
+设 $V$ 是 3 维线性空间，基为 $\left\{\bvec{v}_1, \bvec{v}_2, \bvec{v}_3\right\}$，线性变换 $\mathcal{A}: V \to V$ 满足
+\[
+\begin{aligned}
+    \mathcal{A} \left(\bvec{v}_1\right) = \bvec{v}_1 + \bvec{v}_2, \\
+    \mathcal{A} \left(\bvec{v}_2\right) = \bvec{v}_2 + \bvec{v}_3, \\
+    \mathcal{A} \left(\bvec{v}_3\right) = \bvec{v}_1 + \bvec{v}_3. \\
+\end{aligned}
+\]
+\begin{enumerate}
+    \item 写出 $\mathcal{A}$ 在基 $\left\{\bvec{v}_1, \bvec{v}_2, \bvec{v}_3\right\}$ 下的矩阵表示；
+    \item 求 $\mathcal{A}$ 的像空间 $\im \left(\mathcal{A}\right)$ 和核空间 $\ker \left(\mathcal{A}\right)$ 的基.
+\end{enumerate}
+
+\begin{proof}
+设 $\bvec{x}$ 在基 $\left\{\bvec{v}_1, \bvec{v}_2, \bvec{v}_3\right\}$ 下的坐标为 $\left(r_1, r_2, r_3\right)^\top$. 先求 $\mathcal{A}$ 在该基下的矩阵表示
+\[
+\begin{aligned}
+    \mathcal{A} \left(\bvec{x}\right) &= \mathcal{A} \left(r_1 \bvec{v}_1 + r_2 \bvec{v}_2 + r_3 \bvec{v}_3\right) = r_1 \mathcal{A} \left(\bvec{v}_1\right) + r_2 \mathcal{A} \left(\bvec{v}_2\right) + r_3 \mathcal{A} \left(\bvec{v}_3\right) \\
+    &= \begin{bmatrix}
+        | & | & | \\
+        \mathcal{A} \left(\bvec{v}_1\right) & \mathcal{A} \left(\bvec{v}_2\right) & \mathcal{A} \left(\bvec{v}_3\right) \\
+        | & | & | \\
+    \end{bmatrix} \left(r_1, r_2, r_3\right)^\top \\
+    &= \begin{bmatrix}\bvec{v}_1 & \bvec{v}_2 & \bvec{v}_3\end{bmatrix} \underbrace{\begin{bmatrix}
+        1 & 0 & 1 \\
+        1 & 1 & 0 \\
+        0 & 1 & 1 \\
+    \end{bmatrix}}_{A} \left(r_1, r_2, r_3\right)^\top
+\end{aligned}
+\]
+对 $A$ 施 Gauss - Jordan 消元法有
+\[
+A = \begin{bmatrix}
+        1 & 0 & 1 \\
+        1 & 1 & 0 \\
+        0 & 1 & 1 \\
+    \end{bmatrix}
+\implies
+R = \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+\implies
+\begin{cases}
+    \rank \left(A\right) = 3, \\
+    C \left(A\right) = \Span \left\{\left(1, 1, 0\right)^\top, \left(0, 1, 1\right)^\top, \left(1, 0, 1\right)^\top\right\}, \\
+    N \left(A\right) = \Span \left\{\bvec{0}\right\}. \\
+\end{cases}
+\]
+矩阵 $A$ 可逆，因此 $\mathcal A$ 也是可逆线性算子，从而
+\[
+\boxed{
+    \begin{aligned}
+        \im \left(\mathcal{A}\right) &= V = \Span \left\{\bvec v_1,\bvec v_2,\bvec v_3\right\}, \\
+        \ker \left(\mathcal{A}\right) &= \left\{\bvec{0}\right\}. \\
+    \end{aligned}
+}
+\]
+
+\end{proof}
+\section*{Problem 3}
+
+设 $\mathcal{A}: \mathbb{R}^2 \to \mathbb{R}^2$ 是线性变换，在标准基下的矩阵为
+\[
+A = \begin{bmatrix}
+    1 & 2 \\
+    0 & 3 \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 求 $\mathcal{A}$ 的像空间 $\im \left(\mathcal{A}\right)$ 和核空间 $\ker \left(\mathcal{A}\right)$；
+    \item 判断 $\mathcal{A}$ 是否为单射、满射.
+\end{enumerate}
+
+\begin{proof}
+对 $A$ 施 Gauss - Jordan 消元法有
+\[
+A = \begin{bmatrix}
+    1 & 2 \\
+    0 & 3 \\
+\end{bmatrix}
+\implies
+R = \begin{bmatrix}
+    1 & 0 \\
+    0 & 1 \\
+\end{bmatrix}
+\implies
+\begin{cases}
+    \rank \left(A\right) = 2, \\
+    C \left(A\right) = \Span \left\{\left(1, 0\right)^\top, \left(2, 3\right)^\top\right\}, \\
+    N \left(A\right) = \Span \left\{\bvec{0}\right\}. \\
+\end{cases}
+\]
+由 $\boxed{\ker \left(\mathcal{A}\right) = N \left(A\right) = \Span \left\{\bvec{0}\right\}}$ 知 $\boxed{\mathcal{A} \text{ 是单射}}$，由 $\boxed{\im \left(\mathcal{A}\right) = C \left(A\right) = \mathbb{R}^2}$ 知 $\boxed{\mathcal{A} \text{ 是满射}}$.
+
+\end{proof}

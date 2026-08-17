@@ -1,0 +1,113 @@
+\section*{Problem 1}
+
+设 $g : \mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}$ 定义为
+\[
+g \left(\boldsymbol{x}, \boldsymbol{y}\right) = 2 x_1 y_1 + 3 x_1 y_2 - x_2 y_1 + 4 x_2 y_2,
+\]
+其中 $\boldsymbol{x} = \left(x_1, x_2\right), \boldsymbol{y} = \left(y_1, y_2\right)$.
+\begin{enumerate}
+    \item 写出 $g$ 在标准基下的 Gram 矩阵 $G$；
+    \item 判断 $g$ 是否为对称双线性型.
+\end{enumerate}
+
+\begin{proof}
+为求解标准基 $\left\{\boldsymbol{e}_1, \boldsymbol{e}_2\right\}$ 下的 Gram 矩阵，代入并求值有
+\[
+G = \begin{bmatrix}
+    g \left(\boldsymbol{e}_1, \boldsymbol{e}_1\right) & g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right) \\
+    g \left(\boldsymbol{e}_2, \boldsymbol{e}_1\right) & g \left(\boldsymbol{e}_2, \boldsymbol{e}_2\right) \\
+\end{bmatrix},
+\begin{cases}
+    g \left(\boldsymbol{e}_1, \boldsymbol{e}_1\right) &= 2, \\
+    g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right) &= 3, \\
+    g \left(\boldsymbol{e}_2, \boldsymbol{e}_1\right) &= -1, \\
+    g \left(\boldsymbol{e}_2, \boldsymbol{e}_2\right) &= 4. \\
+\end{cases}
+\implies G = \boxed{\begin{bmatrix}
+    2 & 3 \\
+    -1 & 4 \\
+\end{bmatrix}}.
+\]
+由此亦可见 $\boxed{g \textrm{ 不是对称双线性型}}$.
+
+\end{proof}
+
+\section*{Problem 2}
+
+设 $V$ 是 2 维线性空间，基为 $\left\{\boldsymbol{e}_1, \boldsymbol{e}_2\right\}$，定义双线性型 $g$ 满足
+\[
+\begin{aligned}
+g \left(\boldsymbol{e}_1, \boldsymbol{e}_1\right) = 1, \\
+g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right) = 2, \\
+g \left(\boldsymbol{e}_2, \boldsymbol{e}_1\right) = 3, \\
+g \left(\boldsymbol{e}_2, \boldsymbol{e}_2\right) = 4. \\
+\end{aligned}
+\]
+\begin{enumerate}
+    \item 写出 $g$ 在基 $\left\{\boldsymbol{e}_1, \boldsymbol{e}_2\right\}$ 下的 Gram 矩阵；
+    \item 若新基 $\left\{\boldsymbol{f}_1, \boldsymbol{f}_2\right\}$ 满足 $\boldsymbol{f}_1 = \boldsymbol{e}_1 + \boldsymbol{e}_2, \boldsymbol{f}_2 = \boldsymbol{e}_1 - \boldsymbol{e}_2$，求 $g$ 在新基下的 Gram 矩阵.
+\end{enumerate}
+
+\begin{proof}
+易见
+\[
+G = \begin{bmatrix}
+    g \left(\boldsymbol{e}_1, \boldsymbol{e}_1\right) & g \left(\boldsymbol{e}_1, \boldsymbol{e}_2\right) \\
+    g \left(\boldsymbol{e}_2, \boldsymbol{e}_1\right) & g \left(\boldsymbol{e}_2, \boldsymbol{e}_2\right) \\
+\end{bmatrix} = \boxed{\begin{bmatrix}
+    1 & 2 \\
+    3 & 4 \\
+\end{bmatrix}}.
+\]
+欲求 $g$ 在 $\left\{\boldsymbol{f}_1, \boldsymbol{f}_2\right\}$ 下的 Gram 矩阵，求值
+\[
+\begin{cases}
+    g \left(\boldsymbol{f}_1, \boldsymbol{f}_1\right) = g \left(\boldsymbol{e}_1 + \boldsymbol{e}_2, \boldsymbol{e}_1 + \boldsymbol{e}_2\right) = 10, \\
+    g \left(\boldsymbol{f}_1, \boldsymbol{f}_2\right) = g \left(\boldsymbol{e}_1 + \boldsymbol{e}_2, \boldsymbol{e}_1 - \boldsymbol{e}_2\right) = -2, \\
+    g \left(\boldsymbol{f}_2, \boldsymbol{f}_1\right) = g \left(\boldsymbol{e}_1 - \boldsymbol{e}_2, \boldsymbol{e}_1 + \boldsymbol{e}_2\right) = -4, \\
+    g \left(\boldsymbol{f}_2, \boldsymbol{f}_2\right) = g \left(\boldsymbol{e}_1 - \boldsymbol{e}_2, \boldsymbol{e}_1 - \boldsymbol{e}_2\right) = 0. \\
+\end{cases}
+\]
+于是有
+\[
+G^\prime = \begin{bmatrix}
+    g \left(\boldsymbol{f}_1, \boldsymbol{f}_1\right) & g \left(\boldsymbol{f}_1, \boldsymbol{f}_2\right) \\
+    g \left(\boldsymbol{f}_2, \boldsymbol{f}_1\right) & g \left(\boldsymbol{f}_2, \boldsymbol{f}_2\right) \\
+\end{bmatrix} \\
+= \boxed{\begin{bmatrix}
+    10 & -2 \\
+    -4 & 0 \\
+\end{bmatrix}}.
+\]
+
+\end{proof}
+\section*{Problem 3}
+
+设 $g \left(\boldsymbol{x}, \boldsymbol{y}\right) = \boldsymbol{x}^\top A \boldsymbol{y}$ 是 $\mathbb{R}^n$ 上的双线性型，$A$ 为 $n \times n$ 矩阵. 证明：$g$ 是对称双线性型，当且仅当 $A$ 是对称矩阵.
+
+\begin{proof}
+先证必要性。若 $g$ 为对称双线性型，则
+\[
+\begin{aligned}
+    \boldsymbol{x}^\top A \boldsymbol{y} &= g \left(\boldsymbol{x}, \boldsymbol{y}\right) \\
+    &= g \left(\boldsymbol{y}, \boldsymbol{x}\right) = g \left(\boldsymbol{y}, \boldsymbol{x}\right) ^\top = \left(\boldsymbol{y}^\top A \boldsymbol{x}\right)^\top = \boldsymbol{x}^\top A^\top \boldsymbol{y}.
+\end{aligned}
+\]
+令 $\boldsymbol{x}, \boldsymbol{y}$ 取遍 $\left\{\boldsymbol{e}_1, \boldsymbol{e}_2, \cdots, \boldsymbol{e}_n\right\}$，从而
+\[
+A_{i, j} = \boldsymbol{e}_i^\top A \boldsymbol{e}_j = \boldsymbol{e}_i^\top A^\top \boldsymbol{e}_j = A^\top_{i, j},
+\]
+故 $A=A^\top$。
+
+再证充分性。若 $A=A^\top$，则对任意 $\boldsymbol{x},\boldsymbol{y}\in\mathbb{R}^n$，
+\[
+g(\boldsymbol{y},\boldsymbol{x})
+=\boldsymbol{y}^\top A\boldsymbol{x}
+=\left(\boldsymbol{y}^\top A\boldsymbol{x}\right)^\top
+=\boldsymbol{x}^\top A^\top\boldsymbol{y}
+=\boldsymbol{x}^\top A\boldsymbol{y}
+=g(\boldsymbol{x},\boldsymbol{y}).
+\]
+因此 $g$ 是对称双线性型。
+
+\end{proof}

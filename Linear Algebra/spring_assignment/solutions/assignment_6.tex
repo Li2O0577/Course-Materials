@@ -1,0 +1,174 @@
+\section*{Problem 1}
+
+在 $\mathbb{R}^3$ 中，设子空间 $W_1$ 由方程 $x+y-z=0$ 确定，子空间 $W_2$ 由方程 $x-y=0$ 确定.请分别计算子空间 $W_1$、$W_2$ 以及交空间 $W_1 \cap W_2$ 的维数，并利用维数公式求和空间 $W_1 + W_2$ 的维数.
+
+\begin{proof}
+对 $W_1$，称 $\mathbb{R}^3$ 中向量 $\bvec{x} = \left(x_1, x_2, x_3\right)^\top$ 处于该子空间，当且仅当
+\[
+\underbrace{\begin{bmatrix}
+    1 & 1 & -1
+\end{bmatrix}}_{A_1} \bvec{x} = 0 \iff \bvec{x} \in \ker \left(A_1\right) \iff \ker \left(A_1\right) = W_1.
+\]
+对 $W_2$，称 $\mathbb{R}^3$ 中向量 $\bvec{x} = \left(x_1, x_2, x_3\right)^\top$ 处于该子空间，当且仅当
+\[
+\underbrace{\begin{bmatrix}
+    1 & -1 & 0
+\end{bmatrix}}_{A_2} \bvec{x} = 0 \iff \bvec{x} \in \ker \left(A_2\right).
+\]
+施 Gauss - Jordan 消元法于 $A_1, A_2$ 易见
+\[
+\begin{cases}
+    \dim W_1 = \dim \ker \left(A_1\right) = 2, \\
+    \dim W_2 = \dim \ker \left(A_2\right) = 2. \\
+\end{cases}
+\]
+记 $A = \begin{bmatrix}
+    A_1 \\
+    A_2
+\end{bmatrix}$，施 Gauss - Jordan 消元法于 $A$ 有
+\[
+A = \begin{bmatrix}
+    1 & 1 & -1 \\
+    1 & -1 & 0
+\end{bmatrix}
+\implies
+R = \begin{bmatrix}
+    1 & 0 & -1/2 \\
+    0 & 1 & -1/2 \\
+\end{bmatrix}
+\implies
+\dim \left(W_1 \cap W_2\right) = \dim \ker \left(A\right) = 1.
+\]
+由维数公式知
+\[
+\dim \left(W_1 + W_2\right) = \dim \left(W_1\right) + \dim \left(W_2\right) - \dim \left(W_1 \cap W_2\right) = 3. \\
+\]
+\end{proof}
+
+\section*{Problem 2}
+
+设 $\mathbb{R}^4$ 中的两个子空间分别为
+\[
+\begin{aligned}
+    U &= \Span\left\{
+    \left(1, 0, 0, 0\right)^\top,
+    \left(0, 1, 0, 0\right)^\top
+    \right\}, \\
+    V &= \Span\left\{
+    \left(1, 1, 1, 1\right)^\top,
+    \left(0, 0, 1, 1\right)^\top
+    \right\}.
+\end{aligned}
+\]
+请通过计算维数 $\dim \left(U + V\right)$，来判断 $U + V$ 是否为直和（即判断是否满足 $U \oplus V$）.
+
+\begin{proof}
+欲计算 $\dim \left(U + V\right)$，考虑维数公式
+\[
+\dim \left(U + V\right) = \dim \left(U\right) + \dim \left(V\right) - \dim \left(U \cap V\right).
+\]
+对子空间 $U$，称 $\mathbb{R}^4$ 中向量 $\bvec{x} = \left(x_1, x_2, x_3, x_4\right)^\top$ 处于该子空间，当且仅当
+\[
+\bvec{x} \in C \left(A\right), \quad A = \begin{bmatrix}
+    1 & 0 \\
+    0 & 1 \\
+    0 & 0 \\
+    0 & 0 \\
+\end{bmatrix}.
+\]
+对子空间 $V$，称 $\mathbb{R}^4$ 中向量 $\bvec{x} = \left(x_1, x_2, x_3, x_4\right)^\top$ 处于该子空间，当且仅当
+\[
+\bvec{x} \in C \left(B\right), \quad B = \begin{bmatrix}
+    1 & 0 \\
+    1 & 0 \\
+    1 & 1 \\
+    1 & 1 \\
+\end{bmatrix}.
+\]
+施 Gauss - Jordan 消元法于 $A, B$ 易见
+\[
+\begin{cases}
+    \dim U = \rank \left(A\right) = 2, \\
+    \dim V = \rank \left(B\right) = 2. \\
+\end{cases}
+\]
+下求 $\dim \left(U \cap V\right)$，即求解方程组 $A \bvec{x} = B \bvec{y}$ 的解的维数. 即设 $\bvec{v} \in U \cap V$，则存在 $\bvec{x}, \bvec{y}$ 使得
+\[
+\bvec{v} = \begin{bmatrix}
+    \bvec{\alpha}_1 & \bvec{\alpha}_2
+\end{bmatrix} \bvec{x} = \begin{bmatrix}
+    \bvec{\beta}_1 & \bvec{\beta}_2
+\end{bmatrix} \bvec{y} \implies \begin{bmatrix}
+    \bvec{\alpha}_1 & \bvec{\alpha}_2 & -\bvec{\beta}_1 & -\bvec{\beta}_2
+\end{bmatrix} \begin{pmatrix}
+    \bvec{x} \\
+    \bvec{y}
+\end{pmatrix} = \underbrace{\begin{bmatrix}
+    A & -B
+\end{bmatrix}}_{C} \begin{pmatrix}
+    \bvec{x} \\
+    \bvec{y} \\
+\end{pmatrix} = \bvec{0}.
+\]
+对 $C$ 施 Gauss - Jordan 消元法有
+\[
+C = \begin{bmatrix}
+    1 & 0 & -1 & 0 \\
+    0 & 1 & -1 & 0 \\
+    0 & 0 & -1 & -1 \\
+    0 & 0 & -1 & -1 \\
+\end{bmatrix}
+\implies
+R = \begin{bmatrix}
+    1 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 1 \\
+    0 & 0 & 1 & 1 \\
+    0 & 0 & 0 & 0 \\
+\end{bmatrix}
+\implies \dim \ker \left(C\right) = 1.
+\]
+由于 $A$ 与 $B$ 的列向量各自线性无关，$\ker C$ 中每一组系数唯一对应于 $U\cap V$ 中的一个向量，因此 $\dim(U\cap V)=1$。
+因此
+\[
+\dim \left(U + V\right) = \dim \left(U\right) + \dim \left(V\right) - \dim \left(U \cap V\right) = 3.
+\]
+并且由于 $\dim \left(U \cap V\right) = 1 \neq 0$，从而 $U + V$ 不为直和.
+
+
+\end{proof}
+\section*{Problem 3}
+
+已知 $n$ 阶方阵空间 $V = \mathbb{R}^{n \times n}$ 可以分解为对称矩阵子空间 $W_1$ 与反对称矩阵子空间 $W_2$ 的直和（即 $V = W_1 \oplus W_2$）.给定矩阵
+\[
+A =
+\begin{bmatrix}
+1 & 2 & 4 \\
+4 & 5 & 6 \\
+2 & 8 & 9
+\end{bmatrix},
+\]
+请利用直和分解的性质，求出唯一确定的对称矩阵 $S \in W_1$ 和反对称矩阵 $K \in W_2$，使得 $A = S + K$.
+
+\begin{proof}
+对一般的 $A$，注意到
+\[
+\begin{aligned}
+    A &= \underbrace{\frac{A + A^\top}{2}}_{S} + \underbrace{\frac{A - A^\top}{2}}_{K}, \\
+    S^\top &= \frac{A^\top + A}{2} = S, \\
+    K^\top &= \frac{A^\top - A}{2} = -K. \\
+\end{aligned}
+\]
+并且 $W_1 \cap W_2 = \left\{O_{n \times n}\right\}$，从而 $S$ 与 $K$ 是唯一确定的. 代入 $A$ 的数值即可得到
+\[
+S = \boxed{\begin{bmatrix}
+    1 & 3 & 3 \\
+    3 & 5 & 7 \\
+    3 & 7 & 9 \\
+\end{bmatrix}}, \quad
+K = \boxed{\begin{bmatrix}
+    0 & -1 & 1 \\
+    1 & 0 & -1 \\
+    -1 & 1 & 0 \\
+\end{bmatrix}}.
+\]
+\end{proof}

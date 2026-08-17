@@ -1,0 +1,90 @@
+\section{微分是一种线性映射}
+
+\begin{center}
+\includegraphics[width=0.22\textwidth]{assets/hsr_coreflame_icons/Icon_Coreflame_Passage.png}
+\end{center}
+
+回顾函数的局部展开，它们都有同一种形式：函数在基点处的值保持不变，输入增量产生一个线性主项，其余部分相对于增量范数更高阶。对于一元函数，这个结构写作 \[f(x+h)=f(x)+f'(x)h+o(|h|),\] 对于多元标量函数，这个结构写作 \[f(\bm{x}+\bm{u})=f(\bm{x})+\bm{\nabla} f(\bm{x})^\top \bm{u}+o(\|\bm{u}\|).\]
+两式中的 \(f'(x)h\) 与 \(\bm{\nabla} f(\bm{x})^\top \bm{u}\) 承担相同功能，都是把输入增量送到函数增量的一阶主项。
+
+为了把这种功能从具体坐标公式中分离出来，设 \(f:\mathbb{R}^n\to\mathbb{R}\)，若存在一个关于 \(\bm{u}\) 的线性规则，使得
+\[
+f(\bm{x}+\bm{u})=f(\bm{x})+\mathrm{D}f(\bm{x})[\bm{u}]+o(\|\bm{u}\|),\qquad \bm{u}\to \bm{0},
+\]
+则称 \(f\) 在 \(\bm{x}\) 处\textbf{可微}，并把 \(\mathrm{D}f(\bm{x})\) 称为 \(f\) 在 \(\bm{x}\) 处的\textbf{微分}。这里 \(\mathrm{D}f(\bm{x})[\bm{u}]\) 表示这个规则作用在输入增量 \(\bm{u}\) 上得到的数值，而 \(\mathrm{D}f(\bm{x})\) 本身表示从输入增量到一阶主项的对应关系。方括号中的 \(\bm{u}\) 表示函数自变量在 \(\bm{x}\) 附近发生的改变量。
+
+在一元情形中，输入增量是实数 \(h\)，微分为
+\[
+\mathrm{D}f(x)[h]=f'(x)h.
+\]
+因此，导数 \(f'(x)\) 是这个线性映射的系数，而微分 \(\mathrm{D}f(x)\) 是把 \(h\) 映到 \(f'(x)h\) 的作用方式。若只写 \(f'(x)\)，得到的是一个数；若写 \(\mathrm{D}f(x)[h]\)，得到的是该数与输入增量配对后的函数增量主项。这一区分在一元函数中显得简单，但在多元和矩阵变量情形中会成为组织公式的关键。
+
+对于多元标量函数，若 \(f\) 在 \(\bm{x}\) 处可微，采用欧氏内积，则微分可以写为
+\[
+\mathrm{D}f(\bm{x})[\bm{u}]=\bm{\nabla} f(\bm{x})^\top \bm{u}.
+\]
+梯度是在欧氏内积下表示微分规则的向量，而微分本身是关于输入增量 \(\bm{u}\) 的线性映射。由于这一表示依赖于内积约定，进入矩阵空间时必须先明确采用哪一种内积，才能从微分中读出梯度。
+
+多元微积分中常见的偏导公式正是这个线性映射的坐标表达。把 \(\bm{u}=(u_1,\ldots,u_n)^\top\) 写成 \(\bm{u}=\sum_i u_i \bm{e}_i\)，其中 \(\bm{e}_i\) 是第 \(i\) 个标准基向量。若 \(\mathrm{D}f(\bm{x})\) 是线性映射，则
+\[
+\mathrm{D}f(\bm{x})[\bm{u}]=\sum_i u_i \mathrm{D}f(\bm{x})[\bm{e}_i].
+\]
+而 \(\mathrm{D}f(\bm{x})[\bm{e}_i]\) 正是函数沿第 \(i\) 个坐标方向的一阶系数，也就是偏导数 \(\frac{\partial f}{\partial x_i}(\bm{x})\)。因此
+\[
+\mathrm{D}f(\bm{x})[\bm{u}]=\sum_i \frac{\partial f}{\partial x_i}(\bm{x})u_i=\bm{\nabla} f(\bm{x})^\top \bm{u}.
+\]
+于是，偏导数应理解为全微分在标准坐标方向上的系数；梯度把这些系数排成向量，内积形式则把它们对任意增量 \(\bm{u}\) 的作用一次性写出。
+
+线性函数 \(f(\bm{x})=\bm{a}^\top \bm{x}+b\) 是最简单的例子。对任意 \(\bm{u}\in\mathbb{R}^n\)，有
+\[
+f(\bm{x}+\bm{u})-f(\bm{x})=\bm{a}^\top \bm{u},
+\]
+因此 \(\mathrm{D}f(\bm{x})[\bm{u}]=\bm{a}^\top \bm{u}\)，且微分与基点 \(\bm{x}\) 无关。这里的函数本身已经是线性的，局部展开没有高阶余项。
+
+二次型 \(f(\bm{x})=\bm{x}^\top A\bm{x}\) 则显示了微分怎样从非线性函数中提取局部线性部分。由前面的展开可知
+\[
+f(\bm{x}+\bm{u})-f(\bm{x})=\bm{x}^\top A\bm{u}+\bm{u}^\top A\bm{x}+\bm{u}^\top A\bm{u}.
+\]
+其中前两项关于 \(\bm{u}\) 线性，最后一项是二阶小量。因此
+\[
+\mathrm{D}f(\bm{x})[\bm{u}]=\bm{x}^\top A\bm{u}+\bm{u}^\top A\bm{x}=((A+A^\top)\bm{x})^\top \bm{u}.
+\]
+这个式子同时包含两个信息：作为微分，\(\mathrm{D}f(\bm{x})\) 是把 \(\bm{u}\) 映到 \(\bm{x}^\top A\bm{u}+\bm{u}^\top A\bm{x}\) 的线性映射；作为梯度表示，它对应于向量 \(\bm{\nabla} f(\bm{x})=(A+A^\top)\bm{x}\)。若 \(A=A^\top\)，这个表示才进一步化为 \(\bm{\nabla} f(\bm{x})=2A\bm{x}\)。
+
+微分记号的优势在于它直接记录函数复合、相加和相乘时一阶主项的来源。若 \(f,g:\mathbb{R}^n\to\mathbb{R}\) 都在 \(\bm{x}\) 处可微，则
+\[
+\mathrm{D}(f+g)(\bm{x})[\bm{u}]=\mathrm{D}f(\bm{x})[\bm{u}]+\mathrm{D}g(\bm{x})[\bm{u}].
+\]
+这是因为两个函数的增量展开相加后，一阶主项也相加，余项仍然是 \(o(\|\bm{u}\|)\)。这个规则并不需要重新逐元素求偏导，只需要保留每个函数增量中的线性部分。
+
+乘积规则也可以由同一思想得到。设 \(f,g:\mathbb{R}^n\to\mathbb{R}\) 在 \(\bm{x}\) 处可微，则
+\[
+f(\bm{x}+\bm{u})g(\bm{x}+\bm{u})-f(\bm{x})g(\bm{x})=g(\bm{x})\mathrm{D}f(\bm{x})[\bm{u}]+f(\bm{x})\mathrm{D}g(\bm{x})[\bm{u}]+o(\|\bm{u}\|).
+\]
+因此
+\[
+\mathrm{D}(fg)(\bm{x})[\bm{u}]=g(\bm{x})\mathrm{D}f(\bm{x})[\bm{u}]+f(\bm{x})\mathrm{D}g(\bm{x})[\bm{u}].
+\]
+推导中会出现 \(\mathrm{D}f(\bm{x})[\bm{u}]\mathrm{D}g(\bm{x})[\bm{u}]\) 这样的乘积项，但它是两个一阶量的乘积，阶数为 \(O(\|\bm{u}\|^2)\)，应当归入余项，不能计入一阶主项。
+
+当输出为向量时，微分仍然表示输入增量到一阶主项的线性映射。设 \(F:\mathbb{R}^n\to\mathbb{R}^m\)，若
+\[
+F(\bm{x}+\bm{u})=F(\bm{x})+\mathrm{D}F(\bm{x})[\bm{u}]+o(\|\bm{u}\|),
+\]
+则 \(\mathrm{D}F(\bm{x})[\bm{u}]\in\mathbb{R}^m\)。在标准基下，任意从 \(\mathbb{R}^n\) 到 \(\mathbb{R}^m\) 的线性映射都可由一个 \(m\times n\) 矩阵表示，因此存在矩阵 \(J_F(\bm{x})\)，使得
+\[
+\mathrm{D}F(\bm{x})[\bm{u}]=J_F(\bm{x})\bm{u}.
+\]
+这个矩阵称为 \(F\) 在 \(\bm{x}\) 处的 Jacobian 矩阵。它的第 \(j\) 列是 \(\mathrm{D}F(\bm{x})[\bm{e}_j]\)，也就是函数沿第 \(j\) 个输入坐标方向的一阶输出变化；若 \(F=(F_1,\ldots,F_m)^\top\)，则
+\[
+(J_F(\bm{x}))_{ij}=\frac{\partial F_i}{\partial x_j}(\bm{x}).
+\]
+因此，Jacobian 是向量值函数微分的坐标矩阵，而梯度是标量值函数微分在内积下的代表向量；二者都来自同一个一阶主项。
+
+复合函数的微分反映了“增量先经过内层函数，再影响外层函数”的结构。设 \(g:\mathbb{R}^n\to\mathbb{R}^m\) 在 \(\bm{x}\) 处可微，\(f:\mathbb{R}^m\to\mathbb{R}\) 在 \(g(\bm{x})\) 处可微；此时 \(\mathrm{D}g(\bm{x})[\bm{u}]\in\mathbb{R}^m\)，表示内层函数输出的线性主项。若输入增量为 \(\bm{u}\)，则内层函数首先产生主项 \(\mathrm{D}g(\bm{x})[\bm{u}]\)，外层函数再对这个输出增量取一阶主项，因此
+\[
+\mathrm{D}(f\circ g)(\bm{x})[\bm{u}]=\mathrm{D}f(g(\bm{x}))[\mathrm{D}g(\bm{x})[\bm{u}]].
+\]
+链式法则本质上是两个局部线性规则的连续作用。
+
+可微性意味着函数增量存在稳定的线性主项，微分 \(\mathrm{D}f(\bm{x})\) 是这一主项关于输入增量的线性映射，梯度是在内积结构下表示该映射的向量；若这是向量到向量的函数，则 Jacobian 矩阵是线性映射在标准基下的坐标矩阵。把输入空间从 \(\mathbb{R}^n\) 换成矩阵空间后，同样的展开式写作 \(F(X+H)=F(X)+\mathrm{D}F(X)[H]+o(\|H\|)\)，也会有对应的线性映射，后续章节会详细介绍。

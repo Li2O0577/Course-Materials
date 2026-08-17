@@ -1,0 +1,146 @@
+\section*{Problem 1}
+
+已知矩阵 \[
+A = \begin{bmatrix}
+1 & 2 & 3 \\
+2 & 4 & 6 \\
+1 & 2 & 3 \\
+\end{bmatrix}.
+\]
+该矩阵的各行之间存在明显的倍数关系，因此可以用低秩形式表示。
+
+\begin{enumerate}
+    \item 将矩阵 $A$ 写成外积形式 \[A = \boldsymbol{u}\boldsymbol{v}^\top.\]
+    \item 求矩阵 $A$ 的秩。
+    \item 若直接存储矩阵 $A$ 需要存储全部 $3 \times 3$ 个元素，而采用外积形式时只需存储向量 $\boldsymbol{u}$ 和 $\boldsymbol{v}$ 的全部分量，求：
+    \begin{enumerate}
+        \item 原矩阵的存储量；
+        \item 外积表示下的存储量；
+        \item 传输效率提升倍数（定义为压缩前存储量 / 压缩后存储量）。
+    \end{enumerate}
+\end{enumerate}
+
+\begin{proof}
+首先注意到 $A$ 可表为 \[A = \boldsymbol{u} \boldsymbol{v}^\top = \begin{pmatrix}
+    1 \\ 2 \\ 1 \\
+\end{pmatrix} \left(1,2,3\right).\]
+即取 $\boxed{\boldsymbol{u} = \left(1, 2, 1\right)^\top}, \boxed{\boldsymbol{v} = \left(1, 2, 3\right)^\top}$，并且亦可见 $\boxed{\rank\left(A\right) = 1}$。
+
+考察存储量，原矩阵 $A$ 需要存储 $3 \times 3 = \boxed{9}$ 个元素；而外积表示下只需存储 $\boldsymbol{u}$ 和 $\boldsymbol{v}$ 的分量，即 $3 + 3 = \boxed{6}$ 个元素。因此传输效率提升倍数为 $9 / 6 = \boxed{1.5}$。
+
+\end{proof}
+
+\section*{Problem 2}
+
+设对称矩阵 \[
+A = \begin{bmatrix}
+    3 & 1 \\
+    1 & 3 \\
+\end{bmatrix}.
+\]
+利用特征值分解研究该矩阵的低秩近似。
+
+\begin{enumerate}
+    \item 求矩阵 $A$ 的全部特征值及对应的单位特征向量；
+    \item 写出矩阵 $A$ 的特征值分解形式；
+    \item 取最大特征值所对应的一项，写出矩阵 $A$ 的最佳秩 $1$ 近似矩阵 $\hat{A}$。
+\end{enumerate}
+
+\begin{proof}
+首先计算 $A$ 的特征值，解方程 $\det \left(\lambda I - A\right) = 0$ 得 \[
+\det\begin{bmatrix}
+    \lambda - 3 & -1 \\
+    -1 & \lambda - 3 \\
+\end{bmatrix} = 0 \iff \left(\lambda - 3\right)^2 - 1 = 0 \iff \boxed{\lambda_1 = 4, \lambda_2 = 2}.
+\]
+将两个特征值代入方程 $\left(\lambda I - A\right) \boldsymbol{v} = \boldsymbol{0}$ 可得对应的单位特征向量为 \[
+\begin{aligned}
+    \lambda_1 = 4 &\implies \boxed{\boldsymbol{v}_1 = \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)^\top}, \\
+    \lambda_2 = 2 &\implies \boxed{\boldsymbol{v}_2 = \left(-\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)^\top}. \\
+\end{aligned}
+\]
+从而 \[
+\begin{aligned}
+    A &= Q \Lambda Q^\top = \begin{bmatrix}
+        \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2} \\
+        \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+    \end{bmatrix} \begin{bmatrix}
+        4 & 0 \\
+        0 & 2 \\
+    \end{bmatrix} \begin{bmatrix}
+        \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+        -\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+    \end{bmatrix}, \\
+    &= \boxed{4 \cdot \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)^\top \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right) + 2 \cdot \left(-\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)^\top \left(-\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)}.
+\end{aligned}
+\]
+保留特征值最大的项得到谱范数与 Frobenius 范数意义下的最佳秩 $1$ 近似矩阵 \[\hat{A} = 4 \cdot \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)^\top \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right) = \boxed{\begin{bmatrix}
+    2 & 2 \\
+    2 & 2 \\
+\end{bmatrix}}.
+\]
+
+\end{proof}
+\section*{Problem 3}
+
+设对称矩阵 \[
+A = \begin{bmatrix}
+    2 & 1 & 0 \\
+    1 & 2 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+\]
+\begin{enumerate}
+    \item 求矩阵 $A$ 的全部特征值及对应的一组单位特征向量；
+    \item 按特征值从大到小排序，并写出前三个主成分方向；
+    \item 设 $\hat{A}_k$ 为保留前 $k$ 个主成分得到的近似矩阵，判断当误差要求 \[\left\|A - \hat{A}_k\right\| \le 1\] 时，至少需要保留几个主成分。
+\end{enumerate}
+
+\begin{proof}
+首先计算 $A$ 的特征值，解方程 $\det \left(\lambda I - A\right) = 0$ 得 \[
+\begin{aligned}
+    \det\begin{bmatrix}
+        \lambda - 2 & -1 & 0 \\
+        -1 & \lambda - 2 & 0 \\
+        0 & 0 & \lambda - 1 \\
+    \end{bmatrix} = 0 &\iff \left(\lambda - 1\right) \det\begin{bmatrix}
+        \lambda - 2 & -1 \\
+        -1 & \lambda - 2 \\
+    \end{bmatrix} = 0, \\
+    &\iff \left(\lambda - 1\right) \left(\lambda^2 - 4\lambda + 3\right) = 0 \iff \boxed{\lambda_1 = 3, \lambda_2 = 1, \lambda_3 = 1}.
+\end{aligned}
+\]
+将三个特征值代入方程 $\left(\lambda I - A\right) \boldsymbol{v} = \boldsymbol{0}$ 可得对应的单位特征向量为 \[
+\begin{aligned}
+    \lambda_1 = 3 &\implies \boxed{\boldsymbol{v}_1 = \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}, 0\right)^\top}, \\
+    \lambda_2 = 1 &\implies \boxed{\boldsymbol{v}_2 = \left(-\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}, 0\right)^\top}, \\
+    \lambda_3 = 1 &\implies \boxed{\boldsymbol{v}_3 = \left(0, 0, 1\right)^\top}. \\
+\end{aligned}
+\]
+这同时也是按特征值从大到小排序的主成分方向。
+
+以下将题目中的范数解释为谱范数。要使误差 $\left\|A - \hat{A}_k\right\|_2 \le 1$，需要保留的主成分个数 $k$ 满足 $\lambda_{k+1} \le 1$。由于 $\lambda_2 = 1$，因此至少需要保留 $k = 1$ 个主成分。验证这一点，保留前 $1$ 个主成分得到的近似矩阵为 \[\hat{A}_1 = 3 \cdot \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}, 0\right)^\top \left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}, 0\right) = \begin{bmatrix}
+    \frac{3}{2} & \frac{3}{2} & 0 \\
+    \frac{3}{2} & \frac{3}{2} & 0 \\
+    0 & 0 & 0 \\
+\end{bmatrix}.\]
+计算误差 $\left\|A - \hat{A}_1\right\|$ 有
+\[\begin{aligned}
+    \left\|A - \hat{A}_1\right\|_2 &= \left\|\begin{bmatrix}
+    2 & 1 & 0 \\
+    1 & 2 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix} - \begin{bmatrix}
+    \frac{3}{2} & \frac{3}{2} & 0 \\
+    \frac{3}{2} & \frac{3}{2} & 0 \\
+    0 & 0 & 0 \\
+\end{bmatrix}\right\| = \left\|\begin{bmatrix}
+    \frac{1}{2} & -\frac{1}{2} & 0 \\
+    -\frac{1}{2} & \frac{1}{2} & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}\right\|_2 = 1 \le 1.
+\end{aligned}
+\]
+因此在谱范数意义下至少需要保留 $\boxed{1}$ 个主成分；若题目采用 Frobenius 范数，则至少需要保留 $2$ 个主成分。
+
+\end{proof}

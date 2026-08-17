@@ -1,0 +1,204 @@
+\section*{Problem 1}
+
+设 $\omega_n = e^{-2\pi \mathrm{i}/n}$ 为 $n$ 次单位根。请证明：对任意整数
+$a, b \in \{0, 1, \ldots, n - 1\}$，
+\[
+    \sum_{k = 0}^{n - 1} \omega_n^{(a - b)k}
+    =
+    \begin{cases}
+        n, & a = b, \\
+        0, & a \neq b.
+    \end{cases}
+\]
+并由此推出 $n$ 阶 Fourier 矩阵
+\[
+    F_n = \left(\omega_n^{jk}\right)_{j,k = 0}^{n - 1}
+\]
+满足
+\[
+    F_n^\ct F_n = n I_n, \qquad F_n^{-1} = \frac{1}{n} F_n^\ct.
+\]
+
+\begin{proof}
+    首先利用等比数列求和公式，当 $a \neq b$ 时，
+    \[
+        \sum_{k = 0}^{n - 1} \omega_n^{(a - b)k}
+        = \frac{1 - \omega_n^{(a - b)n}}{1 - \omega_n^{a - b}}
+        = 0,
+    \]
+    其中分子为零是因为 $\omega_n^n = e^{-2\pi \mathrm{i}} = 1$；又因 $0<|a-b|<n$，分母 $1-\omega_n^{a-b}\neq0$。当 $a = b$ 时，$\omega_n^{(a - b)k} = 1$，因此
+    \[
+        \sum_{k = 0}^{n - 1} \omega_n^{(a - b)k} = n.
+    \]
+    考虑
+    \[
+        F_n = \begin{bmatrix}
+            \omega_n^{0 \cdot 0} & \omega_n^{0 \cdot 1} & \cdots & \omega_n^{0 \cdot (n - 1)} \\
+            \omega_n^{1 \cdot 0} & \omega_n^{1 \cdot 1} & \cdots & \omega_n^{1 \cdot (n - 1)} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            \omega_n^{(n - 1) \cdot 0} & \omega_n^{(n - 1) \cdot 1} & \cdots & \omega_n^{(n - 1) \cdot (n - 1)}
+        \end{bmatrix}, \quad F_n^\ct = \begin{bmatrix}
+            \omega_n^{-0 \cdot 0} & \omega_n^{-1 \cdot 0} & \cdots & \omega_n^{-(n - 1) \cdot 0} \\
+            \omega_n^{-0 \cdot 1} & \omega_n^{-1 \cdot 1} & \cdots & \omega_n^{-(n - 1) \cdot 1} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            \omega_n^{-0 \cdot (n - 1)} & \omega_n^{-1 \cdot (n - 1)} & \cdots & \omega_n^{-(n - 1) \cdot (n - 1)}
+        \end{bmatrix}.
+    \]
+    计算 $F_n^\ct F_n$ 的第 $j$ 行第 $k$ 列元素有
+    \[
+        (F_n^\ct F_n)_{jk} = \sum_{l = 0}^{n - 1} \omega_n^{-jl} \omega_n^{lk} = \sum_{l = 0}^{n - 1} \omega_n^{(k - j)l} = \begin{cases}
+            n, & j = k, \\
+            0, & j \neq k.
+        \end{cases} \iff F_n^\ct F_n = nI_n.
+    \]
+    因此 $F_n$ 可逆，并且
+    \[
+        \boxed{F_n^{-1}=\frac1nF_n^\ct}.
+    \]
+\end{proof}
+
+\section*{Problem 2}
+
+取 $n = 4$，$\omega_4 = e^{-2\pi \mathrm{i}/4} = -\mathrm{i}$。设输入向量
+\[
+    \bm{x} = \left(1, 2, 3, 4\right)^\top.
+\]
+
+\begin{enumerate}
+    \item 直接利用 Fourier 矩阵 $F_4$ 计算 $\bm{y} = F_4 \bm{x}$。
+    \item 用 FFT 的蝶形分解（即先分别计算偶数项 $\left(x_0, x_2\right)$ 与奇数项 $\left(x_1, x_3\right)$ 的 2 点 DFT，再用旋转因子合并）重新计算 $\bm{y}$，并核对两种方法结果一致。
+\end{enumerate}
+
+\begin{proof}
+    首先写出 $F_4$ 的具体形式为
+    \[
+        F_4 = \begin{bmatrix}
+            1 & 1 & 1 & 1 \\
+            1 & -\mathrm{i} & -1 & \mathrm{i} \\
+            1 & -1 & 1 & -1 \\
+            1 & \mathrm{i} & -1 & -\mathrm{i}
+        \end{bmatrix}.
+    \]
+    直接计算得到
+    \[
+        \bm{y} = F_4 \bm{x} = \begin{bmatrix}
+            1 & 1 & 1 & 1 \\
+            1 & -\mathrm{i} & -1 & \mathrm{i} \\
+            1 & -1 & 1 & -1 \\
+            1 & \mathrm{i} & -1 & -\mathrm{i}
+        \end{bmatrix} \begin{pmatrix}
+            1 \\
+            2 \\
+            3 \\
+            4
+        \end{pmatrix} = \begin{pmatrix}
+            10 \\
+            -2 + 2\mathrm{i} \\
+            -2 \\
+            -2 - 2\mathrm{i}
+        \end{pmatrix}.
+    \]
+    回忆 $F_{2n}$ 与 $F_n$ 的关系
+    \[
+        F_{2n} = \begin{bmatrix}
+            I_n & D_n \\
+            I_n & -D_n
+        \end{bmatrix} \begin{bmatrix}
+            F_n & 0 \\
+            0 & F_n
+        \end{bmatrix} P, \quad D_n = \mathrm{diag}\left(1, \omega_{2n}, \ldots, \omega_{2n}^{n - 1}\right).
+    \]
+    于是写出 $F_2$ 的具体形式为
+    \[
+        F_2 = \begin{bmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{bmatrix}.
+    \]
+    计算偶数项与奇数项的 DFT 分别为
+    \[
+        F_2 \begin{pmatrix}
+            1 \\
+            3
+        \end{pmatrix} = \begin{pmatrix}
+            4 \\
+            -2
+        \end{pmatrix}, \quad F_2 \begin{pmatrix}
+            2 \\
+            4
+        \end{pmatrix} = \begin{pmatrix}
+            6 \\
+            -2
+        \end{pmatrix}.
+    \]
+    计算旋转因子 $D_2$ 为
+    \[
+        D_2 = \mathrm{diag}\left(1, \omega_4\right) = \begin{bmatrix}
+            1 & 0 \\
+            0 & -\mathrm{i}
+        \end{bmatrix}.
+    \]
+    最后合并得到
+    \[
+        \bm{y} = F_4 \bm{x} = \begin{pmatrix}
+            F_2 \bm{x}_e + D_2 F_2 \bm{x}_o \\
+            F_2 \bm{x}_e - D_2 F_2 \bm{x}_o
+        \end{pmatrix} = \begin{pmatrix}
+            4 + 6 \\
+            -2 + 2\mathrm{i} \\
+            4 - 6 \\
+            -2 - 2\mathrm{i}
+        \end{pmatrix} = \begin{pmatrix}
+            10 \\
+            -2 + 2\mathrm{i} \\
+            -2 \\
+            -2 - 2\mathrm{i}
+        \end{pmatrix}.
+    \]
+    与直接计算结果一致。
+\end{proof}
+
+\section*{Problem 3}
+
+设次数小于 $n$ 的多项式
+\[
+    p(z) = x_0 + x_1 z + x_2 z^2 + \cdots + x_{n - 1} z^{n - 1},
+\]
+记 $\omega_n = e^{-2\pi \mathrm{i}/n}$。
+
+\begin{enumerate}
+    \item 证明 $\bm{y} = F_n \bm{x}$ 的第 $j$ 个分量恰为 $y_j = p(\omega_n^j)$，即 DFT 是把多项式从“系数表示”转为“在 $n$ 次单位根处的点值表示”。
+    \item 设 $n = 2m$。把 $p(z)$ 按偶、奇次项拆分为
+    \[
+        p(z) = p_e(z^2) + z p_o(z^2),
+    \]
+    利用 $\omega_{2m}^2 = \omega_m$ 与 $\omega_{2m}^m = -1$ 推导 FFT 的蝶形合并公式
+    \[
+        y_j = p_e(\omega_m^j) + \omega_{2m}^j p_o(\omega_m^j), \qquad
+        y_{j + m} = p_e(\omega_m^j) - \omega_{2m}^j p_o(\omega_m^j),
+    \]
+    其中 $j = 0, 1, \ldots, m - 1$。
+    \item 写出递推式 $T(n) = 2T(n/2) + O(n)$ 的解，并说明 FFT 相比直接计算 DFT 在复杂度上的优势。
+\end{enumerate}
+
+\begin{proof}
+    显然有
+    \[
+        y_j = \sum_{k = 0}^{n - 1} \omega_n^{jk} x_k = p(\omega_n^j).
+    \]
+    在奇偶拆分下
+    \[
+        p(z) = p_e(z^2) + z p_o(z^2) = \sum_{k = 0}^{m - 1} x_{2k} z^{2k} + z \sum_{k = 0}^{m - 1} x_{2k + 1} z^{2k}.
+    \]
+    从而
+    \[
+        y_j = p(\omega_{2m}^j) = p_e(\omega_m^j) + \omega_{2m}^j p_o(\omega_m^j), \quad
+        y_{j + m} = p(\omega_{2m}^{j + m}) = p_e(\omega_m^j) - \omega_{2m}^j p_o(\omega_m^j).
+    \]
+    对递推式 $T(n) = 2T(n/2) + O(n)$，利用 Master Theorem 可得
+    \[
+        (a, b, d) = (2, 2, 1) \implies T(n) = O(n \log n).
+    \]
+
+    直接计算 DFT 的复杂度为 $O(n^2)$，而 FFT 的复杂度为 $O(n \log n)$，因此当 $n$ 较大时，FFT 相比直接计算 DFT 在复杂度上有显著优势。
+\end{proof}

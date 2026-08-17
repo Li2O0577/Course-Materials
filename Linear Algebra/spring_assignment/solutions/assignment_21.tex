@@ -1,0 +1,196 @@
+\section*{Problem 1}
+
+在全连接神经网络中，ReLU 激活函数会将输入空间划分为若干个区域。在每一个固定的激活区域内，网络实际上退化为一个仿射映射。设一个两层全连接神经网络定义为
+\[
+\bm{z}^{(1)} = W_1 \bm{x} + \bm{b}_1,\quad
+\bm{h} = \operatorname{ReLU}(\bm{z}^{(1)}),\quad
+\bm{z}^{(2)} = W_2 \bm{h} + \bm{b}_2,
+\]
+其中
+\[
+W_1 = \begin{bmatrix}
+    1 & -1 \\
+    2 & 1 \\
+    -1 & 2
+\end{bmatrix},\quad
+\bm{b}_1 = \begin{pmatrix} 0 \\ -1 \\ 1 \end{pmatrix},\quad
+W_2 = \begin{bmatrix} 1 & 0 & 2 \\ -1 & 1 & 0 \end{bmatrix},\quad
+\bm{b}_2 = \begin{pmatrix} 1 \\ 0 \end{pmatrix},
+\]
+对输入
+\[
+\bm{x} = \begin{pmatrix} 2 \\ 1 \end{pmatrix},
+\]
+完成以下任务：
+\begin{enumerate}
+    \item 计算 $\bm{z}^{(1)}$、$\bm{h}$、$\bm{z}^{(2)}$。
+    \item 判断该输入对应的 ReLU 激活模式。
+    \item 在该激活模式保持不变的区域内，写出网络对应的仿射映射。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 逐层计算得到
+        \[
+        \begin{aligned}
+            \bm{z}^{(1)}
+            &= \begin{bmatrix}
+                1 & -1 \\
+                2 & 1 \\
+                -1 & 2
+               \end{bmatrix}
+               \begin{pmatrix}2\\1\end{pmatrix}
+               +\begin{pmatrix}0\\-1\\1\end{pmatrix}
+             = \begin{pmatrix}1\\4\\1\end{pmatrix},\\
+            \bm{h}
+            &= \operatorname{ReLU}(\bm{z}^{(1)})
+             = \begin{pmatrix}1\\4\\1\end{pmatrix},\\
+            \bm{z}^{(2)}
+            &= \begin{bmatrix}1&0&2\\-1&1&0\end{bmatrix}
+               \begin{pmatrix}1\\4\\1\end{pmatrix}
+               +\begin{pmatrix}1\\0\end{pmatrix}
+             = \boxed{\begin{pmatrix}4\\3\end{pmatrix}}.
+        \end{aligned}
+        \]
+        \item 三个净输入分量均为正，故三个隐藏神经元全部激活，激活模式为
+        \[
+            \boxed{(1,1,1)}.
+        \]
+        该模式保持不变的区域为
+        \[
+            x_1-x_2>0,\qquad
+            2x_1+x_2-1>0,\qquad
+            -x_1+2x_2+1>0.
+        \]
+        \item 在此区域内，ReLU 等同于恒等映射，因此
+        \[
+        \begin{aligned}
+            \bm{z}^{(2)}
+            &=W_2(W_1\bm{x}+\bm{b}_1)+\bm{b}_2\\
+            &=(W_2W_1)\bm{x}+(W_2\bm{b}_1+\bm{b}_2)\\
+            &=\boxed{
+              \begin{bmatrix}-1&3\\1&2\end{bmatrix}\bm{x}
+              +\begin{pmatrix}3\\-1\end{pmatrix}}.
+        \end{aligned}
+        \]
+        代入 $\bm{x}=(2,1)^\top$ 可重新得到 $\bm{z}^{(2)}=(4,3)^\top$。
+    \end{enumerate}
+\end{proof}
+
+\section*{Problem 2}
+
+全连接层的一个主要问题是参数量随输入维度迅速增长。卷积层通过局部连接和权重共享显著减少参数量。设输入是一张大小为 $32 \times 32$ 的 RGB 图像，即输入通道数为 $3$。
+
+现在比较以下两种结构：
+\begin{itemize}
+    \item 结构 A：将图像展平成向量后，接一个含有 $1024$ 个神经元的全连接层。
+    \item 结构 B：使用 $16$ 个 $3 \times 3$ 的卷积核，步长为 $1$，无零填充。
+\end{itemize}
+假设所有层都含有偏置项。完成以下任务：
+\begin{enumerate}
+    \item 计算结构 A 的参数量。
+    \item 计算结构 B 的参数量。
+    \item 计算结构 B 的输出特征图大小。
+    \item 若将结构 B 的输出展平后接一个 $10$ 类分类器，计算该分类器的参数量。
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 展平后的输入维度为 $32\cdot32\cdot3=3072$。每个输出神经元有 $3072$ 个权重和 $1$ 个偏置，所以结构 A 的参数量为
+        \[
+            3072\cdot1024+1024=\boxed{3\,146\,752}.
+        \]
+        \item 每个卷积核跨越全部 $3$ 个输入通道，因而含有 $3\cdot3\cdot3=27$ 个权重和 $1$ 个偏置。结构 B 的参数量为
+        \[
+            (3\cdot3\cdot3+1)\cdot16=\boxed{448}.
+        \]
+        \item 步长为 $1$ 且无零填充时，空间边长为
+        \[
+            \frac{32-3}{1}+1=30.
+        \]
+        因此输出特征图大小为
+        \[
+            \boxed{30\times30\times16}.
+        \]
+        \item 展平后的维度为 $30\cdot30\cdot16=14400$。接含偏置的 $10$ 类全连接分类器，共有
+        \[
+            14400\cdot10+10=\boxed{144\,010}
+        \]
+        个参数。
+    \end{enumerate}
+\end{proof}
+
+\section*{Problem 3}
+
+在多分类任务中，神经网络通常先输出 logits，再通过 softmax 转化为类别概率。设一个三分类模型的 logits 由
+\[
+\bm{z} = W \bm{x} + \bm{b}
+\]
+给出，其中
+\[
+W = \begin{bmatrix}
+    1 & 0 \\
+    0 & 1 \\
+    -1 & 0
+\end{bmatrix},\quad
+\bm{b} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix},\quad
+\bm{x} = \begin{pmatrix} 1 \\ 0 \end{pmatrix},
+\]
+真实标签为第一类，即
+\[
+\bm{y} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}.
+\]
+softmax 输出定义为
+\[
+p_i = \frac{\exp(z_i)}{\sum_{j=1}^{3} \exp(z_j)},
+\]
+交叉熵损失函数为
+\[
+L = -\sum_{i=1}^{3} y_i \log p_i.
+\]
+完成以下任务：
+\begin{enumerate}
+    \item 计算 $\bm{z}$ 和 $\bm{p}$。
+    \item 计算损失 $L$。
+    \item 利用 $\nabla_{\bm{z}} L = \bm{p} - \bm{y}$，计算 $\nabla_W L$ 和 $\nabla_{\bm{b}} L$。
+\end{enumerate}
+
+\begin{proof}
+    记 $S=e+1+e^{-1}$。
+    \begin{enumerate}
+        \item 由线性层与 softmax 的定义，
+        \[
+            \bm{z}=\boxed{\begin{pmatrix}1\\0\\-1\end{pmatrix}},
+            \qquad
+            \bm{p}=\frac1S\begin{pmatrix}e\\1\\e^{-1}\end{pmatrix}
+            \approx\boxed{\begin{pmatrix}0.6652\\0.2447\\0.0900\end{pmatrix}}.
+        \]
+        \item 真实类别为第一类，故
+        \[
+            L=-\log p_1
+             =\log S-1
+             \approx\boxed{0.4076}.
+        \]
+        \item 令
+        \[
+            \bm{\delta}=\nabla_{\bm{z}}L
+            =\bm{p}-\bm{y}
+            \approx\begin{pmatrix}-0.3348\\0.2447\\0.0900\end{pmatrix}.
+        \]
+        由于 $\bm{z}=W\bm{x}+\bm{b}$，矩阵微分给出
+        \[
+        \begin{aligned}
+            \nabla_WL
+            &=\bm{\delta}\bm{x}^\top
+             \approx\boxed{\begin{bmatrix}
+                -0.3348&0\\
+                0.2447&0\\
+                0.0900&0
+             \end{bmatrix}},\\
+            \nabla_{\bm{b}}L
+            &=\bm{\delta}
+             \approx\boxed{\begin{pmatrix}-0.3348\\0.2447\\0.0900\end{pmatrix}}.
+        \end{aligned}
+        \]
+    \end{enumerate}
+\end{proof}

@@ -1,0 +1,124 @@
+\section*{Problem 1}
+
+将
+\[
+Q\left(\boldsymbol{x}\right) = x_1^2 + 2x_2^2 + 3x_3^2 + 2x_1x_2 + 4x_1x_3 + 2x_2x_3
+\]
+化为标准形.
+
+\begin{proof}
+直接配方得
+\[
+\begin{aligned}
+    Q\left(\boldsymbol{x}\right) &= x_1^2 + 2x_2^2 + 3x_3^2 + 2x_1x_2 + 4x_1x_3 + 2x_2x_3, \\
+    &= \left(x_1 + x_2 + 2x_3\right)^2 + x_2^2 - x_3^2 - 2x_2x_3, \\
+    &= \boxed{\left(x_1 + x_2 + 2x_3\right)^2 + \left(x_2 - x_3\right)^2 - 2x_3^2}. \\
+\end{aligned}
+\]
+
+\end{proof}
+
+\section*{Problem 2}
+
+设
+\[
+Q\left(x_1, x_2, x_3\right) = ax_1^2 + bx_2^2 + ax_3^2 + 2cx_1x_3,
+\]
+求 $a, b, c$ 满足什么条件时 $Q$ 为正定二次型.
+
+\begin{proof}
+若 $Q$ 正定，则 $a=Q(1,0,0)>0$、$b=Q(0,1,0)>0$。在 $a>0$ 下配方得
+\[
+\begin{aligned}
+    Q \left(x_1, x_2, x_3\right) &= a \left(x_1 + \frac{cx_3}{a}\right)^2 + \left(a - \frac{c^2}{a}\right)x_3^2 + bx_2^2, \\
+\end{aligned}
+\]
+因此 $Q$ 正定当且仅当三个平方项的系数均为正，即
+\[
+\boxed{
+    a > 0,\quad b > 0,\quad a^2 - c^2 > 0
+}.
+\]
+等价地，条件可写为 $\boxed{b > 0,\ a > |c|}$。
+
+\end{proof}
+\section*{Problem 3}
+
+设
+\[
+Q \left(\boldsymbol{x}\right) = x_1^2 + 2x_2^2 + 3x_3^2 - 2x_1x_2 + 4x_2x_3
+\]
+求其正负惯性指数.
+
+\begin{proof}
+显然有
+\[
+\begin{aligned}
+    Q \left(\boldsymbol{x}\right) &= x_1^2 + 2x_2^2 + 3x_3^2 - 2x_1x_2 + 4x_2x_3, \\
+    &= \left(x_1 - x_2\right)^2 + \left(x_2 + 2x_3\right)^2 - x_3^2. \\
+\end{aligned}
+\]
+因此 $Q$ 的正惯性指数为 $2$, 负惯性指数为 $1$. 即
+\[
+\boxed{p = 2, q = 1}.
+\]
+
+\end{proof}
+\section*{Problem 4}
+
+设
+\[
+A =
+\begin{bmatrix}
+    2 & -1 & 1 \\
+    -1 & 2 & -1 \\
+    1 & -1 & 0 \\
+\end{bmatrix}
+\]
+\begin{enumerate}
+    \item 构造 $P$ 使 $P^\top A P$ 为标准形；
+    \item 求惯性指数；
+    \item 判断是否正定.
+\end{enumerate}
+
+\begin{proof}
+考虑二次型
+\[
+\begin{aligned}
+    Q \left(\boldsymbol{x}\right) &= \boldsymbol{x}^\top A \boldsymbol{x} = \left(x_1, x_2, x_3\right) \begin{bmatrix}
+        2 & -1 & 1 \\
+        -1 & 2 & -1 \\
+        1 & -1 & 0 \\
+    \end{bmatrix} \left(x_1, x_2, x_3\right)^\top, \\
+    &= 2x_1^2 + 2x_2^2 - 2x_1x_2 - 2x_2x_3 + 2x_1x_3, \\
+    &= 2 \left(x_1 - \frac{x_2}{2} + \frac{x_3}{2}\right)^2 + \frac{3x_2^2}{2} - 2x_2x_3 - \frac{x_3^2}{2}, \\
+    &= 2 \left(x_1 - \frac{x_2}{2} + \frac{x_3}{2}\right)^2 + \frac{3}{2} \left(x_2 - \frac{x_3}{3}\right)^2 - \frac{2x_3^2}{3}, \\
+    &= \left(x_1 - \frac{x_2}{2} + \frac{x_3}{2}, x_2 - \frac{x_3}{3}, x_3\right)
+    \mathrm{diag}\left(2, \frac{3}{2}, -\frac{2}{3}\right) \left(x_1 - \frac{x_2}{2} + \frac{x_3}{2}, x_2 - \frac{x_3}{3}, x_3\right)^\top, \\
+    &= \left[\begin{bmatrix}
+        1 & -\frac{1}{2} & \frac{1}{2} \\
+        0 & 1 & -\frac{1}{3} \\
+        0 & 0 & 1 \\
+    \end{bmatrix} \left(x_1, x_2, x_3\right)^\top\right]^\top \mathrm{diag}\left(2, \frac{3}{2}, -\frac{2}{3}\right) \left[\begin{bmatrix}
+        1 & -\frac{1}{2} & \frac{1}{2} \\
+        0 & 1 & -\frac{1}{3} \\
+        0 & 0 & 1 \\
+    \end{bmatrix} \left(x_1, x_2, x_3\right)^\top\right], \\
+    &= \left(x_1, x_2, x_3\right) \underbrace{\begin{bmatrix}
+        1 & -\frac{1}{2} & \frac{1}{2} \\
+        0 & 1 & -\frac{1}{3} \\
+        0 & 0 & 1 \\
+    \end{bmatrix}^\top}_{{P^{-1}}^\top} \mathrm{diag}\left(2, \frac{3}{2}, -\frac{2}{3}\right) \underbrace{\begin{bmatrix}
+        1 & -\frac{1}{2} & \frac{1}{2} \\
+        0 & 1 & -\frac{1}{3} \\
+        0 & 0 & 1 \\
+    \end{bmatrix}}_{P^{-1}} \left(x_1, x_2, x_3\right)^\top.
+\end{aligned}
+\]
+则 $P = \boxed{\begin{bmatrix}
+    1 & \frac{1}{2} & -\frac{1}{3} \\
+    0 & 1 & \frac{1}{3} \\
+    0 & 0 & 1 \\
+\end{bmatrix}}$，观察对角阵 $\mathrm{diag}\left(2, \frac{3}{2}, -\frac{2}{3}\right)$ 得 $\boxed{p = 2, q = 1}$，且 $\boxed{A \textrm{ 不是正定矩阵}}$.
+
+\end{proof}

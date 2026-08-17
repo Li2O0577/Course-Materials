@@ -1,0 +1,74 @@
+\section*{Problem 1}
+
+反向传播算法的核心思想是先计算高层误差，再将误差逐层传回低层。设一个两层线性网络为
+\[
+\bm{h} = W_1 \bm{x},\quad \hat{\bm{y}} = W_2 \bm{h},
+\]
+其中
+\[
+W_1 = \begin{bmatrix}
+    1 & 2 \\
+    0 & -1
+\end{bmatrix},\quad
+W_2 = \begin{bmatrix}
+    1 & 0 \\
+    2 & -1
+\end{bmatrix},\quad
+\bm{x} = \begin{pmatrix} 1 \\ -1 \end{pmatrix},\quad
+\bm{y} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
+\]
+损失函数为
+\[
+L = \frac{1}{2} \|\hat{\bm{y}} - \bm{y}\|_2^2.
+\]
+完成以下任务：
+\begin{enumerate}
+    \item 计算 $\bm{h}$、$\hat{\bm{y}}$、$\bm{e} = \hat{\bm{y}} - \bm{y}$。
+    \item 计算 $\nabla_{W_2} L$。
+    \item 计算 $\nabla_{W_1} L$。
+\end{enumerate}
+
+\section*{Problem 2}
+
+自动微分可以看作是系统地应用链式法则。设计算图为
+\[
+L = \bm{c}^\top \bm{v},\quad
+\bm{v} = \tanh(\bm{u}),\quad
+\bm{u} = A \bm{x} + \bm{b},
+\]
+其中
+\[
+A = \begin{bmatrix}
+    1 & -1 \\
+    0 & 2
+\end{bmatrix},\quad
+\bm{x} = \begin{pmatrix} 1 \\ 0 \end{pmatrix},\quad
+\bm{b} = \begin{pmatrix} -1 \\ 0 \end{pmatrix},\quad
+\bm{c} = \begin{pmatrix} 2 \\ -1 \end{pmatrix}.
+\]
+这里 $\tanh$ 逐坐标作用于向量。完成以下任务：
+\begin{enumerate}
+    \item 进行前向计算，求 $\bm{u}$、$\bm{v}$、$L$。
+    \item 使用反向模式自动微分思想，求 $\nabla_{\bm{x}} L$、$\nabla_{A} L$、$\nabla_{\bm{b}} L$。
+\end{enumerate}
+
+\section*{Problem 3}
+
+一维卷积或互相关可以看作是一个具有特殊稀疏结构的矩阵乘法。设一维输入信号为
+\[
+\bm{x} = (x_1, x_2, x_3, x_4, x_5)^\top,
+\]
+滤波器为
+\[
+\bm{a} = (a_1, a_2, a_3)^\top.
+\]
+采用步长为 $1$、无零填充的窄互相关运算：
+\[
+y_i = a_1 x_i + a_2 x_{i+1} + a_3 x_{i+2},\quad i = 1, 2, 3.
+\]
+完成以下任务：
+\begin{enumerate}
+    \item 将该运算写成 $\bm{y} = K \bm{x}$ 的矩阵形式。
+    \item 令 $\bm{a} = (1, 0, -1)^\top$，$\bm{x} = (2, 1, 3, 0, -2)^\top$，计算 $\bm{y}$。
+    \item 若目标输出为 $\bm{t} = (0, 1, 3)^\top$，损失函数为 $L = \frac{1}{2} \|\bm{y} - \bm{t}\|_2^2$，求 $\nabla_{\bm{x}} L$ 和 $\nabla_{\bm{a}} L$。
+\end{enumerate}
